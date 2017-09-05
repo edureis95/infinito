@@ -1,0 +1,37 @@
+CHANGELOG rememberme
+===========================
+
+RELEASE 0.5.1
+-----------
+
+- add autocomplete always on option
+- fix bug
+
+RELEASE 0.5
+-----------
+
+- fix firefox autocomplete feature/bug
+
+RELEASE 0.4
+-----------
+
+- add autocheck
+- fix session max lifetime for last roundcube
+
+RELEASE 0.3
+-----------
+
+- fix bug
+- optimize
+
+RELEASE 0.2
+-----------
+
+- add parameter for debug
+- add parameter for use cookie time instead of expire session
+- small optimization
+
+RELEASE 0.1
+-----------
+
+- move to github

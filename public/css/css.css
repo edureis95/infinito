@@ -1,0 +1,415 @@
+body {
+  background-color: #F5F8FA;
+}
+
+html, body, form, fieldset, table, tr, td, img{
+  font-size: 14px !important;
+  line-height: 20px !important;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+#scheduler_here {
+  line-height: 8px;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 18px;
+}
+::-webkit-scrollbar-thumb {
+    height: 6px;
+    border: 4px solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+    -webkit-border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+.no-border-nav {
+  border: 0px;
+  background-color: #F5F8FA;
+}
+
+a.no-border-nav:hover{
+  background-color: #DCDCDC;
+}
+
+.members .members_table img {
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+.members a {
+  text-decoration: none;
+}
+
+#sidebar {
+  height:100%;
+  position:fixed;
+  right:0;
+  background-color: #F5F8FA;
+  border-left-style: solid;
+  border-color: #DBE4E8;
+  border-width: 1px;
+}
+
+.fixed {
+  position: fixed;
+  width:17%;
+}
+
+.active p{
+  display: inline;
+  border-style: none;
+  border-radius: 30%/100%;
+  background-color: #DCDCDC;
+  padding-right: 10%;
+  padding-top: 5%;
+  padding-bottom: 5%;
+  line-height: 30px;
+}
+
+.link-nav {
+  font-size: 14px;
+}
+
+.link-nav a {
+  text-decoration: none;
+  color: black;
+}
+
+.link-nav a:hover {
+  color: #428BD3;
+}
+
+.link-nav .activeL span{
+  display: inline;
+  color: #428BD3;
+}
+
+/* Scheduler */
+.scheduler-container {
+  overflow-x: scroll;
+  margin-right: 5%;
+}
+
+/* Sidebar */
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+
+.sidebar-right {
+  display: none;
+}
+@media (min-width: 768px) {
+
+  .sidebar-right {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    right: 0;
+    display: block;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #F5F8FA;
+    z-index: 1;
+    width: 30px;
+    padding: 0;
+  }
+}
+
+/* Sidebar navigation */
+.nav-sidebar2 {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+  text-align: center;
+}
+.nav-sidebar2 > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+
+.nav-sidebar2 > li:hover {
+  background-color: #EEEEEE;
+}
+
+.nav-sidebar2 .chat-users {
+  margin-top: 10%;
+}
+
+.chatModal {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.chatModalBackImage {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.dropdown-form {
+  width: 500px !important;
+}
+
+.container {
+ 
+}
+
+.borderless > tbody > tr > td,
+.borderless > tbody > tr > th,
+.borderless > tfoot > tr > td,
+.borderless > tfoot > tr > th,
+.borderless > thead > tr > td,
+.borderless > thead > tr > th {
+    border: none;
+}
+
+.borderless {
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.buttonCursor {
+   cursor: pointer; 
+   cursor: hand; 
+}
+
+.buttonCursor.link:hover{
+  color: #428BD3;
+}
+
+.taskNotApproved {
+  background-color: red;
+  color: white;
+}
+
+.taskWaiting {
+  background-color: orange;
+}
+
+.taskApproved {
+  background-color: #ADFF2F;
+}
+
+.panelMenu {
+  height: 40px; 
+  margin: 0; 
+  padding: 0;
+}
+
+.secondPanelMenu {
+  height: 34px; 
+  margin: 0; 
+  padding: 0;
+}
+
+.panelMenu a {
+  margin-right: 3%;
+}
+
+.secondPanelMenu a{
+  margin-right: 3%;
+}
+
+.panelMenuTwoLines a {
+  margin-right: 3%;
+}
+
+.panelMenuTwoLines {
+  height: 69px; 
+  margin: 0; 
+  padding: 0;
+}
+
+@media (min-width:1025px) { 
+  .structure-panel {
+    zoom: 0.8; /* Other non-webkit browsers */
+    zoom: 80%; /* Webkit browsers */
+  }
+}
+
+.smallFontTable th{
+  font-size:11px;
+  padding: 1 !important;
+  background-color: #f6f6f6;
+  height: 36px !important;
+  vertical-align: middle !important;
+}
+
+.smallFontTable tbody tr td{
+  font-size:11px !important;
+  padding: 1 !important;
+  vertical-align: middle !important;
+}
+
+.smallForm label{
+  font-size: 12px !important;
+}
+
+.smallForm select{
+  font-size: 12px;
+  height: 30px;
+}
+
+.smallForm input {
+  font-size: 12px;
+  height: 30px;
+}
+
+.smallForm .form-group {
+  margin: 1;
+}
+
+.smallFontContainer {
+  font-size: 12px !important;
+  padding-left: 7px;
+  height: 30px !important;
+}
+
+.smallFont {
+  font-size: 12px !important;
+  padding-left: 8px;
+}
+
+
+
+
+
+/* navbar */
+.main-navbar {
+    background-color: #00203B !important;
+    border-color: #E7E7E7;
+}
+
+.main-navbar a{
+    color: white;
+}
+
+.sidebar a {
+    color: #42A8DF;
+}
+
+
+/* The Overlay (background) */
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 95%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    top: 50px;
+    right: 4%;
+    background-color: rgb(255,255,255); /* Black fallback color */
+    background-color: rgba(255,255,255, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.2s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 25%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    font-size: 40px;
+}
+
+/* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+@media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 16px;
+        right: 35px;
+    }
+}
+
+.openTaskLayer {
+  color: blue !important;
+}
+
+.openContactLayer {
+  color: blue !important;
+}
+
+.insideContainer {
+  width: calc(100%);
+}
+
+.smallPanelHeading {
+  height: 30px;
+  padding: 1px 10px;
+  padding-left: 22px;
+  background-color: #00203B !important;
+  color: white !important;
+}
+
+.smallPanelHeading button{
+  margin-top: -3px;
+}
+
+.secondNavMenu {
+  height: 34px;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.pinSidebar {
+  position: fixed;
+  top: 50px;
+  left: 120px;
+  display: none;
+  z-index: 1;
+}

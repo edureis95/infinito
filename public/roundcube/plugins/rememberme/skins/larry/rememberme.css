@@ -1,0 +1,23 @@
+#rememberme_container {
+        border: 0px;
+        text-align:center;
+}
+
+#rememberme_container div {
+        margin: 3px 0 0 0;
+        padding: 0;
+        line-height: 1.0em;
+}
+
+#rememberme_container label {
+        white-space: nowrap;
+        color: #cecece;
+        text-shadow: 0px 1px 1px black;
+        padding-right: 4px;
+}
+
+#rememberme_container input {
+        vertical-align: middle;
+        position: relative;
+        bottom: 1px;
+}

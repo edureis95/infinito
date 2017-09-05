@@ -1,0 +1,51 @@
+#myNav .panel:first-of-type {
+	margin-top: 34px; 
+	width: 97%; 
+	background: transparent;
+}
+
+#myNav .nameAndButtons {
+	background-color: transparent;
+}
+
+#myNav .nameAndButtons button {
+	padding: 3px 5px; 
+	margin-top: 24px;
+}
+
+#myNav table td {
+	padding: 2px !important;
+	font-size: 12px !important;
+	color: grey;
+	vertical-align: middle !important;
+}
+
+#myNav table td .overlayDetail {
+	color: black;
+	font-size: 14px;
+}
+
+
+#myNav table td .overlayFirstName, .descriptionTable td .overlayLastName {
+	font-weight: bold !important;
+	font-size: 15px !important;
+}
+
+#myNav input {
+	height: 30px;
+	font-size: 14px;
+	float:left;
+}
+
+#myNav select {
+	height: 20px;
+	font-size: 14px;
+	float: left;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+#myNav button {
+	margin-right: 2%;
+	font-size: 12px;
+}

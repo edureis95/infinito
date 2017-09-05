@@ -1,0 +1,2 @@
+[05-Sep-2017 14:39:06 +0000]: <ftb3rbea> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[05-Sep-2017 14:39:06 +0000]: <ftb3rbea> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 18

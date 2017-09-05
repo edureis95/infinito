@@ -1,0 +1,13 @@
+/* Non-responsive overrides
+ *
+ * Utilize the following CSS to disable the responsive-ness of the container,
+ * grid system, and navbar.
+ */
+
+/* Reset the container */
+.container {
+  width: 100%;
+  padding: 0;
+  max-width: none !important;
+}
+

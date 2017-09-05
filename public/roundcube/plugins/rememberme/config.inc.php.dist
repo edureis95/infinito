@@ -1,0 +1,19 @@
+<?php
+
+// time in minutes remembered session expired (similarly as session_lifetime in main config)
+// if session saved in memcache this paramemter limited of 43199 (30 days)
+$rcmail_config['rememberme_session_lifetime'] = 43199;
+
+// for debug
+$rcmail_config['rememberme_log'] = false;
+
+// set cookies to  now + lifetime instead of session
+$rcmail_config['rememberme_usetime'] = true;
+
+// set the rememberme checkbox as marked by default
+$rcmail_config['rememberme_autocheck'] = false;
+
+// set autocomplete always on
+$rcmail_config['rememberme_autocompletealwayson'] = false;
+
+?>

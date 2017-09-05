@@ -1,0 +1,324 @@
+
+
+====================================
+Log started, 05/09/2017 04:41:34
+====================================
+
+Done in 0.082406997680664s
+
+
+
+====================================
+Log started, 05/09/2017 04:41:55
+====================================
+
+Done in 0.08521294593811s
+
+
+
+====================================
+Log started, 05/09/2017 04:43:27
+====================================
+
+Done in 0.10081577301025s
+
+
+
+====================================
+Log started, 05/09/2017 04:44:49
+====================================
+
+Done in 0.086006879806519s
+
+
+
+====================================
+Log started, 05/09/2017 04:44:57
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-09-10 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_responsible => JO
+505_open => 1
+505_end_date => 2017-09-25 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-09-10 00:00:00
+duration => 360
+text => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+responsible => JO
+open => 1
+end_date => 2017-09-25 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.037945985794067s
+
+
+
+====================================
+Log started, 05/09/2017 04:46:04
+====================================
+
+Done in 0.098921060562134s
+
+
+
+====================================
+Log started, 05/09/2017 04:46:12
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-09-19 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_responsible => JO
+505_open => 1
+505_end_date => 2017-10-04 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-09-19 00:00:00
+duration => 360
+text => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+responsible => JO
+open => 1
+end_date => 2017-10-04 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.040309190750122s
+
+
+
+====================================
+Log started, 05/09/2017 04:46:46
+====================================
+
+Done in 0.092840909957886s
+
+
+
+====================================
+Log started, 05/09/2017 04:46:53
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-09-07 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_responsible => JO
+505_open => 1
+505_end_date => 2017-09-22 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-09-07 00:00:00
+duration => 360
+text => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+responsible => JO
+open => 1
+end_date => 2017-09-22 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.042407035827637s
+
+
+
+====================================
+Log started, 05/09/2017 04:47:14
+====================================
+
+Done in 0.084115982055664s
+
+
+
+====================================
+Log started, 05/09/2017 04:47:22
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-09-08 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_responsible => JO
+505_open => 1
+505_end_date => 2017-09-23 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-09-08 00:00:00
+duration => 360
+text => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+responsible => JO
+open => 1
+end_date => 2017-09-23 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.041980028152466s
+
+
+
+====================================
+Log started, 05/09/2017 04:48:01
+====================================
+
+Done in 0.068814039230347s
+
+
+
+====================================
+Log started, 05/09/2017 04:48:07
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-09-09 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_u_sigla => JO
+505_open => 1
+505_end_date => 2017-09-24 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-09-09 00:00:00
+duration => 360
+t_name => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+u_sigla => JO
+open => 1
+end_date => 2017-09-24 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.042355060577393s
+
+
+
+====================================
+Log started, 05/09/2017 04:48:12
+====================================
+
+DataProcessor object initialized
+505_id => 505
+505_start_date => 2017-08-26 00:00:00
+505_duration => 360
+505_text => Projecto de Licenciamento
+505_progress => 0
+505_parent => 522
+505_type => 0
+505_number => 0
+505_milestone => 0
+505_u_sigla => JO
+505_open => 1
+505_end_date => 2017-09-10 00:00:00
+505_!nativeeditor_status => updated
+ids => 505
+
+Row data [505]
+id => 505
+start_date => 2017-08-26 00:00:00
+duration => 360
+t_name => Projecto de Licenciamento
+progress => 0
+parent => 522
+type => 0
+number => 0
+milestone => 0
+u_sigla => JO
+open => 1
+end_date => 2017-09-10 00:00:00
+!nativeeditor_status => updated
+
+Edit operation finished
+0 => action:updated; sid:505; tid:505;
+
+Done in 0.04299783706665s
+
+
+
+====================================
+Log started, 05/09/2017 04:48:14
+====================================
+
+Done in 0.083625078201294s
+
