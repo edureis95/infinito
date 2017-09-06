@@ -2,11 +2,11 @@
 
 @section('content')
 
-<div class="col-xs-12" style="max-width: 98%;">
+<div class="col-xs-12 insideContainer">
 	@include('layouts.personal_nav')
 	@include('layouts.personal_approval_nav')
 	<div class="panel panel-default borderless">
-		<div class="panel-body" style="padding-left: 0;">
+		<div class="panel-body">
 			<button class="dropdown-toggle saveApproval btn btn-success" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px; margin-left: 85%;">
 					<span style="font-size: 12px;">Aprovar</span>
 			</button>
@@ -59,32 +59,29 @@
 
 			<table class="table approvalTable smallFontTable">
 				<thead>
+					<th class="text-center"><input type="checkbox" class="overallCheckbox"></th>
 					<th class="text-center">Início</th>
 					<th class="text-center">Fim<br>Horas</th>
 					<th class="text-center">Co</th>
 					<th class="text-center">Departamento</th>
 					<th class="text-center">Motivo</th>
-					<th class="text-center" style="width: 50%;">Descrição</th>	
-					<th class="text-center">Aprovar</th>
-					<th class="text-center">Rejeitar</th>
+					<th class="text-center" style="width: 50%;">Descrição</th>
 				</thead>
 				<tbody class="text-center">
 				@foreach($absences as $absence)
 					<tr>
+						<td><input content="{{$absence->a_id}}" class="approvalCheckbox" type="checkbox"></td>
 						<td>{{$absence->start_date}}</td>
 						<td>{{$absence->end_date}}</td>
 						<td>{{$absence->u_sigla}}</td>
 						<td>Departamento</td>
 						<td>{{$absence->a_name}}</td>
 						<td class="text-left">{{$absence->text}}</td>
-						<td class="taskNotApproved"><input content="{{$absence->a_id}}" class="approvalCheckbox" type="checkbox"></td>
-						<td class="taskNotApproved"><input content="{{$absence->a_id}}" class="rejectCheckbox" type="checkbox"></td>
 					</tr>
 				@endforeach
 				</tbody>
 			</table>
 			</div>
-			<button type="button" class="btn btn-success" id="saveApproval">Guardar</button>
 			<span class="savedBox hidden" style="color: green;"><i class="glyphicon glyphicon-check"></i> As permissões foram guardadas</span>
 		</div>
 	</div>
@@ -96,8 +93,20 @@ $('.dropdown-form select').click(function(e) {
 	e.stopPropagation();
 });
 
+$('.overallCheckbox').change(function() {
+	if($(this).is(':checked')) {
+		$('.approvalCheckbox').each(function() {
+			$(this).prop('checked', true);
+		})
+	} else {
+		$('.approvalCheckbox').each(function() {
+			$(this).prop('checked', false);
+		})
+	}
+})
+
 $('.approvalTable').on('change', '.approvalCheckbox', function() {
-	if($(this).is(":checked")) {
+	/*if($(this).is(":checked")) {
 		$(this).parent().addClass('taskApproved');
 		$(this).parent().removeClass('taskNotApproved');
 		var id = $(this).attr('content');
@@ -112,10 +121,10 @@ $('.approvalTable').on('change', '.approvalCheckbox', function() {
 		$('.rejectCheckbox[content="' + id +'"]').parent().removeClass('taskApproved');
 		$('.rejectCheckbox[content="' + id +'"]').parent().addClass('taskNotApproved');
 		$('.rejectCheckbox[content="' + id +'"]').prop('checked', false);
-	}
+	}*/
 });
 
-$('.approvalTable').on('change', '.rejectCheckbox', function() {
+/*$('.approvalTable').on('change', '.rejectCheckbox', function() {
 	if($(this).is(":checked")) {
 		$(this).parent().addClass('taskNotApproved');
 		$(this).parent().removeClass('taskApproved');
@@ -130,8 +139,29 @@ $('.approvalTable').on('change', '.rejectCheckbox', function() {
 		$(this).parent().removeClass('taskApproved');
 		$('.approvalCheckbox[content="' + id +'"]').prop('checked', false);
 	}
+});*/
+$('.saveApproval').click(function() {
+	var obj = {};
+	var ids = [];
+	$('.approvalTable .approvalCheckbox').each(function() {
+		obj[$(this).attr('content')] = $(this).is(":checked");
+		ids.push($(this).attr('content'));
+	});
+	obj['ids'] = ids;
+	console.log(obj);
+	$.ajax({
+	  type: "POST",
+	  url: '/management/absenceApproval/saveApproval',
+	  data: {
+	  	'obj' : obj
+	  },
+	  success: function(response) {
+	  	location.reload();
+	  }
+	});
 });
-$('#saveApproval').click(function() {
+
+$('.saveReject').click(function() {
 	var obj = {};
 	var ids = [];
 	$('.approvalTable .approvalCheckbox').each(function() {
@@ -140,23 +170,14 @@ $('#saveApproval').click(function() {
 	});
 	obj['ids'] = ids;
 
-	var rejected = {};
-	var rejectedids = [];
-	$('.approvalTable .rejectCheckbox').each(function() {
-		rejected[$(this).attr('content')] = $(this).is(":checked");
-		rejectedids.push($(this).attr('content'));
-	});
-	rejected['ids'] = rejectedids;
-
 	$.ajax({
 	  type: "POST",
-	  url: '/management/absenceApproval/saveApproval',
+	  url: '/management/absenceApproval/saveReject',
 	  data: {
-	  	'obj' : obj,
-	  	'rejected' : rejected
+	  	'obj' : obj
 	  },
-	  success: function(response) {
-	  	$('.savedBox').removeClass('hidden');
+	  success: function() {
+	  	location.reload();
 	  }
 	});
 });
@@ -197,33 +218,33 @@ function refreshFilter() {
           	for(var i = 0; i < response.length; i++) {
           		if(response[i].a_ap == 0) {
           			$('.approvalTable tbody').append('<tr>' +
+          											'<td class=""><input content="'+ response[i].a_id +'"class="approvalCheckbox" type="checkbox"></td>' +
 													'<td> ' + response[i].start_date + '</td>' +
 													'<td>'+ response[i].end_date + '</td>' +
 													'<td>'+ response[i].u_sigla + '</td>' +
+													'<td>'+ response[i].u_sigla + '</td>' +
 													'<td>'+ response[i].a_name +'</td>' +
 													'<td class="text-left">'+ response[i].text +'</td>' +
-													'<td class="taskNotApproved"><input content="'+ response[i].a_id +'"class="approvalCheckbox" type="checkbox"></td>' +
-													'<td class="taskNotApproved"><input content="'+ response[i].a_id +'"class="rejectCheckbox" type="checkbox"></td>' +
 												'</tr>');
           		} else if(response[i].a_ap > 0){
           			$('.approvalTable tbody').append('<tr>' +
+													'<td class="taskApproved"><input content="'+ response[i].a_id +'"class="approvalCheckbox" type="checkbox"></td>' +
 													'<td> ' + response[i].start_date + '</td>' +
 													'<td>'+ response[i].end_date + '</td>' +
 													'<td>'+ response[i].u_sigla + '</td>' +
+													'<td>'+ response[i].u_sigla + '</td>' +
 													'<td>'+ response[i].a_name +'</td>' +
 													'<td class="text-left">'+ response[i].text +'</td>' +
-													'<td class="taskApproved"><input content="'+ response[i].a_id +'"class="approvalCheckbox" checked type="checkbox"></td>' +
-													'<td class="taskApproved"><input content="'+ response[i].a_id +'"class="rejectCheckbox" type="checkbox"></td>' +
 												'</tr>');
           		} else {
           			$('.approvalTable tbody').append('<tr>' +
+													'<td class="taskNotApproved"><input content="'+ response[i].a_id +'"class="approvalCheckbox" type="checkbox"></td>' +
 													'<td> ' + response[i].start_date + '</td>' +
 													'<td>'+ response[i].end_date + '</td>' +
 													'<td>'+ response[i].u_sigla + '</td>' +
+													'<td>'+ response[i].u_sigla + '</td>' +
 													'<td>'+ response[i].a_name +'</td>' +
 													'<td class="text-left">'+ response[i].text +'</td>' +
-													'<td class="taskNotApproved"><input content="'+ response[i].a_id +'"class="approvalCheckbox" type="checkbox"></td>' +
-													'<td class="taskNotApproved"><input content="'+ response[i].a_id +'"class="rejectCheckbox" checked type="checkbox"></td>' +
 												'</tr>');
           		}
           		

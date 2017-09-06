@@ -274,7 +274,7 @@
                 @endif
                 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle"  href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
@@ -332,7 +332,11 @@
 
                         @foreach($tasksPercentage as $task)
                         <li>
+                            @if($task->taskType == 'commercial')
+                            <a href="/commercialProject/planningTasks/{{$task->p_id}}">
+                            @else
                             <a href="/project/gantt/{{$task->p_id}}">
+                            @endif
                                 <div>
                                     <span style="line-height: 20px; font-size: 12px;">
                                         <strong>

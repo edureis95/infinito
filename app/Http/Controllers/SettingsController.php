@@ -544,13 +544,29 @@ class SettingsController extends Controller
     }
 
     public function getProjectUserFunction() {
-        $functions = \App\Project_User_Function::all();
+        $functions = \App\Project_User_Function::orderBy('code')->get();
 
         return view('projectUserFunctionSettings', array('activeL' => 'projects', 'activeLL' => 'tipoFunção', 'functions' => $functions));
     }
 
     public function addProjectUserFunction(Request $r) {
         $function = new \App\Project_User_Function();
+        $function->code = $r['code'];
+        $function->sigla = $r['sigla'];
+        $function->name = $r['name'];
+        $function->save();
+
+        return redirect()->back();
+    }
+
+    public function getProjectGeneralUserFunction() {
+        $functions = \App\Project_General_User_Function::all();
+
+        return view('projectGeneralUserFunctionSettings', array('activeL' => 'projects', 'activeLL' => 'funçãoGeral', 'functions' => $functions));
+    }
+
+    public function addProjectGeneralUserFunction(Request $r) {
+        $function = new \App\Project_General_User_Function();
         $function->code = $r['code'];
         $function->sigla = $r['sigla'];
         $function->name = $r['name'];

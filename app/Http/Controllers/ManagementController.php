@@ -80,6 +80,7 @@ class ManagementController extends Controller
     							->leftjoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
     							->join('users', 'task_timer.user_id', '=', 'users.id')
     							->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'users.sigla as u_sigla', 'task_timer.id as t_id', 'task_timer.done as done', 'task_timer.date as t_date')
+                                ->orderBy('task_timer.date', 'desc')
     							->get();
 
     	foreach($tasks as $task) {
@@ -104,8 +105,8 @@ class ManagementController extends Controller
                     $task->userToApprove = $userToApprove;
                 $task->save();
             } else {
-                $task->approved = 0;
-                $task->save();
+                /*$task->approved = 0;
+                $task->save();*/
             }
     	}
     }
@@ -117,8 +118,8 @@ class ManagementController extends Controller
                 $task->approved = -1;
                 $task->save();
             } else {
-                $task->approved = 0;
-                $task->save();
+                /*$task->approved = 0;
+                $task->save();*/
             }
         }
     }
@@ -164,6 +165,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
             } else {
                 $tasks = \App\TaskTimer::where('user_id', $userComparison, $r['user'])
@@ -180,6 +182,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
             }
     		
@@ -198,6 +201,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
             }else {
                 $tasks = \App\TaskTimer::where('user_id', $userComparison, $r['user'])
@@ -214,6 +218,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
             }
         } else if($r['endDateFilter'] != "") {
@@ -231,6 +236,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
         } else {
 
@@ -246,6 +252,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
 
             } else {
@@ -262,6 +269,7 @@ class ManagementController extends Controller
                                 ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
                                 ->join('users', 'task_timer.user_id', '=', 'users.id')
                                 ->select('task_timer.task_name as t_name', 'task_timer.hours as t_hours', 'task_timer.minutes as t_min', 'task_timer.created_at as t_created_at', 'project.number as p_number', 'project.name as p_name', 'phases.sigla as ph_sigla', 'expertise.sigla as e_sigla', 'users.name as u_name', 'task_timer.id as t_id', 'task_timer.approved as t_ap', 'users.sigla as u_sigla', 'task_timer.date as t_date', 'task_timer.done as done')
+                                ->orderBy('task_timer.date', 'desc')
                                 ->get();
             }
     	}
@@ -288,6 +296,7 @@ class ManagementController extends Controller
                                        ->where('scheduler_events.type', 7)
                                        ->join('absence_reasons', 'absence_reasons.id', '=', 'scheduler_events.absence_type')
                                        ->select('users.name as u_name', 'users.sigla as u_sigla', 'absence_reasons.name as a_name', 'start_date', 'end_date', 'event_name as text', 'scheduler_events.event_id as a_id', 'approved as a_ap')
+                                       ->orderBy('start_date', 'desc')
                                        ->get();
 
         foreach($absences as $absence) {
@@ -334,6 +343,7 @@ class ManagementController extends Controller
                                 ->join('users', 'users.id', '=', 'scheduler_events.user_id')
                                 ->join('absence_reasons', 'absence_reasons.id', '=', 'scheduler_events.absence_type')
                                 ->select('users.sigla as u_sigla', 'absence_reasons.name as a_name', 'scheduler_events.start_date as start_date', 'scheduler_events.end_date as end_date', 'scheduler_events.event_name as text', 'scheduler_events.event_id as a_id', 'scheduler_events.approved as a_ap')
+                                ->orderBy('start_date', 'desc')
                                 ->get();
         } else if($r['startDateFilter'] != "") {
             $absences = \App\SchedulerEvent::where('user_id', $userComparison, $r['user'])
@@ -346,6 +356,7 @@ class ManagementController extends Controller
                                 ->join('users', 'users.id', '=', 'scheduler_events.user_id')
                                 ->join('absence_reasons', 'absence_reasons.id', '=', 'scheduler_events.absence_type')
                                 ->select('users.sigla as u_sigla', 'absence_reasons.name as a_name', 'scheduler_events.start_date as start_date', 'scheduler_events.end_date as end_date', 'scheduler_events.event_name as text', 'scheduler_events.event_id as a_id', 'scheduler_events.approved as a_ap')
+                                ->orderBy('start_date', 'desc')
                                 ->get();
         } else if($r['endDateFilter'] != "") {
             $absences = \App\SchedulerEvent::where('user_id', $userComparison, $r['user'])
@@ -358,6 +369,7 @@ class ManagementController extends Controller
                                 ->join('users', 'users.id', '=', 'scheduler_events.user_id')
                                 ->join('absence_reasons', 'absence_reasons.id', '=', 'scheduler_events.absence_type')
                                 ->select('users.sigla as u_sigla', 'absence_reasons.name as a_name', 'scheduler_events.start_date as start_date', 'scheduler_events.end_date as end_date', 'scheduler_events.event_name as text', 'scheduler_events.event_id as a_id', 'scheduler_events.approved as a_ap')
+                                ->orderBy('start_date', 'desc')
                                 ->get();
         } else {
 
@@ -370,6 +382,7 @@ class ManagementController extends Controller
                                 ->join('users', 'users.id', '=', 'scheduler_events.user_id')
                                 ->join('absence_reasons', 'absence_reasons.id', '=', 'scheduler_events.absence_type')
                                 ->select('users.sigla as u_sigla', 'absence_reasons.name as a_name', 'scheduler_events.start_date as start_date', 'scheduler_events.end_date as end_date', 'scheduler_events.event_name as text', 'scheduler_events.event_id as a_id', 'scheduler_events.approved as a_ap')
+                                ->orderBy('start_date', 'desc')
                                 ->get();
 
          
@@ -401,18 +414,29 @@ class ManagementController extends Controller
         foreach($absences as $absence) {
             if($r['obj'][$absence->event_id] == "true")
                 $absence->approved = 1;
-            else
-                $absence->approved = 0;
+           
             $absence->save();
         }
 
-        $absences = \App\SchedulerEvent::whereIn('event_id', $r['rejected']['ids'])->get();
+        /*$absences = \App\SchedulerEvent::whereIn('event_id', $r['rejected']['ids'])->get();
 
         foreach($absences as $absence) {
             if($r['rejected'][$absence->event_id] == "true")
                 $absence->approved = -1;
             else
                 $absence->approved = 0;
+            $absence->save();
+        }*/
+    }
+
+    public function saveAbsenceReject(Request $r) {
+
+        $absences = \App\SchedulerEvent::whereIn('event_id', $r['obj']['ids'])->get();
+
+        foreach($absences as $absence) {
+            if($r['obj'][$absence->event_id] == "true")
+                $absence->approved = -1;
+           
             $absence->save();
         }
     }
@@ -822,7 +846,7 @@ class ManagementController extends Controller
         $phases = \App\Phase::all();
         $expertise = \App\Expertise::where('parent', '=', 0)->get();
         $subExpertise = \App\Expertise::where('parent', '!=', 0)->get();
-        $iva = \App\iva::orderBy('percentage')->get();
+        $iva = \App\Iva::orderBy('percentage')->get();
         $hourlyRate = \App\Commercial_Hourly_Rate::orderBy('value')->get();
 
 
@@ -887,6 +911,262 @@ class ManagementController extends Controller
                 }
             }
         }
+    }
+
+    public function getCommercialProjectPlannedTasks($id) {
+        $project = \App\Commercial_Project::find($id);
+        $phases = \App\Commercial_Project_Phase::where('commercial_project_id', $id)->get();
+        $expertise = \App\Commercial_Project_Expertise::where('commercial_project_id', $id)->get();
+        $planningTypes = \App\Planning_Type::all();
+        $project_planning = \App\Commercial_Planned_Task::where('project_id', $id)
+                                                 ->join('expertise', 'expertise.id', '=', 'commercial_planned_tasks.expertise')
+                                                 ->join('phases', 'phases.id', '=', 'commercial_planned_tasks.phase')
+                                                 ->join('planning_types', 'planning_types.id', '=', 'commercial_planned_tasks.type')
+                                                 ->select('expertise.name as e_name', 'phases.name as ph_name', 'planning_types.name as pl_name', 'startDate')
+                                                 ->get();
+
+        foreach($phases as $phase) {
+            $tempPhase = \App\Phase::find($phase->phase_id);
+            $phase->name = $tempPhase->name;
+        }
+
+        foreach($expertise as $expert) {
+            $tempExpert = \App\Expertise::find($expert->expertise_id);
+            $expert->name = $tempExpert->name;
+        }
+
+        return view('commercial_project_planned_tasks', array('project' => $project, 'phases' => $phases, 'expertise' => $expertise, 'activeL' => 'informação', 'activeLL' => 'planeado', 'planningTypes' => $planningTypes, 'project_planning' => $project_planning));
+    }
+
+    public function addCommercialProjectPlannedTask(Request $r, $id) {
+
+        $plannedTasks = new \App\Commercial_Planned_Task();
+        $plannedTasks->project_id = $id;
+        $plannedTasks->type = $r['type'];
+        $plannedTasks->phase = $r['phase'];
+        $plannedTasks->expertise = $r['expertise'];
+        $plannedTasks->startDate = $r['startDate'];
+        $plannedTasks->milestone = 1;
+        $plannedTasks->save();
+
+        return redirect()->back();
+    }
+
+    public function getCommercialProjectPlanningTasks($id) {
+        $project = \App\Commercial_Project::find($id);
+
+        $tasks = \App\Commercial_Task::where('project_id', $id)
+                          ->join('users', 'users.id', '=', 'commercial_tasks.user_id')
+                          ->leftJoin('expertise', 'expertise_id', '=', 'expertise.id')
+                          ->leftJoin('phases', 'phase_id', '=', 'phases.id')
+                          ->join('project_event_types', 'commercial_tasks.type', 'project_event_types.id')
+                          ->select('expertise.sigla as e_sigla', 'phases.sigla as p_sigla', 'commercial_tasks.name as t_name', 'commercial_tasks.id as t_id', 'start_date as start_date', 'end_date as end_date', 'users.sigla as u_sigla', 'subExpertise_id as subExpertise_id', 'project_event_types.sigla as ev_sigla', 'commercial_tasks.notes as notes')
+                          ->get();
+
+        foreach ($tasks as $task) {
+            $subExpertise = \App\Expertise::find($task->subExpertise_id);
+            if($subExpertise != null)
+                $task->subExpertiseName = $subExpertise->name;
+            else
+                $task->subExpertiseName = '-';
+
+            $task_timer = \App\Commercial_Executed_Task::where('plannedTask_id', $task->t_id)
+                                        ->orderBy('id', 'desc')
+                                        ->first();
+
+            if($task_timer == null)
+                $task->state = 0;
+            else {
+                $task->state = $task_timer->done;
+            }
+
+            if($task->subExpertise_id > 0)
+                $task->se_sigla = \App\Expertise::find($task->subExpertise_id)->sigla;
+
+            $date1 = new DateTime($task->start_date);
+            $task->start_date = $date1->format('d-m-y');
+            $date1 = new DateTime($task->end_date);
+            $task->end_date = $date1->format('d-m-y');
+        }
+
+        $tasks = $tasks->sortByDesc(function($task, $key) {
+            if($task['state'] != 100)
+                return $task['state'];
+            else
+                return -1;
+        });               
+
+        $expertise = \App\Commercial_Project_Expertise::where('commercial_project_id', $id)
+                                           ->where('parent', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'commercial_project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'commercial_project_expertise.id as proj_e_id')
+                                           ->get();
+        $subExpertise = \App\Commercial_Project_Expertise::where('commercial_project_id', $id)
+                                           ->where('parent', '!=', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'commercial_project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'parent as parent', 'commercial_project_expertise.id as proj_e_id')
+                                           ->get();
+
+        $phases = \App\Commercial_Project_Phase::where('commercial_project_id', $id)
+                                    ->join('phases', 'phases.id', '=', 'commercial_project_phase.phase_id')
+                                    ->select('phase_id as id', 'phases.name as name')
+                                    ->get();
+
+        $eventTypes = \App\Project_Event_Type::all();
+
+        return view('commercialProjectTasks', array('tasks' => $tasks, 'activeL' => 'informação', 'activeLL' => 'planeamento', 'project' => $project, 'phases' => $phases, 'expertise' => $expertise, 'subExpertise' => $subExpertise, 'eventTypes' => $eventTypes));
+    }
+
+    public function addCommercialProjectPlanningTask(Request $r, $id) {
+
+        $projectTask = new \App\Commercial_Task();
+        $projectTask->project_id = $id;
+        if($r['phase'] != 0)
+            $projectTask->phase_id = $r['phase'];
+        if($r['expertise'] != 0)
+            $projectTask->expertise_id = $r['expertise'];
+        if($r['subExpertise'] != 0)
+            $projectTask->subExpertise_id = $r['subExpertise'];
+        
+        $projectTask->name = $r['name'];
+        $projectTask->start_date = $r['start_date'];
+        $projectTask->end_date = $r['end_date'];
+        $projectTask->user_id = $r['user'];
+        $projectTask->type = $r['type'];
+        $projectTask->notes = $r['notes'];
+
+        $projectTask->save();
+
+        return redirect()->back();
+    }
+
+    public function getCommercialProjectExecutedTasks($id) {
+        $project = \App\Commercial_Project::find($id);
+        $states = \App\State_Type::all();
+        $executedTasks = \App\Commercial_Executed_Task::where('project_id', $id)
+                          ->join('users', 'users.id', '=', 'commercial_executed_tasks.user_id')
+                          ->leftJoin('expertise', 'expertise_id', '=', 'expertise.id')
+                          ->leftJoin('phases', 'phase_id', '=', 'phases.id')
+                          ->leftJoin('state_types', 'commercial_executed_tasks.subType', 'state_types.id')
+                          ->join('project_event_types', 'commercial_executed_tasks.type', 'project_event_types.id')
+                          ->select('expertise.sigla as e_sigla', 'phases.sigla as p_sigla', 'commercial_executed_tasks.name as t_name', 'commercial_executed_tasks.id as t_id', 'start_date as start_date', 'users.sigla as u_sigla', 'subExpertise_id as subExpertise_id', 'project_event_types.sigla as ev_type', 'notes as notes', 'done as state', 'commercial_executed_tasks.hours as hours', 'commercial_executed_tasks.minutes as minutes', 'plannedTask_id')
+                          ->orderBy('start_date', 'desc')
+                          ->orderBy('t_id', 'desc')
+                          ->get();
+
+
+        /*$executedTasks = \App\TaskTimer::where('task_timer.project_id', $id)
+                                       ->join('users', 'users.id', '=', 'task_timer.user_id')
+                                       ->leftJoin('expertise', 'task_timer.expertise_id', '=', 'expertise.id')
+                                       ->leftJoin('phases', 'task_timer.phase_id', '=', 'phases.id')    
+                                       ->select('expertise.sigla as e_sigla', 'phases.sigla as p_sigla', 'task_timer.task_name as t_name', 'task_timer.id as t_id', 'date as start_date', 'users.sigla as u_sigla', 'task_timer.subExpertise_id as subExpertise_id', DB::raw("'TF' AS ev_sigla"), 'task_timer.notes as notes', 'task_timer.done as state', 'task_timer.hours as hours', 'task_timer.minutes as minutes', 'task_timer.programmedTask_id as programmedTask_id')
+                                       ->union($tasks)
+                                       ->orderBy('start_date', 'desc')
+                                       ->orderBy('t_id', 'desc')
+                                       ->get();*/
+
+        foreach($executedTasks as $task) {
+
+            if($task->subType == null)
+                $task->subType = '-';
+            if($task->subExpertise_id > 0)
+                $task->se_sigla = \App\Expertise::find($task->subExpertise_id)->sigla;
+            else
+                $task->se_sigla = '-';
+
+            $date1 = new DateTime($task->start_date);
+            $task->start_date = $date1->format('d-m-y');
+
+            if(is_numeric($task->state)) {
+                if($task->plannedTask_id != null) {
+                    $task_temp = \App\Commercial_Executed_Task::where('plannedTask_id', $task->plannedTask_id)->orderBy('id', 'desc')->first();
+                    if($task->t_id == $task_temp->id) {
+                        $task->outdated = 0;
+                    } else
+                        $task->outdated = 1;
+                }
+            }
+        }
+
+        $expertise = \App\Commercial_Project_Expertise::where('commercial_project_id', $id)
+                                           ->where('parent', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'commercial_project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'commercial_project_expertise.id as proj_e_id')
+                                           ->get();
+        $subExpertise = \App\Commercial_Project_Expertise::where('commercial_project_id', $id)
+                                           ->where('parent', '!=', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'commercial_project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'parent as parent')
+                                           ->get();
+
+        $phases = \App\Commercial_Project_Phase::where('commercial_project_id', $id)
+                                    ->join('phases', 'phases.id', '=', 'commercial_project_phase.phase_id')
+                                    ->select('phase_id as id', 'phases.name as name')
+                                    ->get();
+
+        $eventTypes = \App\Project_Event_Type::all();
+
+        $plannedEvents = \App\Commercial_Task::where('project_id', $id)->orderBy('start_date', 'desc')->get();
+
+        $plannedTasks = \App\Commercial_Task::where('project_id', $id)->where('type', 6)->get();
+        foreach($plannedTasks as $key => $task) {
+            $task = \App\Commercial_Executed_Task::where('plannedTask_id', $task->id)
+                                        ->where('done', 100)
+                                        ->first();
+            if($task != null) {
+                $plannedTasks->forget($key);
+            }
+        }
+
+        $plannedTasks = $plannedTasks->values();
+
+        return view('commercial_executed_tasks', array('activeL' => 'informação', 'activeLL' => 'executado', 'project' => $project, 'phases' => $phases, 'expertise' => $expertise, 'subExpertise' => $subExpertise, 'eventTypes' => $eventTypes, 'plannedTasks' => $plannedTasks, 'executedTasks' => $executedTasks, 'states' => $states, 'plannedEvents' => $plannedEvents));
+
+    }
+
+    public function addCommercialProjectExecutedTask(Request $r, $id) {
+        $task = new \App\Commercial_Executed_Task();
+        $task->project_id = $id;
+        $task->user_id = $r['user'];
+        if($r['type'] == 6) {
+            $taskTemp = \App\Commercial_Task::find($r['task']);
+            $task->expertise_id = $taskTemp->expertise_id;
+            $task->subExpertise_id = $taskTemp->subExpertise_id;
+            $task->phase_id = $taskTemp->phase_id;
+            $task->name = $taskTemp->name;
+            $task->minutes = $r['minutes'];
+            $task->hours = $r['hours'];
+            $task->start_date = $r['start_date'];
+            $task->done = $r['statePercentage'];
+            $task->plannedTask_id = $taskTemp->id;
+            $task->type = $r['type'];
+            $task->notes = $r['notes'];
+
+            $task->save();
+        } else if($r['type'] == 1) {
+            $task->name = \App\State_Type::find($r['state'])->name;
+            $task->subType = $r['state'];
+            $task->start_date = $r['start_date'];
+            $task->hours = $r['hours'];
+            $task->minutes = $r['minutes'];
+            $task->notes = $r['notes'];
+            $task->type = $r['type'];
+
+            $task->save();
+        } else {
+            $plannedTask = \App\Commercial_Task::find($r['name']);
+            $task->plannedTask_id = $plannedTask->id;
+            $task->name = $plannedTask->name;
+            $task->start_date = $r['start_date'];
+            $task->hours = $r['hours'];
+            $task->minutes = $r['minutes'];
+            $task->notes = $r['notes'];
+            $task->type = $r['type'];
+
+            $task->save();
+        }
+
+        return redirect()->back();
     }
 
 }

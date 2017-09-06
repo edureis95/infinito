@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-xs-12" style="max-width: 98%;">
+<div class="col-xs-12 insideContainer">
 	@include('layouts.personal_nav')
 	@include('layouts.personal_approval_nav')
 	<div class="panel panel-default borderless">
@@ -324,7 +324,7 @@ function refreshFilter() {
           			else
           				conclusionLine = '<td style="background-color: #39B1F0; color: white";>' + conclusion + '</td>';
           			$('.approvalTable tbody').append('<tr class="text-center">' +
-          											'<td class="taskApproved"><input checked content="'+ response[i].t_id +'"class="approvalCheckbox" type="checkbox"></td>' +
+          											'<td class="taskApproved"><input content="'+ response[i].t_id +'"class="approvalCheckbox" type="checkbox"></td>' +
 													'<td> ' + response[i].date + '</td>' +
 													'<td>'+ response[i].u_sigla + '</td>' +
 													'<td>' + '</td>' +
@@ -335,7 +335,7 @@ function refreshFilter() {
 													'<td>'+ ("0" + response[i].t_hours).slice(-2) +':'+ ("0" + response[i].t_min).slice(-2) +'</td>' +
 													conclusionLine +
 												'</tr>');
-          		} /*else {
+          		} else {
           			var conclusion = response[i].done;
           			var conclusionLine = null;
           			if(conclusion < 25) {
@@ -358,7 +358,7 @@ function refreshFilter() {
 													'<td>'+ ("0" + response[i].t_hours).slice(-2) +':'+ ("0" + response[i].t_min).slice(-2) +'</td>' +
 													conclusionLine +
 												'</tr>');
-          		}*/
+          		}
           		
           	}
           }

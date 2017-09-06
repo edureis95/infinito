@@ -36,7 +36,7 @@
 					</tr>
 					@foreach($functions as $function)
 					<tr>
-						<td>{{$function->code}}</td>
+						<td>{{str_pad($function->code, 3, '0', STR_PAD_LEFT)}}</td>
 						<td>{{$function->sigla}}</td>
 						<td class="text-left">{{$function->name}}</td>
 					</tr>

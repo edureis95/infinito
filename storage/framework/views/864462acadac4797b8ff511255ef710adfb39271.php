@@ -1048,7 +1048,7 @@
 			gantt.attachEvent("onGanttRender", function(){
 			    var timeout = setTimeout(function(){
 					gantt.showDate(new Date());
-				}, 100);
+				}, 200);
 			});
 
 			var func = function(e) {

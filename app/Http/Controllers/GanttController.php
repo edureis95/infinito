@@ -21,16 +21,20 @@ class GanttController extends Controller
                           ->join('users', 'users.id', '=', 'tasks.user_id')
                           ->select('gantt_tasks.*', 'tasks.name as t_name', 'users.sigla as u_sigla');
 
-        $executedTasks = GanttTask::where('gantt_tasks.type', 3)
-                          ->join('task_timer', 'task_timer.ganttTask_id', '=', 'gantt_tasks.id')
-                          ->join('users', 'users.id', '=', 'task_timer.user_id')
-                          ->select('gantt_tasks.*', 'task_timer.task_name', 'users.sigla as u_sigla');
+        $taskTimerTasks = \App\TaskTimer::join('gantt_tasks', 'task_timer.ganttTask_id', '=', 'gantt_tasks.id') 
+                                       ->join('users', 'users.id', '=', 'task_timer.user_id')
+                                       ->select('gantt_tasks.*', 'task_timer.task_name', 'users.sigla as u_sigla');
+
+        $executedTasks = \App\Executed_Task::join('gantt_tasks', 'executed_tasks.ganttTask_id', '=', 'gantt_tasks.id') 
+                                           ->join('users', 'users.id', '=', 'executed_tasks.user_id')
+                                           ->select('gantt_tasks.*', 'executed_tasks.name', 'users.sigla as u_sigla');
 
         $connector->render_table(GanttTask::where('progress', '<', 1)
                                           ->where('type', '!=', 0)
                                           ->where('type', '!=', 3)
                                           ->select('gantt_tasks.*', 'gantt_tasks.text as t_name', 'gantt_tasks.responsible as u_sigla')
                                           ->union($tasks)
+                                          ->union($taskTimerTasks)
                                           ->union($executedTasks)
                                             ,"id","start_date,duration, t_name,progress,parent,type,number,milestone, u_sigla", "end_date");
     }

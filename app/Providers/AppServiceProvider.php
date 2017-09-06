@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
-
+use DB;
 
 class LaravelLoggerProxy {
         public function log( $msg ) {
@@ -102,17 +102,29 @@ class AppServiceProvider extends ServiceProvider
                   }
                 }
 
+                $commercialTasks = \App\Commercial_Task::join('commercial_projects', 'commercial_projects.id', '=', 'commercial_tasks.project_id')
+                                            ->leftJoin('phases', 'phases.id', '=', 'commercial_tasks.phase_id')
+                                            ->leftJoin('expertise', 'expertise.id', '=', 'commercial_tasks.expertise_id')
+                                            ->select('commercial_tasks.name as name', 'commercial_projects.number as p_number', 'commercial_tasks.id as id', 'commercial_tasks.type as type', 'commercial_projects.name as p_name', 'commercial_tasks.start_date as start_date', 'commercial_tasks.end_date as end_date', 'expertise.sigla as e_sigla', 'phases.sigla as ph_sigla', 'commercial_projects.id as p_id', DB::raw('"commercial" as taskType'));
+
                 $tasksPercentage = \App\Task::join('project', 'project.id', '=', 'tasks.project_id')
                                             ->leftJoin('phases', 'phases.id', '=', 'tasks.phase_id')
                                             ->leftJoin('expertise', 'expertise.id', '=', 'tasks.expertise_id')
-                                            ->select('tasks.name as name', 'project.number as p_number', 'tasks.id as id', 'tasks.type as type', 'project.name as p_name', 'tasks.start_date as start_date', 'tasks.end_date as end_date', 'expertise.sigla as e_sigla', 'phases.sigla as ph_sigla', 'project.id as p_id')
+                                            ->select('tasks.name as name', 'project.number as p_number', 'tasks.id as id', 'tasks.type as type', 'project.name as p_name', 'tasks.start_date as start_date', 'tasks.end_date as end_date', 'expertise.sigla as e_sigla', 'phases.sigla as ph_sigla', 'project.id as p_id', DB::raw('"operations" as taskType'))
                                             ->where('tasks.user_id', Auth::user()->id)
+                                            ->union($commercialTasks)
                                             ->get();
+
                 foreach($tasksPercentage as $key => $task) {
-                  $task_timer = \App\TaskTimer::where('programmedTask_id', $task->id)
+                  if($task->taskType == 'operations') {
+                    $task_timer = \App\TaskTimer::where('programmedTask_id', $task->id)
                                                ->orderBy('id', 'desc')
                                                ->first();
-
+                  } else {
+                    $task_timer = \App\Commercial_Executed_Task::where('plannedTask_id', $task->id)
+                                                               ->orderBy('id', 'desc')
+                                                               ->first();
+                  }
                   if($task_timer == null) {
                       if($task->type == '6') {
                         $task->done = 0;

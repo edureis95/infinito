@@ -900,7 +900,7 @@ class ProjectController extends Controller
     public function getOutsideTeam($id) {
         $this->registerProjectSeen($id);
         $project = \App\Project::find($id);
-        $functions = \App\Project_User_Function::all();
+        $functions = \App\Project_General_User_Function::all();
         $expertise = \App\General_Expertise::all();
 
         $team = \App\Project_Outside_Team::where('project_id', $id)
@@ -1445,7 +1445,7 @@ class ProjectController extends Controller
                 $task = new \App\GanttTask();
                 $task->number = 0;
                 $task->milestone = 1;
-                $task->type = 8;
+                $task->type = 3;
                 $task->text = \App\State_Type::find($r['state'])->name;
                 $task->start_date = $r['start_date'];
 
@@ -1527,7 +1527,7 @@ class ProjectController extends Controller
                 $task = new \App\GanttTask();
                 $task->number = 0;
                 $task->milestone = 1;
-                $task->type = 8;
+                $task->type = 3;
                 $task->text = \App\Task::find($r['name'])->name;
                 $task->start_date = $r['start_date'];
 

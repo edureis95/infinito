@@ -212,6 +212,8 @@ Route::middleware('auth')->group(function () {
 			Route::post('/settings/projects/types/edit', 'SettingsController@editProjectTypes');
 			Route::post('/settings/projects/constructionTypes/edit', 'SettingsController@editProjectConstructionTypes');
 			Route::post('/settings/projects/utilizationTypes/edit', 'SettingsController@editProjectUtilizationTypes');
+			Route::get('/settings/projects/generalUserFunction', 'SettingsController@getProjectGeneralUserFunction');
+			Route::post('/settings/projects/generalUserFunction/addFunction', 'SettingsController@addProjectGeneralUserFunction');
 			Route::get('/settings/projects/userFunction', 'SettingsController@getProjectUserFunction');
 			Route::post('/settings/projects/userFunction/addFunction', 'SettingsController@addProjectUserFunction');
 			Route::get('/settings/projects/generalExpertise', 'SettingsController@getGeneralExpertise');
@@ -243,6 +245,7 @@ Route::middleware('auth')->group(function () {
 			Route::get('management/operations', 'ManagementController@showOperations');
 			Route::get('management/absence', 'ManagementController@getAbsenceApproval');
 			Route::post('management/absenceApproval/saveApproval', 'ManagementController@saveAbsenceApproval');
+			Route::post('management/absenceApproval/saveReject', 'ManagementController@saveAbsenceReject');
 			Route::post('management/absenceApproval/filter', 'ManagementController@filterAbsenceApproval');
 			Route::get('management/project/{id}', 'ManagementController@getProject');
 			Route::get('management/project/team/{id}', 'ManagementController@getProjectTeam');
@@ -262,6 +265,12 @@ Route::middleware('auth')->group(function () {
 			Route::post('/commercialProject/expertise/addExpertise/{id}', 'ManagementController@addCommercialProjectExpertise');
 			Route::post('commercialProject/phases/addPhase/{id}', 'ManagementController@addCommercialProjectPhase');
 			Route::post('/commercialProject/expertise/editExpertisePhases', 'ManagementController@editCommercialProjectExpertisePhases');
+			Route::get('/commercialProject/plannedTasks/{id}', 'ManagementController@getCommercialProjectPlannedTasks');
+			Route::post('/commercialProject/{id}/addPlannedTask', 'ManagementController@addCommercialProjectPlannedTask');
+			Route::get('/commercialProject/planningTasks/{id}', 'ManagementController@getCommercialProjectPlanningTasks');
+			Route::post('/commercialProject/addPlanningTask/{id}', 'ManagementController@addCommercialProjectPlanningTask');
+			Route::get('/commercialProject/executedTasks/{id}', 'ManagementController@getCommercialProjectExecutedTasks');
+			Route::post('/commercialProject/addExecutedTask/{id}', 'ManagementController@addCommercialProjectExecutedTask');
 		});
 
 		Route::middleware('contacts')->group(function () {

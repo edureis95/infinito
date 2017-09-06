@@ -274,7 +274,7 @@
                 <?php endif; ?>
                 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle"  href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
@@ -332,7 +332,11 @@
 
                         <?php $__currentLoopData = $tasksPercentage; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
+                            <?php if($task->taskType == 'commercial'): ?>
+                            <a href="/commercialProject/planningTasks/<?php echo e($task->p_id); ?>">
+                            <?php else: ?>
                             <a href="/project/gantt/<?php echo e($task->p_id); ?>">
+                            <?php endif; ?>
                                 <div>
                                     <span style="line-height: 20px; font-size: 12px;">
                                         <strong>

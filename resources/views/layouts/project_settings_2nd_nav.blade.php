@@ -12,6 +12,7 @@
 		<a href="/settings/projects/documentTypes" class="tiposDocumento secondNavMargin"> <span>Tipo Documento</span> </a>
 		<a href="/settings/projects/eventTypes" class="tipoAcontecimento secondNavMargin"> <span>Tipo Acontecimento</span> </a>
 		<a href="/settings/projects/userFunction" class="tipoFunção secondNavMargin"> <span>Função</span> </a>
+		<a href="/settings/projects/generalUserFunction" class="funçãoGeral secondNavMargin"> <span>Função Geral</span> </a>
 	</div>
 </div>
 <div class="row">

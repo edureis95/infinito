@@ -22,9 +22,11 @@
 						<td>{{$absence->a_name}}</td>
 						<td class="text-left">{{$absence->text}}</td>
 						@if($absence->a_ap == 0)
-						<td class="taskNotApproved">Não</td>
-						@else
+						<td class="taskWaiting">Aguarda</td>
+						@elseif($absence->a_ap > 0)
 						<td class="taskApproved">Sim</td>
+						@else
+						<td class="taskNotApproved">Não</td>
 						@endif
 					</tr>
 				@endforeach
