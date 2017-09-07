@@ -108,6 +108,7 @@
 	  				</tr>
 				</table>
 				<button type="button" class="saveTask btn btn-success pull-right">Guardar</button>
+				<button type="button" class="btn btn-danger pull-right removeTask" style="margin-right: 10px;">Eliminar Registo</button>
 			</div>
   		</div>
   	</div>
@@ -180,6 +181,30 @@ $(document).ready(function() {
 
 var idClicked  = null;
 
+$('.removeTask').click(function() {
+	var approved = $(this).attr('approved');
+	if(approved == 1)
+		alert('Este registo já foi aprovado, não o podes apagar!');
+	else {
+		var txt;
+		var r = confirm("Tem a certeza que quer eliminar este registo?");
+		if (r == true) {
+			$.ajax({
+		      type: "POST",
+		      url: '/removeTaskTimer',
+		      data: {
+		        'id' : idClicked
+		      },
+		      success: function() {
+		        location.reload();
+		      }
+		    });
+		} else {
+		   
+		}
+	}
+})
+
 $('.openTaskLayer').click(function() {
 	$('.overlayTaskName').text('-');
 	$('.overlayDate').text('-');
@@ -221,6 +246,7 @@ $('.openTaskLayer').click(function() {
 			$('.editTable .expertiseSelect option[value="' + response.expertise_id + '"]').prop('selected', true);
 			appendPhaseToLayer(response.phase_id);
 			$('.editTable .subExpertiseSelect option[value="' + response.subexpertise_id + '"]').prop('selected', true);
+			$('.removeTask').attr('approved', response.approved);
       	}
       });
 });

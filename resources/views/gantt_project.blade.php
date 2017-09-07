@@ -101,6 +101,7 @@
 	  				</tr>
 				</table>
 				<button type="button" class="saveTask btn btn-success pull-right">Guardar</button>
+				<button type="button" class="btn btn-danger pull-right removeTask" style="margin-right: 10px;">Eliminar Tarefa</button>
 			</div>
   		</div>
   	</div>
@@ -551,6 +552,7 @@
 			});
 			$('.note-editor').css('font-family', 'Arial');
 			$('.summernoteOverlay').summernote('disable');
+			$('.note-toolbar').addClass('hidden');
 
 			$('.editDescriptionButton').click(function() {
 				$(this).addClass('hidden');
@@ -558,6 +560,7 @@
 				$('.editTable').removeClass('hidden');
 				$('.descriptionTable').addClass('hidden');
 				$('.summernoteOverlay').summernote('enable');
+				$('.note-toolbar').removeClass('hidden');
 			});
 
 			$('.cancelEditDescription').click(function() {
@@ -566,11 +569,31 @@
 				$('.editTable').addClass('hidden');
 				$('.descriptionTable').removeClass('hidden');
 				$('.summernoteOverlay').summernote('disable');
+				$('.note-toolbar').addClass('hidden');
 			});
 
 			$('.ganttCheckbox').change(function() {
 				gantt.refreshData();
 			});
+
+			$('.removeTask').click(function() {
+				var txt;
+				var r = confirm("Tem a certeza que quer eliminar esta tarefa? (As tarefas executadas associadas a esta tarefa também serão apagadas)");
+				if (r == true) {
+					$.ajax({
+				      type: "POST",
+				      url: '/removeProjectTask',
+				      data: {
+				        'id' : task_id
+				      },
+				      success: function() {
+				        location.reload();
+				      }
+				    });
+				} else {
+				   
+				}
+			})
 		});
 
 		function appendPhaseToLayer(phase_id) {
@@ -739,7 +762,7 @@
 				gantt.templates.leftside_text = function leftSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "left" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -748,7 +771,7 @@
 				gantt.templates.rightside_text = function rightSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "right" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -757,7 +780,7 @@
 				gantt.templates.task_text = function taskTextTemplate(start, end, task){
 					if (getTaskFitValue(task) === "center" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -782,13 +805,12 @@
 						}
 					}
 					else {
-						return "center";
+						return "right";
 					}
 				}
 			})();
 
 			gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
-			gantt.config.row_height = 28;
 			gantt.config.columns = [
 			{name:"text", label:"Gantt", tree:true, width:"400", resize:true, align:"left"},
 			];

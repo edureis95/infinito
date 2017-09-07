@@ -306,6 +306,7 @@ $('.summernoteOverlay').summernote({
 });
 $('.note-editor').css('font-family', 'Arial');
 $('.summernoteOverlay').summernote('disable');
+$('.note-toolbar').addClass('hidden');
 
 $('.openTaskLayer').click(function() {
 	$('.overlayTaskName').text('-');
@@ -356,6 +357,7 @@ $('.editDescriptionButton').click(function() {
 	$('.editTable').removeClass('hidden');
 	$('.descriptionTable').addClass('hidden');
 	$('.summernoteOverlay').summernote('enable');
+	$('.note-toolbar').removeClass('hidden');
 });
 
 $('.cancelEditDescription').click(function() {
@@ -364,6 +366,7 @@ $('.cancelEditDescription').click(function() {
 	$('.editTable').addClass('hidden');
 	$('.descriptionTable').removeClass('hidden');
 	$('.summernoteOverlay').summernote('disable');
+	$('.note-toolbar').addClass('hidden');
 })
 
 $('.saveTask').click(function() {

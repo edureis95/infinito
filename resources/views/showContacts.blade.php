@@ -13,9 +13,11 @@
 <form id="editContactForm" enctype="multipart/form-data">
 <div class="panel panel-default borderless pull-right">
 	<div class="panel-heading nameAndButtons">
-		<button class="btn btn-warning editDescriptionButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button class="btn btn-danger cancelEditDescription hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button>
-		<button type="button" class="hidden saveContact btn btn-success pull-right">Guardar</button>
-		<button class="btn btn-danger removeContact pull-right hidden" type="button">Remover Contacto</button>
+		<div class="buttons">
+			<button class="btn btn-warning editDescriptionButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button class="btn btn-danger cancelEditDescription hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button>
+			<button type="button" class="hidden saveContact btn btn-success pull-right">Guardar</button>
+			<button class="btn btn-danger removeContact pull-right hidden" type="button">Remover Contacto</button>
+		</div>
 		<h3 style="padding-left: 6px;"><b><span class="overlayFirstName"></span> <span class="overlayLastName"></span></b></h3>
 	</div>
   <div class="panel panel-info">

@@ -385,27 +385,22 @@
                         <i class="fa fa-bell fa-fw"></i><span> {{$notificationNumber}} </span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                    @foreach($hoursApprovalList as $notApproved)
                         <li>
-                            <a href="/management/hoursApproval">
-                                <div style="font-size: 12px;">
-                                    Tarefa - {{$notApproved->task_name}}
-                                    <span class="pull-right text-muted small">{{$notApproved->user_name}}</span>
+                            <a href="/management/hoursApproval" style="margin-top: -4px; height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Tarefas - {{$hoursApprovalList}}
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>
-                    @endforeach
-                    @foreach($absenceApprovalList as $notApproved)
+                        <li class="divider" style="margin: 1;"></li>
                         <li>
-                            <a href="/management/absence">
-                                <div style="font-size: 12px;">
-                                    Ausência - {{$notApproved->text}}
+                            <a href="/management/absence" style="height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Ausências - {{$absenceApprovalList}}
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>
-                    @endforeach
+                        <li class="divider" style="margin: 1;"></li>
                         <li>
                             <a class="text-center" href="/management/hoursApproval">
                                 <strong>Ver Aprovações</strong>
@@ -472,7 +467,7 @@
                             <a href="#">DASHBOARD</a>
                         </li>
                         <li>
-                            <a href="/scheduler">Calendário</a>
+                            <a href="/calendar">Calendário</a>
                         </li>
                         <li>
                             <a href="/contacts">Contactos</a>

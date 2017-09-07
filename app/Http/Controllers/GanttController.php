@@ -12,7 +12,7 @@ class GanttController extends Controller
     public function data() {
         $connector = new GanttConnector(null, "PHPLaravel");
         $connector->mix('open', 1);
-        $connector->enable_log('log');
+        $connector->sort('number', 'desc');
         $connector->render_links(new GanttLink(), "id", "source,target,type");
 
         $tasks = GanttTask::where('progress', '<', 1)
@@ -46,7 +46,7 @@ class GanttController extends Controller
     	return view('/gantt_project', array('task' => $task, 'project' => $project, 'active' => 'gestao_projetos'));
     }
 
-    public function user_gantt() {
+    /*public function user_gantt() {
         $gantt_tasks = \App\GanttTask::where('responsible', Auth::user()->id)->get();
         $gantt_tasks->ids = array();
         foreach($gantt_tasks as $gantt_task) {
@@ -56,8 +56,11 @@ class GanttController extends Controller
             $gantt_tasks->ids[] = $gantt_task->id;
         }
 
-        return view('/gantt', array('tasks' => $gantt_tasks->ids, 'active' => 'gestao_projetos', 'activeL' => 'planeamento'));
-    }
+        
+        $companyDays = \App\Company_Day::all();
+
+        return view('/gantt', array('tasks' => $gantt_tasks->ids, 'active' => 'gestao_projetos', 'activeL' => 'planeamento', ));
+    }*/
 
     public function gantt() {
         $gantt_tasks = \App\GanttTask::all();
@@ -70,7 +73,25 @@ class GanttController extends Controller
             $gantt_tasks->ids[] = $gantt_task->id;
         }
 
-        return view('/gantt', array('tasks' => $gantt_tasks->ids, 'active' => 'gestao_projetos', 'activeL' => 'planeamento', 'companyDays' => $companyDays));
+        /*$expertise = \App\Project_Expertise::where('project_id', $id)
+                                           ->where('parent', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'project_expertise.id as proj_e_id')
+                                           ->get();
+        $subExpertise = \App\Project_Expertise::where('project_id', $id)
+                                           ->where('parent', '!=', 0)
+                                           ->join('expertise', 'expertise.id', '=', 'project_expertise.expertise_id')
+                                           ->select('expertise_id as id', 'expertise.name as name', 'parent as parent', 'project_expertise.id as proj_e_id')
+                                           ->get();
+
+        $phases = \App\Project_Phase::where('project_id', $id)
+                                    ->join('phases', 'phases.id', '=', 'project_phase.phase_id')
+                                    ->select('phase_id as id', 'phases.name as name')
+                                    ->get();*/
+
+        $eventTypes = \App\Project_Event_Type::all();
+
+        return view('/gantt', array('tasks' => $gantt_tasks->ids, 'active' => 'gestao_projetos', 'activeL' => 'planeamento', 'companyDays' => $companyDays, 'eventTypes' => $eventTypes));
     }
 
 }

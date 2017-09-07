@@ -883,7 +883,7 @@ class ProjectController extends Controller
                                  ->join('users', 'user_id', '=', 'users.id')
                                  ->join('departments', 'departments.id', '=', 'users.function')
                                  ->join('project_user_function', 'project_user_function.id', '=', 'function_id')
-                                 ->select('users.name as u_name', 'expertise.name as e_name', 'users.email as u_email', 'project_team.id as id', 'users.sigla as u_sigla', 'subExpertise_id as subExpertise_id', 'departments.name as u_department', 'project_user_function.name as u_function')
+                                 ->select('users.name as u_name', 'expertise.name as e_name', 'expertise.id as e_id','users.email as u_email', 'project_team.id as id', 'users.sigla as u_sigla', 'subExpertise_id as subExpertise_id', 'departments.name as u_department', 'project_user_function.name as u_function', 'project_user_function.id as u_function_id')
                                  ->get();
 
         foreach($team as $member) {
@@ -907,8 +907,8 @@ class ProjectController extends Controller
                                  ->join('general_expertise', 'expertise_id', '=', 'general_expertise.id')
                                  ->leftJoin('contacts', 'coordinator_id', '=', 'contacts.id')
                                  ->leftJoin('company_contacts', 'company_id', '=', 'company_contacts.id')
-                                 ->join('project_user_function', 'project_user_function.id', '=', 'function_id')
-                                 ->select('contacts.firstName as u_firstName', 'contacts.lastName as u_lastName', 'general_expertise.name as e_name', 'contacts.email as u_email', 'company_contacts.name as c_name', 'contacts.phoneNumber as u_phone', 'project_user_function.name as u_function', 'project_outside_team.id as id')
+                                 ->join('project_general_user_function', 'project_general_user_function.id', '=', 'function_id')
+                                 ->select('contacts.firstName as u_firstName', 'contacts.lastName as u_lastName', 'general_expertise.name as e_name', 'general_expertise.id as e_id','contacts.email as u_email', 'company_contacts.name as c_name', 'company_contacts.id as c_id','contacts.phoneNumber as u_phone', 'project_general_user_function.name as u_function', 'project_general_user_function.id as u_function_id','project_outside_team.id as id')
                                  ->get();
 
         $contacts = \App\Contact::all();
@@ -2325,6 +2325,10 @@ class ProjectController extends Controller
                 $ganttTask = \App\GanttTask::find($task->ganttTask_id);
                 $ganttTask->start_date = $r['start_date'];
                 $ganttTask->end_date = $r['end_date'];
+                $date1 = new DateTime($r['start_date']);
+                $date2 = new DateTime($r['end_date']);
+                $interval = $date1->diff($date2);
+                $ganttTask->duration = ($interval->d) * 24;
                 if($r['expertise'] != 0) {
                     $expertiseTask = \App\GanttTask::where('expertise_id', $r['expertise'])
                                                 ->where('parent', $project->commercial_project_Task_ID)
@@ -2381,6 +2385,26 @@ class ProjectController extends Controller
         });
     }
 
+    public function editPlannedTaskFromGeneralGantt(Request $r) {
+        DB::transaction(function () use($r) {
+            $task = \App\Task::where('ganttTask_id', $r['id'])->first();
+            $task->user_id = $r['user'];
+            $task->start_date = $r['start_date'];
+            $task->end_date = $r['end_date'];
+            $task->notes = $r['notes'];
+
+            $ganttTask = \App\GanttTask::find($r['id']);
+            $date1 = new DateTime($r['start_date']);
+            $date2 = new DateTime($r['end_date']);
+            $interval = $date1->diff($date2);
+            $ganttTask->duration = ($interval->d) * 24;
+            $ganttTask->save();
+
+            $task->save();
+
+        });
+    }
+
     public function getEmailAndDepartmentFromUser($id) {
         $user = \App\User::where('users.id', $id)
                          ->join('departments', 'function', '=', 'departments.id')
@@ -2396,14 +2420,73 @@ class ProjectController extends Controller
         return $contact;
     }
 
-    public function cenas() {
-        
-        $tasks = \App\GanttTask::where('progress', '<', 1)
-                          ->where('gantt_tasks.type', 0)
-                          ->join('tasks', 'tasks.ganttTask_id', '=', 'gantt_tasks.id')
-                          ->select('gantt_tasks.*')
-                          ->get();
-
-        print_r($tasks);
+    public function editProjectOutsideTeamMember(Request $r) {
+        $member = \App\Project_Outside_Team::find($r['id']);
+        $member->function_id = $r['memberFunction'];
+        $member->expertise_id = $r['expertise'];
+        $member->save();
     }
+
+    public function removeProjectTask(Request $r) {
+        DB::transaction(function () use($r) {
+            $ganttTask = \App\GanttTask::find($r['id']);
+            $ganttTask->delete();
+
+            $task = \App\Task::where('ganttTask_id', $r['id'])->first();
+            if($task != null) {
+                $executedTasks = \App\Executed_Task::where('plannedTask_id', $task->id)->get();
+                foreach($executedTasks as $taskTemp) {
+                    $taskTempToDelete = \App\GanttTask::find($taskTemp->ganttTask_id);
+                    if($taskTempToDelete != null)
+                        $taskTempToDelete->delete();
+                    $taskTemp->delete();
+                }
+                $taskTimer = \App\TaskTimer::where('programmedTask_id', $task->id)->get();
+                foreach($taskTimer as $taskTemp) {
+                    $taskTempToDelete = \App\GanttTask::find($taskTemp->ganttTask_id);
+                    if($taskTempToDelete != null)
+                        $taskTempToDelete->delete();
+                    $taskTemp->delete();
+                }
+                $task->delete();
+            }
+            
+        });
+    }
+
+    public function editTeamMember(Request $r) {
+        $member = \App\Project_Team::find($r['id']);
+        $member->expertise_id = $r['expertise_id'];
+        $member->subExpertise_id = $r['subExpertise_id'];
+        $member->function_id = $r['function_id'];
+        $member->save();
+    }
+
+   /* public function cenas() {
+         DB::transaction(function (){
+        $ganttTask = \App\GanttTask::find(869);
+        $ganttTask->delete();
+
+        $task = \App\Task::where('ganttTask_id', 869)->first();
+        if($task != null) {
+            $executedTasks = \App\Executed_Task::where('plannedTask_id', $task->id)->get();
+            foreach($executedTasks as $taskTemp) {
+                $taskTempToDelete = \App\GanttTask::find($taskTemp->ganttTask_id);
+                if($taskTempToDelete != null)
+                    $taskTempToDelete->delete();
+                $taskTemp->delete();
+            }
+            $taskTimer = \App\TaskTimer::where('programmedTask_id', $task->id)->get();
+            foreach($taskTimer as $taskTemp) {
+                $taskTempToDelete = \App\GanttTask::find($taskTemp->ganttTask_id);
+                if($taskTempToDelete != null)
+                    $taskTempToDelete->delete();
+                $taskTemp->delete();
+            }
+            $task->delete();
+        }
+    });
+    }*/
+
+
 }

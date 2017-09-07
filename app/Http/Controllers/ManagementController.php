@@ -308,7 +308,7 @@ class ManagementController extends Controller
             //$absence->end_date = $date1->format('d-m-y H:i');
             if($date1String == $date2String) {
                 $absence->start_date = $date1->format('d-m-y');
-                $absence->end_date = $date2->format('H') - 0;
+                $absence->end_date = $date2->format('H') - $date1->format('H');
             } else {
                 $absence->start_date = $date1->format('d-m-y');
                 $absence->end_date = $date2->format('d-m-y');

@@ -3,12 +3,91 @@
 
 @section('content')
 
+<div id="myNav" class="overlay">
 
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="panel panel-default" style="margin-top: 8%;">
+  	<div class="panel-info">
+  		<div class="panel-heading smallPanelHeading">
+  			<h5>
+  				<span class="overlayTaskName"></span>
+  				<button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-success editDescriptionButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-danger cancelEditDescription hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button>
+  			</h5>
+  		</div>
+  		<div class="panel-body">
+  			<div class="summernoteOverlay">
+
+  			</div>
+  			<table class="table borderless descriptionTable" style="width: auto;">
+  				<tr>
+  					<td class="text-right"><b>Colaborador: </b></td>
+  					<td class="overlayUser"></td>
+  				</tr>
+  				<tr>
+  					<td class="text-right"> <b>Início: </b> </td>
+  					<td class="overlayStartDate">-</td>
+  					<td class="text-right"> <b>Fim: </b></td>
+  					<td class="overlayEndDate">-</td>
+  				</tr>
+  				<tr>
+  					<td class="text-right"> <b>Tipo: </b> </td>
+  					<td class="overlayType">-</td>
+  				</tr>
+  				<tr>
+	  				<td class="text-right"> <b>Especialidade: </b></td>
+	  				<td class="overlayExpertise">-</td>
+	  				<td class="text-right"> <b>Sub-Especialidade: </b></td>
+	  				<td class="overlaySubExpertise">-</td>
+	  				<td class="text-right"> <b>Fase: </b></td>
+	  				<td class="overlayPhase">-</td>
+  				</tr>
+  			</table>
+  			<div class="editTable hidden">
+	  			<table class="table borderless" style="width: auto;">
+					<tr>
+	  					<td class="text-right"><b>Colaborador: </b></td>
+	  					<td class="">
+	  						<select class="form-control input-sm userSelect">
+							@foreach($usersList as $user)
+								<option value="{{$user->id}}">{{$user->sigla}}</option>
+							@endforeach
+	  						</select>
+	  					</td>
+	  				</tr>
+	  				<tr>
+	  					<td class="text-right"> <b>Início: </b> </td>
+	  					<td><input type="text" required class="input-sm form-control datepicker overlayStartDatePicker" name="start_date"></td>
+	  					<td class="text-right"> <b>Fim: </b> </td>
+	  					<td><input type="text" required class="input-sm form-control datepicker overlayEndDatePicker" name="start_date"></td>
+	  				</tr>
+	  				<tr>
+	  					<td class="text-right"> <b>Tipo: </b> </td>
+	  					<td>
+	  						<select name="type" disabled class="typeSelect input-sm form-control">
+								@foreach($eventTypes as $type)
+									<option value="{{$type->id}}">{{$type->name}}</option>
+								@endforeach	
+							</select>
+	  					</td>
+	  				</tr>
+				</table>
+				<button type="button" class="saveTask btn btn-success pull-right">Guardar</button>
+				<button type="button" class="btn btn-danger pull-right removeTask" style="margin-right: 10px;">Eliminar Tarefa</button>
+			</div>
+  		</div>
+  	</div>
+  </div>
+ </div>
 	<div class="col-xs-12" style="max-width: 98%;">
 		<script src="dhtmlxGantt/codebase/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
 		<link rel="stylesheet" href="dhtmlxGantt/codebase/dhtmlxgantt.css" type="text/css" media="screen" title="no title" charset="utf-8">
 		<style>
-
+			.openTaskLayer .gantt_tree_content{
+				color: blue;
+				cursor: pointer; 
+   				cursor: hand; 
+			}
 			.gantt_task_link.link .gantt_line_wrapper div{
 				background-color: red;
 			}
@@ -308,6 +387,136 @@
 		</div>
 
 		<script type="text/javascript">
+
+			function closeNav() {
+			    document.getElementById("myNav").style.width = "0%";
+			}
+
+			var task_id = null;
+			$(document).ready(function() {
+				$(document).on('click', '.gantt_tree_content', function() {
+					task_id = $(this).parent().parent().attr('task_id');
+					if(	gantt.getTask(task_id).type == 0) {
+						$('.overlayTaskName').text('-');
+						$('.overlayStartDate').text('-');
+						$('.overlayEndDate').text('-');
+						$('.overlayUser').text('-');
+						$('.overlayExpertise').text('-');
+						$('.overlayPhase').text('-');
+						$('.overlaySubExpertise').text('-');
+						$('.overlayType').text('-');
+						idClicked = $(this).closest('tr').find('.taskId').text();
+						taskType = $(this).closest('tr').find('.taskType').text();
+						$.ajax({
+					      type: "POST",
+					      url: '/project/gantt/getPlannedTaskDetails',
+					      data: {
+					        'id' : task_id
+					      },
+					      success: function(response) {
+					      		$('#myNav').css('width', 'calc(96% - 170px)');
+					      		$('.overlayTaskName').text(response.name);
+								$('.overlayStartDate').text(response.start_date);
+								$('.overlayEndDate').text(response.end_date);
+								$('.overlayUser').text(response.userName);
+								$('.overlayExpertise').text(response.expertiseSigla);
+								$('.overlayPhase').text(response.phaseSigla);
+								if(response.subExpertiseSigla != null)
+									$('.overlaySubExpertise').text(response.subExpertiseSigla);
+								$('.overlayType').text(response.type);
+								$('.overlayStartDatePicker').val(response.start_date);
+								$('.overlayEndDatePicker').val(response.end_date);
+								$('.summernoteOverlay').summernote('code', response.notes);
+
+								$('.editTable .expertiseSelect option[value="0"]').prop('selected', true);
+								$('.editTable .subExpertiseSelect option[value="0"]').prop('selected', true);
+								$('.editTable .phaseOptions option[value="0"]').prop('selected', true);
+
+								$('.editTable .userSelect option[value="' + response.user_id + '"]').prop('selected', true);
+								$('.editTable .typeSelect option[value="' + response.type_id + '"]').prop('selected', true);
+								$('.editTable .expertiseSelect option[value="' + response.expertise_id + '"]').prop('selected', true);
+								appendPhaseToLayer(response.phase_id);
+								$('.editTable .subExpertiseSelect option[value="' + response.subexpertise_id + '"]').prop('selected', true);
+					      	}
+					      });
+					}
+				});
+
+				$('.saveTask').click(function() {
+				var user = $('.editTable .userSelect').val();
+				var phase = $('.editTable .phaseOptions').val();
+				var expertise = $('.editTable .expertiseSelect').val();
+				var subExpertise = $('.editTable .subExpertiseSelect').val();
+				var start_date = $('.editTable .overlayStartDatePicker').val();
+				var end_date = $('.editTable .overlayEndDatePicker').val();
+				var notes = $('.summernoteOverlay').summernote('code');
+				$.ajax({
+			      type: "POST",
+			      url: '/project/gantt/editPlannedTaskFromGeneralGantt',
+			      data: {
+			        'id' : task_id,
+			        'user': user,
+			        'taskType': taskType,
+			        'start_date': start_date,
+			        'end_date': end_date,
+			        'notes': notes
+			      },
+			      success: function() {
+			        location.reload();
+			      }
+			    });
+			});
+
+				$('.summernoteOverlay').summernote({
+					height: 100,
+					maximumImageFileSize: 65536
+				});
+				$('.note-editor').css('font-family', 'Arial');
+				$('.summernoteOverlay').summernote('disable');
+				$('.note-toolbar').addClass('hidden');
+
+				$('.editDescriptionButton').click(function() {
+					$(this).addClass('hidden');
+					$('.cancelEditDescription').removeClass('hidden');
+					$('.editTable').removeClass('hidden');
+					$('.descriptionTable').addClass('hidden');
+					$('.summernoteOverlay').summernote('enable');
+					$('.note-toolbar').removeClass('hidden');
+				});
+
+				$('.cancelEditDescription').click(function() {
+					$(this).addClass('hidden');
+					$('.editDescriptionButton').removeClass('hidden');
+					$('.editTable').addClass('hidden');
+					$('.descriptionTable').removeClass('hidden');
+					$('.summernoteOverlay').summernote('disable');
+					$('.note-toolbar').addClass('hidden');
+				});
+
+				$('.ganttCheckbox').change(function() {
+					gantt.refreshData();
+				});	
+
+				$('.removeTask').click(function() {
+					var txt;
+					var r = confirm("Tem a certeza que quer eliminar esta tarefa? (As tarefas executadas associadas a esta tarefa também serão apagadas)");
+					if (r == true) {
+						$.ajax({
+					      type: "POST",
+					      url: '/removeProjectTask',
+					      data: {
+					        'id' : task_id
+					      },
+					      success: function() {
+					        location.reload();
+					      }
+					    });
+					} else {
+					   
+					}
+				})
+			});
+
 			function setScaleConfig(value){
 				switch (value) {
 					case "1":
@@ -436,7 +645,7 @@
 				gantt.templates.leftside_text = function leftSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "left" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -445,7 +654,7 @@
 				gantt.templates.rightside_text = function rightSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "right" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -454,7 +663,7 @@
 				gantt.templates.task_text = function taskTextTemplate(start, end, task){
 					if (getTaskFitValue(task) === "center" && (task.type == 0 || task.type == 3)) {
 						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+							return task.u_sigla;
 						else 
 							return task.text;
 					}
@@ -466,7 +675,7 @@
 						taskEndPos = gantt.posFromDate(task.end_date);
 
 					var width = taskEndPos - taskStartPos;
-					var textWidth = (task.text + task.u_sigla || "").length * gantt.config.font_width_ratio;
+					var textWidth = (task.u_sigla || "").length * gantt.config.font_width_ratio;
 
 					if(width < textWidth){
 						var ganttLastDate = gantt.getState().max_date;
@@ -479,13 +688,12 @@
 						}
 					}
 					else {
-						return "center";
+						return "right";
 					}
 				}
 			})();
 
 			gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
-			gantt.config.row_height = 28;
 			gantt.config.columns = [
 			{name:"text", label:"Gantt", tree:true, width:"400", resize:true, align:"left"},
 			];
@@ -513,17 +721,17 @@
 					return false;
 				if(task.parent != 0) {
 					var taskTemp = gantt.getTask(task.parent);
-					if(taskTemp.type == 5)
+					if(taskTemp.type == 5 || taskTemp.type == 6)
 						return false;
 
 					if(taskTemp.parent != 0) {
 						taskTemp = gantt.getTask(taskTemp.parent);
-						if(taskTemp.type == 5)
+						if(taskTemp.type == 5 || taskTemp.type == 6)
 							return false;
 
 						if(taskTemp.parent != 0) {
 							taskTemp = gantt.getTask(taskTemp.parent);
-							if(taskTemp.type == 5)
+							if(taskTemp.type == 5 || taskTemp.type == 6)
 								return false;
 						}
 					}

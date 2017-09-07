@@ -85,7 +85,7 @@ class CompanyController extends Controller
 
     public function data() {
         $scheduler = new SchedulerConnector(null, "PHPLaravel");
-        $scheduler->configure(\App\SchedulerEvent::where('type', 7), "event_id", "start_date, end_date, event_name, user_id, type");
+        $scheduler->configure(\App\SchedulerEvent::where('type', 7), "event_id", "start_date, end_date, event_name, user_id, absence_type");
         $scheduler->render();
     }
 

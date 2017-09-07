@@ -152,14 +152,14 @@ class AppServiceProvider extends ServiceProvider
 
                 $hoursApproval = \App\TaskTimer::where('approved', '==', 0)->where('userToApprove', Auth::user()->id)->get();
 
-                View::share('hoursApprovalList', $hoursApproval);
+                View::share('hoursApprovalList', count($hoursApproval));
 
                 if(Auth::user()->type == 2)
-                  $absenceApproval = \App\AbsenceEvent::where('approved', '==', 0)->get();
+                  $absenceApproval = \App\SchedulerEvent::where('approved', '==', 0)->where('type', 7)->get();
                 else
                   $absenceApproval = collect([]);
 
-                View::share('absenceApprovalList', $absenceApproval);
+                View::share('absenceApprovalList', count($absenceApproval));
 
                 $notificationNumber = $absenceApproval->count() + $hoursApproval->count();
                 View::share('notificationNumber', $notificationNumber);

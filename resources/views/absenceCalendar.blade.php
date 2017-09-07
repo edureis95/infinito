@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="col-xs-12" style=" height:100%; width: 98%;">
+<div class="col-xs-12 insideContainer">
     @include('layouts.company_nav')
     <div class="row">
         <hr style="margin-top: 0; margin-left: 0; width: 100%; border-color: #DCDCDC;">
@@ -106,7 +106,7 @@
                                 }
                                 scheduler.config.lightbox.sections=[
                                     {name:"description", height:70  , map_to:"text", type:"textarea" , focus:true},
-                                    {name:"Motivo da ausência", height:40, type:"select", options: reasons, map_to:'type'},
+                                    {name:"Motivo da ausência", height:40, type:"select", options: reasons, map_to:'absence_type'},
                                     {name:"time", height:72, type:"time", map_to:"auto"}
                                 ];
                             })

@@ -386,29 +386,24 @@
                         <i class="fa fa-bell fa-fw"></i><span> <?php echo e($notificationNumber); ?> </span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                    <?php $__currentLoopData = $hoursApprovalList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notApproved): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
-                            <a href="/management/hoursApproval">
-                                <div style="font-size: 12px;">
-                                    Tarefa - <?php echo e($notApproved->task_name); ?>
-
-                                    <span class="pull-right text-muted small"><?php echo e($notApproved->user_name); ?></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php $__currentLoopData = $absenceApprovalList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notApproved): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <a href="/management/absence">
-                                <div style="font-size: 12px;">
-                                    Ausência - <?php echo e($notApproved->text); ?>
+                            <a href="/management/hoursApproval" style="margin-top: -4px; height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Tarefas - <?php echo e($hoursApprovalList); ?>
 
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <li class="divider" style="margin: 1;"></li>
+                        <li>
+                            <a href="/management/absence" style="height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Ausências - <?php echo e($absenceApprovalList); ?>
+
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" style="margin: 1;"></li>
                         <li>
                             <a class="text-center" href="/management/hoursApproval">
                                 <strong>Ver Aprovações</strong>
@@ -476,7 +471,7 @@
                             <a href="#">DASHBOARD</a>
                         </li>
                         <li>
-                            <a href="/scheduler">Calendário</a>
+                            <a href="/calendar">Calendário</a>
                         </li>
                         <li>
                             <a href="/contacts">Contactos</a>

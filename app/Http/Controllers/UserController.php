@@ -176,7 +176,7 @@ class UserController extends Controller
             //$absence->end_date = $date1->format('d-m-y H:i');
             if($date1String == $date2String) {
                 $absence->start_date = $date1->format('d-m-y');
-                $absence->end_date = $date2->format('H') - 0;
+                $absence->end_date = $date2->format('H') - $date1->format('H');
             } else {
                 $absence->start_date = $date1->format('d-m-y');
                 $absence->end_date = $date2->format('d-m-y');
@@ -190,7 +190,7 @@ class UserController extends Controller
         $task = \App\TaskTimer::leftJoin('expertise', 'expertise.id', '=', 'expertise_id')
                                   ->leftJoin('phases', 'phases.id', '=', 'phase_id')
                                   ->where('task_timer.id', $r['id'])
-                                  ->select('task_name as name', 'phases.sigla as phaseSigla', 'expertise.sigla as expertiseSigla', 'date as start_date', 'subexpertise_id as subexpertise_id', 'expertise_id as expertise_id', 'phase_id as phase_id', 'hours', 'minutes')
+                                  ->select('task_name as name', 'phases.sigla as phaseSigla', 'expertise.sigla as expertiseSigla', 'date as start_date', 'subexpertise_id as subexpertise_id', 'expertise_id as expertise_id', 'phase_id as phase_id', 'hours', 'minutes', 'approved')
                                   ->first();
 
         $subExpertise = \App\Expertise::where('id', $task->subexpertise_id)->first();
@@ -208,5 +208,21 @@ class UserController extends Controller
         $task->minutes = $r['minutes'];
         $task->approved = 0;
         $task->save();
+    }
+
+    public function removeTaskTimer(Request $r) {
+        $taskTimer = \App\TaskTimer::find($r['id']);
+        $ganttTask = \App\GanttTask::find($taskTimer->ganttTask_id);
+
+        $taskTimers = \App\TaskTimer::where('ganttTask_id', $taskTimer->ganttTask_id)->get();
+        if(count($taskTimers) > 1) {
+            $duration = ceil($taskTimer->hours + ($taskTimer->minutes / 60));
+            $ganttTask->duration -= $duration;
+            $ganttTask->save();
+            $taskTimer->delete();
+        } else {
+            $ganttTask->delete();
+            $taskTimer->delete();
+        }
     }
 }

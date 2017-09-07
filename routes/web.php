@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
 
 		Route::middleware('projects')->group(function () {
 			//project
+			Route::post('/removeProjectTask', 'ProjectController@removeProjectTask');
+			Route::post('/project/team/editMember', 'ProjectController@editTeamMember');
 			Route::get('projects', 'ProjectController@show_projects');
 			Route::get('projects/new', 'ProjectController@create_project_form');
 			Route::post('projects/new', 'ProjectController@create_project');
@@ -106,10 +108,12 @@ Route::middleware('auth')->group(function () {
 			Route::post('/project/plannedTasks/getTaskDetails', 'ProjectController@getPlannedTaskDetails');
 			Route::post('/project/gantt/getPlannedTaskDetails', 'ProjectController@getPlannedTaskDetailsFromGantt');
 			Route::post('/project/gantt/editPlannedTaskFromGantt', 'ProjectController@editPlannedTaskFromGantt');
+			Route::post('/project/gantt/editPlannedTaskFromGeneralGantt', 'ProjectController@editPlannedTaskFromGeneralGantt');
 			Route::post('/project/plannedTasks/editTask', 'ProjectController@editPlannedTask');
 			Route::get('getProject/{id}', 'ProjectController@getProject');
 			Route::get('/emailAndDepartmentFromUser/{id}', 'ProjectController@getEmailAndDepartmentFromUser');
 			Route::get('/emailAndPhoneFromContact/{id}', 'ProjectController@getEmailAndPhoneFromContact');
+			Route::post('/project/outsideTeam/editMember', 'ProjectController@editProjectOutsideTeamMember');
 		});
 
 		Route::middleware('calendar')->group(function () {
@@ -118,6 +122,9 @@ Route::middleware('auth')->group(function () {
 			Route::post('/scheduler/addPlannedTask', 'SchedulerController@addPlannedTask');
 			Route::post('/scheduler/addEventToCalDav','CalDavController@addEventToCalDav');
 			Route::match(['get', 'post'], '/scheduler_data', "SchedulerController@data");
+			Route::get('/calendar', function() {
+				return view('roundcubeCalendar');
+			});
 		});
 
 
@@ -297,6 +304,7 @@ Route::middleware('auth')->group(function () {
 			Route::post('management/hoursApproval/filter', 'ManagementController@filterApproval');
 			Route::get('personal/report', 'PersonalController@getReport');
 			Route::post('personal/reportFromYear', 'PersonalController@getReportFromYear');
+			Route::post('removeTaskTimer', 'UserController@removeTaskTimer');
 
 			//profile
 			Route::get('profile/{id}', 'UserController@profile');
@@ -315,7 +323,7 @@ Route::post('/postChangeDefaultPassword', 'ChangeDefaultPasswordController@chang
 Route::post('/resetPassword', 'ChangeDefaultPasswordController@resetPassword')->middleware('auth');
 
 Auth::routes();
-Route::get('/cenas', 'CalDavController@cenas');
+Route::get('/cenas', 'ProjectController@cenas');
 Route::get('/timeout', function() {
 	return view('timeout');
 });
