@@ -15,7 +15,8 @@ class UserController extends Controller
 {
     //
     public function profile($id) {
-    	return view('/profile', array('user' => \App\User::find($id), 'activeL' => 'perfil', 'activeLL' => 'geral'));
+      $userDetails = \App\User_Detail::where('user_id', $id)->first();
+    	return view('/profile', array('user' => \App\User::find($id), 'activeL' => 'perfil', 'activeLL' => 'geral', 'userDetails' => $userDetails));
     }
 
     public function update_avatar(Request $request, $id) {

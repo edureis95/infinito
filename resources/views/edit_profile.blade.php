@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+	@include('layouts.personal_nav')
 	@include('layouts.user_profile_nav')
 	<div class="col-xs-12 insideContainer" style="padding-left: 0;">
 

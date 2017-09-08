@@ -20,9 +20,10 @@
 			</div>
 			<table class="smallFontTable table">
 				<thead>
-					<th class="text-center" style="width: 33.3%;">Código</th>
-					<th class="text-center" style="width: 33.3%;">Sigla</th>
-					<th class="text-left" style="width: 33.3%;">Nome</th>
+					<th class="text-center">Código</th>
+					<th class="text-center">Sigla</th>
+					<th class="text-left">Nome</th>
+					<th></th>
 				</thead>
 				<tbody class="text-center">
 					<tr class="hidden hiddenForm">
@@ -35,10 +36,23 @@
 						</form>
 					</tr>
 					@foreach($functions as $function)
-					<tr>
+					<tr class="functionEdit{{$function->id}} hidden">
+						<td><input class="input-sm form-control codeInput" required name="code" value="{{$function->code}}" type="text"></td>
+						<td><input class="input-sm form-control siglaInput" required name="sigla" type="text" value="{{$function->sigla}}"></td>
+						<td><input class="input-sm form-control nameInput" required name="name" type="text" value="{{$function->name}}"></td>
+						<td class="text-center">
+							<button class="btn btn-xs btn-danger cancelEdit" content="{{$function->id}}"><i class="glyphicon glyphicon-edit"></i></button>
+							<button class="btn btn-xs btn-success saveEdit" content="{{$function->id}}"><i class="glyphicon glyphicon-check"></i></button>
+						</td>
+					</tr>
+					<tr class="function{{$function->id}}">
 						<td>{{str_pad($function->code, 3, '0', STR_PAD_LEFT)}}</td>
 						<td>{{$function->sigla}}</td>
 						<td class="text-left">{{$function->name}}</td>
+						<td class="text-center">
+							<button class="btn btn-warning btn-xs editFunction" content="{{$function->id}}"><i class="glyphicon glyphicon-edit"></i></button>
+							<button content='{{$function->id}}' class="btn btn-danger btn-xs removeFunction" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+						</td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -62,6 +76,56 @@
 
 	$('.saveFunction').click(function() {
 		$('.submitButton').click();
+	})
+
+	$('.editFunction').click(function() {
+		var id = $(this).attr('content');
+		$('.function' + id).addClass('hidden');
+		$('.functionEdit' + id).removeClass('hidden');
+	})
+
+	$('.cancelEdit').click(function() {
+		var id = $(this).attr('content');
+		$('.function' + id).removeClass('hidden');
+		$('.functionEdit' + id).addClass('hidden');
+	})
+
+	$('.saveEdit').click(function() {
+		var id = $(this).attr('content');
+		var code = $('.functionEdit' + id + ' .codeInput').val();
+		var sigla = $('.functionEdit' + id + ' .siglaInput').val();
+		var name = $('.functionEdit' + id + ' .nameInput').val();
+		$.ajax({
+			method: 'POST',
+			url: '/settings/projects/generalUserFunction/editFunction',
+			data: {
+				id: id,
+				code: code,
+				sigla: sigla,
+				name: name
+			},
+			success: function() {
+				location.reload();
+			}
+		})
+	})
+
+	$('.removeFunction').click(function() {
+		var id = $(this).attr('content');
+		var txt;
+		var r = confirm("Tem a certeza que quer eliminar esta função?");
+		if (r == true) {
+			$.ajax({
+				method: 'POST',
+				url: '/settings/projects/generalUserFunction/removeFunction',
+				data: {
+					id: id
+				},
+				success: function() {
+					location.reload();
+				}
+			})
+		}
 	})
 </script>
 

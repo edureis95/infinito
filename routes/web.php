@@ -254,6 +254,10 @@ Route::middleware('auth')->group(function () {
 			Route::post('/settings/projects/generalExpertise/removeExpertise', 'SettingsController@removeGeneralExpertise');
 			Route::post('/settings/projects/planning/editPlanningType', 'SettingsController@editPlanningType');
 			Route::post('/settings/contacts/projects/removePlanningType', 'SettingsController@removePlanningType');
+			Route::post('/settings/projects/userFunction/editFunction', 'SettingsController@editProjectUserFunction');
+			Route::post('/settings/projects/userFunction/removeFunction', 'SettingsController@removeProjectUserFunction');
+			Route::post('/settings/projects/generalUserFunction/editFunction', 'SettingsController@editProjectGeneralUserFunction');
+			Route::post('/settings/projects/generalUserFunction/removeFunction', 'SettingsController@removeProjectGeneralUserFunction');
 		});
 
 		Route::middleware('email')->group(function () {

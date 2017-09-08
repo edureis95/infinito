@@ -793,4 +793,28 @@ class SettingsController extends Controller
         \App\Planning_Type::find($r['id'])->delete();
     }
 
+    public function editProjectUserFunction(Request $r) {
+        $function = \App\Project_User_Function::find($r['id']);
+        $function->code = $r['code'];
+        $function->sigla = $r['sigla'];
+        $function->name = $r['name'];
+        $function->save();
+    }
+
+    public function removeProjectUserFunction(Request $r) {
+        \App\Project_User_Function::find($r['id'])->delete();
+    }
+
+    public function editProjectGeneralUserFunction(Request $r) {
+        $function = \App\Project_General_User_Function::find($r['id']);
+        $function->code = $r['code'];
+        $function->sigla = $r['sigla'];
+        $function->name = $r['name'];
+        $function->save();
+    }
+
+    public function removeProjectGeneralUserFunction(Request $r) {
+        \App\Project_General_User_Function::find($r['id'])->delete();
+    }
+
 }
