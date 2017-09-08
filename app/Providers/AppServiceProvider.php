@@ -161,7 +161,11 @@ class AppServiceProvider extends ServiceProvider
 
                 View::share('absenceApprovalList', count($absenceApproval));
 
-                $notificationNumber = $absenceApproval->count() + $hoursApproval->count();
+                $hoursNotApproved = \App\TaskTimer::where('approved', -1)->where('user_id', Auth::user()->id)->get();
+
+                View::share('hoursNotApproved', count($hoursNotApproved));
+
+                $notificationNumber = $absenceApproval->count() + $hoursApproval->count() + $hoursNotApproved->count();
                 View::share('notificationNumber', $notificationNumber);
             }
 

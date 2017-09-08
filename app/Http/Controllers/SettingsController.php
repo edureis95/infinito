@@ -577,7 +577,7 @@ class SettingsController extends Controller
 
     public function getGeneralExpertise() {
 
-        $expertise = \App\General_Expertise::all();
+        $expertise = \App\General_Expertise::orderBy('code')->get();
 
         return view ('generalExpertiseSettings', array('activeL' => 'projects', 'activeLL' => 'especialidadesGerais', 'expertise' => $expertise));
     }
@@ -700,6 +700,97 @@ class SettingsController extends Controller
         $type->save();
 
         return redirect()->back();
+    }
+
+    public function editContactType(Request $r) {
+        $type = \App\Contact_Type::find($r['id']);
+        $type->code = $r['code'];
+        $type->sigla = $r['sigla'];
+        $type->name = $r['name'];
+        $type->save();
+    }
+
+    public function removeContactType(Request $r) {
+        \App\Contact_Type::find($r['id'])->delete();
+    }
+
+    public function editContactSource(Request $r) {
+        $source = \App\Contact_Source::find($r['id']);
+        $source->code = $r['code'];
+        $source->sigla = $r['sigla'];
+        $source->name = $r['name'];
+        $source->save();
+    }
+
+    public function removeContactSource(Request $r) {
+        \App\Contact_Source::find($r['id'])->delete();
+    }
+
+    public function editCompanyContactType(Request $r) {
+        $type = \App\Company_Contact_Type::find($r['id']);
+        $type->code = $r['code'];
+        $type->sigla = $r['sigla'];
+        $type->name = $r['name'];
+        $type->save();
+    }
+
+    public function removeCompanyContactType(Request $r) {
+        \App\Company_Contact_Type::find($r['id'])->delete();
+    }
+
+    public function editCompanyContactField(Request $r) {
+        $type = \App\Company_Contact_Field::find($r['id']);
+        $type->code = $r['code'];
+        $type->sigla = $r['sigla'];
+        $type->name = $r['name'];
+        $type->save();
+    }
+
+    public function removeCompanyContactField(Request $r) {
+        \App\Company_Contact_Field::find($r['id'])->delete();
+    }
+
+    public function editCompanyContactDimension(Request $r) {
+        $type = \App\Company_Contact_Dimension::find($r['id']);
+        $type->code = $r['code'];
+        $type->sigla = $r['sigla'];
+        $type->name = $r['name'];
+        $type->save();
+    }
+
+    public function removeCompanyContactDimension(Request $r) {
+        \App\Company_Contact_Dimension::find($r['id'])->delete();
+    }
+
+    public function editAbsenceReason(Request $r) {
+        $reason = \App\Absence_Reason::find($r['id']);
+        $reason->code = $r['code'];
+        $reason->name = $r['name'];
+        $reason->save();
+    }
+
+    public function editGeneralExpertise(Request $r) {
+        $expertise = \App\General_Expertise::find($r['id']);
+        $expertise->code = $r['code'];
+        $expertise->name = $r['name'];
+        $expertise->sigla = $r['sigla'];
+        $expertise->save();
+    }
+
+    public function removeGeneralExpertise(Request $r) {
+        \App\General_Expertise::find($r['id'])->delete();
+    }
+
+    public function editPlanningType(Request $r) {
+        $type = \App\Planning_Type::find($r['id']);
+        $type->code = $r['code'];
+        $type->sigla = $r['sigla'];
+        $type->name = $r['name'];
+        $type->save();
+    }
+
+    public function removePlanningType(Request $r) {
+        \App\Planning_Type::find($r['id'])->delete();
     }
 
 }

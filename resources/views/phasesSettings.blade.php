@@ -53,7 +53,7 @@
 			</tr>
 			@foreach($phases as $phase) 
 				<tr>
-					<td content='{{$phase->id}}' class="code">{{$phase->code}}</td>
+					<td content='{{$phase->id}}' class="code">{{str_pad($phase->code, 3, '0', STR_PAD_LEFT)}}</td>
 					<td content='{{$phase->id}}' class="sigla">{{$phase->sigla}}</td>
 					<td content='{{$phase->id}}' class="phase name">{{$phase->name}}</td>
 				</tr>
@@ -71,7 +71,7 @@
 				<tbody>
 				@foreach($phases as $phase) 
 					<tr class="editablePhase" content="{{$phase->id}}">
-						<td content='{{$phase->id}}' class="code">{{$phase->code}}</td>
+						<td content='{{$phase->id}}' class="code">{{str_pad($phase->code, 3, '0', STR_PAD_LEFT)}}</td>
 						<td content='{{$phase->id}}' class="sigla">{{$phase->sigla}}</td>
 						<td content='{{$phase->id}}' class="phase name">{{$phase->name}}</td>
 						<td data-editable='false'><button content='{{$phase->id}}' style="padding: 3px 5px;" class="btn btn-danger removePhase" type="button"><i class="glyphicon glyphicon-minus"></i></button></td>

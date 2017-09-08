@@ -405,6 +405,15 @@
                         </li>
                         <li class="divider" style="margin: 1;"></li>
                         <li>
+                            <a href="/personal/hoursApproval" style="height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Horas Não Aprovadas - <?php echo e($hoursNotApproved); ?>
+
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" style="margin: 1;"></li>
+                        <li>
                             <a class="text-center" href="/management/hoursApproval">
                                 <strong>Ver Aprovações</strong>
                                 <i class="fa fa-angle-right"></i>

@@ -239,6 +239,21 @@ Route::middleware('auth')->group(function () {
 			Route::post('/settings/contacts/companyField/addType', 'SettingsController@addCompanyContactField');
 			Route::get('/settings/contacts/companyDimensions', 'SettingsController@getCompanyContactDimensions');
 			Route::post('/settings/contacts/companyDimension/addType', 'SettingsController@addCompanyContactDimension');
+			Route::post('/settings/contacts/types/editType', 'SettingsController@editContactType');
+			Route::post('/settings/contacts/types/removeType', 'SettingsController@removeContactType');
+			Route::post('/settings/contacts/sources/editSource', 'SettingsController@editContactSource');
+			Route::post('/settings/contacts/source/removeSource', 'SettingsController@removeContactSource');
+			Route::post('/settings/contacts/companyTypes/editType', 'SettingsController@editCompanyContactType');
+			Route::post('//settings/contacts/companyTypes/removeType', 'SettingsController@removeCompanyContactType');
+			Route::post('/settings/contacts/companyFields/editField', 'SettingsController@editCompanyContactField');
+			Route::post('/settings/contacts/companyFields/removeField', 'SettingsController@removeCompanyContactField');
+			Route::post('/settings/contacts/companyDimensions/editDimension', 'SettingsController@editCompanyContactDimension');
+			Route::post('/settings/contacts/companyDimensions/removeDimension', 'SettingsController@removeCompanyContactDimension');
+			Route::post('/settings/company/absence/editReason', 'SettingsController@editAbsenceReason');
+			Route::post('/settings/projects/generalExpertise/editExpertise', 'SettingsController@editGeneralExpertise');
+			Route::post('/settings/projects/generalExpertise/removeExpertise', 'SettingsController@removeGeneralExpertise');
+			Route::post('/settings/projects/planning/editPlanningType', 'SettingsController@editPlanningType');
+			Route::post('/settings/contacts/projects/removePlanningType', 'SettingsController@removePlanningType');
 		});
 
 		Route::middleware('email')->group(function () {

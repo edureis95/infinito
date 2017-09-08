@@ -15,7 +15,9 @@
 				<tr>
 					<td> 
 						{{$profile->name}}
-						<button content='{{$profile->id}}' style="padding: 3px 5px; margin-bottom: 5px;" class="btn btn-danger removeProfile" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+						@if($profile->id != 1)
+							<button content='{{$profile->id}}' style="padding: 3px 5px; margin-bottom: 5px;" class="btn btn-danger removeProfile" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+						@endif
 					</td>
 				</tr>
 				@endforeach

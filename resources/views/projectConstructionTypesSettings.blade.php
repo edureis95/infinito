@@ -28,7 +28,7 @@
 				</tr>
 				@foreach($constructionTypes as $type)
 				<tr>
-					<td>{{$type->code}}</td>
+					<td>{{str_pad($type->code, 3, '0', STR_PAD_LEFT)}}</td>
 					<td>{{$type->name}}</td>
 					<td></td>
 					<td></td>
@@ -55,7 +55,7 @@
 					</tr>
 					@foreach($constructionTypes as $type)
 					<tr class="editableType" content="{{$type->id}}">
-						<td>{{$type->code}}</td>
+						<td>{{str_pad($type->code, 3, '0', STR_PAD_LEFT)}}</td>
 						<td>{{$type->name}}</td>
 						<td><button content='{{$type->id}}' style="padding: 3px 5px; margin-bottom: 5px;" class="btn btn-danger removeType" type="button"><i class="glyphicon glyphicon-minus"></i></button></td>
 						<td></td>

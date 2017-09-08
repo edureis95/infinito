@@ -20,9 +20,10 @@
 			</div>
 			<table class="smallFontTable table">
 				<thead>
-					<th class="text-center" style="width: 33.3%;">Código</th>
-					<th class="text-center" style="width: 33.3%;">Sigla</th>
-					<th class="text-left" style="width: 33.3%;">Nome</th>
+					<th class="text-center">Código</th>
+					<th class="text-center">Sigla</th>
+					<th class="text-left">Nome</th>
+					<th></th>
 				</thead>
 				<tbody class="text-center">
 					<tr class="hidden hiddenForm">
@@ -35,10 +36,23 @@
 						</form>
 					</tr>
 					@foreach($sources as $source) 
-					<tr>
-						<td>{{$source->code}}</td>
+					<tr class="sourceEdit{{$source->id}} hidden">
+						<td><input class="input-sm form-control codeInput" required name="code" value="{{$source->code}}" type="text"></td>
+						<td><input class="input-sm form-control siglaInput" required name="sigla" type="text" value="{{$source->sigla}}"></td>
+						<td><input class="input-sm form-control nameInput" required name="name" type="text" value="{{$source->name}}"></td>
+						<td class="text-center">
+							<button class="btn btn-xs btn-danger cancelEdit" content="{{$source->id}}"><i class="glyphicon glyphicon-edit"></i></button>
+							<button class="btn btn-xs btn-success saveEdit" content="{{$source->id}}"><i class="glyphicon glyphicon-check"></i></button>
+						</td>
+					</tr>
+					<tr class="source{{$source->id}}">
+						<td>{{str_pad($source->code, 3, '0', STR_PAD_LEFT)}}</td>
 						<td>{{$source->sigla}}</td>
 						<td class="text-left">{{$source->name}}</td>
+						<td class="text-center">
+							<button class="btn btn-warning btn-xs editSource" content="{{$source->id}}"><i class="glyphicon glyphicon-edit"></i></button>
+							<button content='{{$source->id}}' class="btn btn-danger btn-xs removeSource" type="button"><i class="glyphicon glyphicon-minus"></i></button>
+						</td>
 					</tr>
 					@endforeach
 				</tbody>
@@ -62,6 +76,56 @@
 
 	$('.saveFunction').click(function() {
 		$('.submitButton').click();
+	})
+
+	$('.editSource').click(function() {
+		var id = $(this).attr('content');
+		$('.source' + id).addClass('hidden');
+		$('.sourceEdit' + id).removeClass('hidden');
+	})
+
+	$('.cancelEdit').click(function() {
+		var id = $(this).attr('content');
+		$('.source' + id).removeClass('hidden');
+		$('.sourceEdit' + id).addClass('hidden');
+	})
+
+	$('.saveEdit').click(function() {
+		var id = $(this).attr('content');
+		var code = $('.sourceEdit' + id + ' .codeInput').val();
+		var sigla = $('.sourceEdit' + id + ' .siglaInput').val();
+		var name = $('.sourceEdit' + id + ' .nameInput').val();
+		$.ajax({
+			method: 'POST',
+			url: '/settings/contacts/sources/editSource',
+			data: {
+				id: id,
+				code: code,
+				sigla: sigla,
+				name: name
+			},
+			success: function() {
+				location.reload();
+			}
+		})
+	})
+
+	$('.removeSource').click(function() {
+		var id = $(this).attr('content');
+		var txt;
+		var r = confirm("Tem a certeza que quer eliminar esta origem?");
+		if (r == true) {
+			$.ajax({
+				method: 'POST',
+				url: '/settings/contacts/source/removeSource',
+				data: {
+					id: id
+				},
+				success: function() {
+					location.reload();
+				}
+			})
+		}
 	})
 </script>
 
