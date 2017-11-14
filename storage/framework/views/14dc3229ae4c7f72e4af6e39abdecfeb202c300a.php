@@ -123,20 +123,15 @@ $('.expertiseSelect').change(function() {
 	showSubExpertise();
 });
 
-var initialCoordinatorSelect = $('.coordinatorSelect').html();
 function updateContacts() {
-	$('.coordinatorSelect').empty();
-	$('.coordinatorSelect').append(initialCoordinatorSelect);
-	var company = $('.companySelect').val();
-	var toAppend = "";
-	toAppend += $('.coordinatorSelect option[value="0"]')[0].outerHTML;
-	$('.coordinatorSelect .company' + company).each(function() {
-		toAppend += $(this)[0].outerHTML;
-	})
-	$('.coordinatorSelect').empty();
-	$('.coordinatorSelect').append(toAppend);
 	$('.coordinatorSelect option[value="0"]').prop('selected', true);
-	
+	$('.coordinatorSelect .coordinator').each(function() {
+		$(this).addClass('hidden');
+	});
+	var company = $('.companySelect').val();
+	$('.coordinatorSelect .company' + company).each(function() {
+		$(this).removeClass('hidden');
+	})
 }
 
 $('.companySelect').change(function() {
@@ -149,6 +144,7 @@ function getEmailAndPhone() {
 	var user_id = $('.coordinatorSelect').val();
 	if(user_id != 0) {
 		$.get('/emailAndPhoneFromContact/' + user_id, function(response) {
+			console.log(response);
 			$('.emailSpace').text(response.email);
 			$('.phoneSpace').text(response.phoneNumber);
 		})

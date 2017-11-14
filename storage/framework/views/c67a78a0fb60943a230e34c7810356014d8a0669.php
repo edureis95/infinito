@@ -2,11 +2,11 @@
 
 <?php $__env->startSection('content'); ?>
 
-<div class="col-md-11">
+<div class="col-xs-12" style="max-width: 100%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.user_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
+	<div class="panel panel-default borderless">
+		<div class="panel-body" style="padding: 0;">
 			<table class="table borderless permissionTable text-center">
 				<thead>
 					<th class="text-center"> Permissões </th>
@@ -46,6 +46,16 @@
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</tr>
 				<tr>
+					<td> Área Pessoal </td>
+					<?php $__currentLoopData = $permissionProfiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profile): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<?php if($profile->personalArea == 1): ?>
+						<td><input id="personalArea<?php echo e($profile->id); ?>" checked type="checkbox"></td>
+					<?php else: ?>
+						<td><input id="personalArea<?php echo e($profile->id); ?>" type="checkbox"></td>
+					<?php endif; ?>
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tr>
+				<tr>
 					<td> Empresa </td>
 					<?php $__currentLoopData = $permissionProfiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profile): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<?php if($profile->company == 1): ?>
@@ -72,6 +82,26 @@
 						<td><input id="settings<?php echo e($profile->id); ?>" checked type="checkbox"></td>
 					<?php else: ?>
 						<td><input id="settings<?php echo e($profile->id); ?>" type="checkbox"></td>
+					<?php endif; ?>
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tr>
+				<tr>
+					<td> Gestão </td>
+					<?php $__currentLoopData = $permissionProfiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profile): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<?php if($profile->management == 1): ?>
+						<td><input id="management<?php echo e($profile->id); ?>" checked type="checkbox"></td>
+					<?php else: ?>
+						<td><input id="management<?php echo e($profile->id); ?>" type="checkbox"></td>
+					<?php endif; ?>
+					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tr>
+				<tr>
+					<td> Finanças </td>
+					<?php $__currentLoopData = $permissionProfiles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $profile): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<?php if($profile->finances == 1): ?>
+						<td><input id="finances<?php echo e($profile->id); ?>" checked type="checkbox"></td>
+					<?php else: ?>
+						<td><input id="finances<?php echo e($profile->id); ?>" type="checkbox"></td>
 					<?php endif; ?>
 					<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</tr>

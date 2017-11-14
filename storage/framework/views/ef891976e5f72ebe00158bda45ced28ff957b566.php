@@ -1,14 +1,14 @@
 <?php $__env->startSection('content'); ?>
 
 
-<div class="col-xs-12 insideContainer">
-	<?php echo $__env->make('layouts.commercial_project_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<?php echo $__env->make('layouts.commercial_project_secondNav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="col-xs-12" style="max-width: 98%;">
+	<?php echo $__env->make('managementProject.project_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('managementProject.project_second_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body link-nav">
+		<div class="panel-body link-nav" style="padding: 0;">
 			<div class="col-xs-12">
 				<div class="panel panel-info">
-					<div class="panel-heading smallPanelHeading">
+					<div class="panel-heading">
 						<h5>Descrição <button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-success editDescriptionButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-danger cancelEditDescription hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button></h5>
 					</div>
 					<div class="panel-body">
@@ -62,7 +62,7 @@
 					</div>
 				</div>
 				<div class="panel panel-info">
-					<div class="panel-heading smallPanelHeading">
+					<div class="panel-heading">
 						<h5>Caracterização <button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-success editButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button style="padding: 3px 5px; vertical-align: middle;" class="btn btn-danger cancelEditButton hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button></h5>
 					</div>
 					<div class="panel-body">

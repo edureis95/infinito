@@ -32,18 +32,14 @@
 
         .absence {
             background-color: orange !important;
+            border-style: solid !important;
             border-color: orange !important;
             border-radius: 0 !important;
             color: white !important;
-            
-            font-family: Arial !important;
-            line-height: 17px !important;
-        }
-
-        .dhx_cal_event_clear.absence {
-            border-style: solid !important;
             font-size: 12px !important;
             padding-left: 5px !important;
+            font-family: Arial !important;
+            line-height: 17px !important;
         }
 
         .dhx_cal_date {
@@ -89,16 +85,6 @@
                 </select>    
             </td>
         </tr>
-        <tr class="attendees hidden">
-            <td><b>Convidados</b></td>
-            <td>
-                <select multiple="true" name="attendees[]" class="form-control attendeesOptions" style="width: 100%;">
-                <?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </select>    
-            </td>
-        </tr>
         <tr>
             <td><b>Dia Único</b></td>
             <td><input type="radio" value="0" id="onlyDayRadio" checked name="timeType"></td>
@@ -109,11 +95,11 @@
         </tr>
         <tr>
             <td><b>Início</b></td>
-            <td><input class="form-control startDate" type="datetime-local"></td>
+            <td><input class="form-control startDate" type="date"></td>
         </tr>
         <tr class="hidden periodOption">
             <td><b>Fim</b></td>
-            <td><input class="form-control endDate" type="datetime-local"></td>
+            <td><input class="form-control endDate" type="date"></td>
         </tr>
         <tr class="onlyDayOption">
             <td><b>Tempo(h)</b></td>
@@ -122,7 +108,7 @@
     </table>
     <input type="button" name="save" value="Guardar" id="save" style='width:100px;' onclick="save_form()">
     <input type="button" name="close" value="Fechar" id="close" style='width:100px;' onclick="close_form()">
-    <input type="button" name="delete" value="Eliminar" id="delete" style='width:100px;' onclick="delete_event()">
+    <input type="button" name="delete" value="Cancelar" id="delete" style='width:100px;' onclick="delete_event()">
 </div>
 </div>
 <div class="col-md-12" style=" height:100%; width: 98%;">
@@ -184,15 +170,9 @@
                                 if(this.value == 7) {
                                     $('.absenceType').removeClass('hidden');
                                     $('.projectRow').addClass('hidden');
-                                    $('.attendees').addClass('hidden');
-                                } else if(this.value == 3) {
-                                    $('.absenceType').addClass('hidden');
-                                    $('.projectRow').removeClass('hidden');
-                                    $('.attendees').removeClass('hidden');
                                 } else {
                                     $('.absenceType').addClass('hidden');
                                     $('.projectRow').removeClass('hidden');
-                                    $('.attendees').addClass('hidden');
                                 }
                             });
 
@@ -217,30 +197,40 @@
                                 $('.descriptionInput').val(ev.text);
                                 var month = ('0' + (ev.start_date.getMonth()+1)).slice(-2)
                                 var day = ('0' + (ev.start_date.getDate())).slice(-2)
-                                var hours = ('0' + (ev.start_date.getHours())).slice(-2)
-                                var minutes = ('0' + (ev.start_date.getMinutes())).slice(-2)
-                                $('.startDate').val(ev.start_date.getFullYear() + "-" + month + "-" + day + 'T' + hours + ':' + minutes);
+                                $('.startDate').val(ev.start_date.getFullYear() + "-" + month + "-" + day);
                                 $('.typeSelect option[value="'+ ev.type + '"]').prop('selected', true);
-                                if(ev.type == 3)
-                                    $('.attendees').removeClass('hidden');
                             };
 
                             function save_form() {
                                 var ev = scheduler.getEvent(scheduler.getState().lightbox_id);
-                                //console.log($('.attendeesOptions').val());
                                 ev.approved = 0;
                                 ev.text = $('.descriptionInput').val();
                                 ev.user_id = <?php echo e(Auth::user()->id); ?>;
                                 ev.type = $('.typeSelect').val();
                                 if(ev.type == 7)
-                                    ev.absence_type = $('.absenceReason').val();
-                                else
-                                    ev.absence_type = 3;
+                                    ev.absence_type = $('.absenceReason').val(),
                                 
                                 ev.start_date = new Date($('.startDate').val());
                                 var project_id = $('.projectSelect').val();
                                 if($("#periodRadio").is(':checked')) {
                                     ev.end_date = new Date($('.endDate').val());
+                                    if(ev.type != 7) {
+                                        $.ajax({
+                                          async: false,
+                                          type: "POST",
+                                          url: '/scheduler/addPlannedTask',
+                                          data: {
+                                            'project_id': project_id,
+                                            'name': ev.text,
+                                            'start_date': $('.startDate').val(),
+                                            'end_date': $('.endDate').val(),
+                                            'type': $('.typeSelect').val()
+                                          },
+                                          success: function(response) {
+                                            ev.plannedTask_id = response;
+                                          }
+                                        });
+                                    }
                                 } else {
                                     ev.end_date = new Date($('.startDate').val());
                                     ev.end_date.setTime(ev.end_date.getTime() + ($('.timeNumber').val()*60*60*1000));
@@ -249,21 +239,6 @@
                                 ev.custom2 = html("custom2").value;*/
 
                                 scheduler.endLightbox(true, html("my_form"));
-                                setTimeout(function() {
-                                    $.ajax({
-                                      type: "POST",
-                                      url: '/scheduler/addEventToCalDav',
-                                      data: {
-                                        'id' : ev.id,
-                                        'text' : ev.text,
-                                        'start_date' : ev.start_date.toLocaleString(),
-                                        'end_date' : ev.end_date.toLocaleString()
-                                      },
-                                      success: function(response) {
-                                        console.log(response);
-                                      }
-                                    });
-                                }, 2000);
                             }
                             function close_form() {
                                 scheduler.endLightbox(false, html("my_form"));
@@ -331,10 +306,10 @@
 
                               scheduler.templates.event_bar_text = function(start,end,ev){
                                  if(ev.user_id != undefined) {
-                                    if(ev.u_sigla !=  undefined)
-                                        return ev.u_sigla + ' - ' + ev.text;
-                                    else
-                                        return '<?php echo e(Auth::user()->sigla); ?>' + ' - ' + ev.text;
+                                    <?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        if(<?php echo e($user->id); ?> == ev.user_id)
+                                            return '<?php echo e($user->sigla); ?>' + ' - ' + ev.text;
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                  } else
                                     return ev.text; 
                               };
@@ -345,7 +320,8 @@
                             });
 
                             scheduler.attachEvent("onEventSave",function(id,data){
-                               console.log(id);
+                                data.user_id = $('#userID').text();
+                                return true;
                             });
 
                             scheduler.filter_month = scheduler.filter_day = scheduler.filter_week = function(id, event) {

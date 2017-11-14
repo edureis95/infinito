@@ -13,7 +13,7 @@
 	<div class="panel-heading nameAndButtons">
 		<button class="btn btn-warning editDescriptionButton pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button><button class="btn btn-danger cancelEditDescription hidden pull-right" type="button"><i class="glyphicon glyphicon-edit"></i></button>
 		<button type="button" class="hidden saveContact btn btn-success pull-right">Guardar</button>
-		<button class="btn btn-danger removeContact pull-right hidden" type="button">Remover Contacto</button>
+		<button class="btn btn-danger removeContact pull-right" type="button">Remover Contacto</button>
 		<h3 style="padding-left: 6px;"><b><span class="overlayFirstName"></span> <span class="overlayLastName"></span></b></h3>
 	</div>
   <div class="panel panel-info">
@@ -56,69 +56,24 @@
 			  			<div class="col-xs-10">
 				  			<table class="table borderless information" style="">
 				  				<tr>
-				  					<td><span class="inputLabel">Primeiro Nome: </span></td>
-				  					<td style="width: 30%"><input class="overlayInputFirstName form-control" name="firstName" type="text"></td>
-
-				  					<td><span class="inputLabel">Nomes do Meio: </span></td>
-				  					<td style="width: 30%"><input class="overlayInputMiddleNames form-control" name="middleName" type="text"></td>
-
-				  					<td><span class="inputLabel text-right">Último Nome: </span></td>
-				  					<td style="width: 30%"><input class="overlayInputLastName form-control" name="lastName" type="text"></td>
+				  					<td><span class="inputLabel">Primeiro Nome: </span><input class="overlayInputFirstName form-control" name="firstName" type="text"> </td>
+				  					<td><span class="inputLabel">Nomes do Meio: </span><input class="overlayInputMiddleNames form-control" name="middleName" type="text"></td>
+				  					<td><span class="inputLabel">Último Nome: </span><input class="overlayInputLastName form-control" name="lastName" type="text"></td>
 				  				</tr>
 				  				<tr>
-				  					<td><span class="inputLabel">Email: </span></td>
-				  					<td><input class="overlayInputEmail form-control" name="email" type="text"></td>
-
-				  					<td><span class="inputLabel">Telemóvel: </span></td>
-				  					<td><input class="overlayInputPhoneNumber form-control" name="phoneNumber" type="text"></td>
-
-				  					<td><span class="inputLabel">Skype: </span></td>
-				  					<td><input class="overlayInputSkype form-control" name="skype" type="text"></td>
+				  					<td><span class="inputLabel">Email: </span><input class="overlayInputEmail form-control" name="email" type="text"></td>
+				  					<td><span class="inputLabel">Telemóvel: </span><input class="overlayInputPhoneNumber form-control" name="phoneNumber" type="text"></td>
 				  				</tr>
 				  				<tr>
-				  					<td><span class="inputLabel">Empresa: </span></td>
-				  					<td>
+				  					<td> 
+				  						<span class="inputLabel">Empresa: </span>
 				  						<select class="overlayInputCompany form-control" name="company">
 				  							<option value="0">Sem Empresa</option>
 					  						<?php $__currentLoopData = $companyContacts; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $contact): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					  						<option value="<?php echo e($contact->id); ?>"><?php echo e($contact->name); ?></option>
 					  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				  						</select>
-				  					</td>
-
-				  					<td><span class="inputLabel">Posição: </span></td>
-				  					<td><input class="overlayInputCompanyPosition form-control" name="position" type="text"></td>
-				  				</tr>
-				  				<tr>
-				  					<td><span class="inputLabel">Tipo de Contacto: </span></td>
-				  					<td>
-				  						<select class="overlayInputContactType form-control" name="type">
-				  							<option value="0">Sem tipo</option>
-					  						<?php $__currentLoopData = $contactTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					  						<option value="<?php echo e($type->id); ?>"><?php echo e($type->name); ?></option>
-					  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				  						</select>
-				  					</td>
-
-				  					<td><span class="inputLabel">Origem: </span></td>
-				  					<td>
-				  						<select class="overlayInputSource form-control" name="source">
-				  							<option value="0">Sem origem</option>
-					  						<?php $__currentLoopData = $contactSources; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $source): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					  						<option value="<?php echo e($source->id); ?>"><?php echo e($source->name); ?></option>
-					  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				  						</select>
-				  					</td>
-
-				  					<td><span class="inputLabel">Responsável: </span></td>
-				  					<td>
-				  						<select class="overlayInputResponsible form-control" name="responsible">
-				  							<option value="0">Sem Responsável</option>
-					  						<?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-					  						<option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
-					  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				  						</select>
-				  					</td>
+				  						</td>
 				  				</tr>
 				  			</table>
 			  			</div>
@@ -310,7 +265,7 @@
 	<button style="padding: 3px 5px; margin-right: 5%; margin-top: 0.5%; background-color: grey; color: white; font-size: 12px;" class="btn addType pull-right" data-toggle="modal" data-target="#myModal" type="button">Filtro</button>
 	<button style="padding: 3px 5px; margin-right: 5%; margin-top: 0.5%; font-size: 12px;" class="btn btn-primary addType pull-right" data-toggle="modal" data-target="#myModal" type="button"><i class="glyphicon glyphicon-plus"></i> Contacto</button>
 	<div class="panel panel-default borderless" style="margin-top: 19px;">
-		<div class="panel-body">
+		<div class="panel-body" style="padding-left: 0;">
 			<table class="table smallFontTable">
 				<thead>
 					<th class="text-center">Foto</th>
@@ -328,7 +283,7 @@
 						<td class="buttonCursor openContactLayer" content="<?php echo e($contact->id); ?>" style="padding-top: 5px !important"><?php echo e($contact->firstName); ?> <?php echo e($contact->lastName); ?></td>
 						<td style="padding-top: 5px !important"><?php echo e($contact->phoneNumber); ?></td>
 						<td style="padding-top: 5px !important"><?php echo e($contact->email); ?></td>
-						<td style="padding-top: 5px !important"><?php echo e($contact->skype); ?></td>
+						<td style="padding-top: 5px !important"><?php echo e($contact->skype); ?> edureis95</td>
 						<td style="padding-top: 5px !important"><?php echo e($contact->company != null ? $companyContacts->find($contact->company)->name : ""); ?></td>
 						<td style="padding-top: 5px !important">Diretor</td>
 					</tr>
@@ -376,7 +331,6 @@ $('.editDescriptionButton').click(function() {
 	$('.editTable').removeClass('hidden');
 	$('.descriptionTable').addClass('hidden');
 	$('.saveContact').removeClass('hidden');
-	$('.removeContact').removeClass('hidden');
 });
 
 $('.cancelEditDescription').click(function() {
@@ -385,18 +339,11 @@ $('.cancelEditDescription').click(function() {
 	$('.editTable').addClass('hidden');
 	$('.descriptionTable').removeClass('hidden');
 	$('.saveContact').addClass('hidden');
-	$('.removeContact').addClass('hidden');
 })
 
 var idClicked = null
 $('.openContactLayer').click(function() {
 	idClicked = $(this).attr('content');
-	$('.cancelEditDescription').addClass('hidden');
-	$('.editDescriptionButton').removeClass('hidden');
-	$('.editTable').addClass('hidden');
-	$('.descriptionTable').removeClass('hidden');
-	$('.saveContact').addClass('hidden');
-	$('.removeContact').addClass('hidden');
 	$.ajax({
 	  type: "POST",
 	  url: '/contacts/getContactDetails',
@@ -420,11 +367,6 @@ $('.openContactLayer').click(function() {
 	  	$('.overlayCountry').text(response.country != null ? response.country : " -");
 	  	$('.overlayCompany').text(response.companyName);
 	  	$('.overlayPhoto').attr('src', '/uploads/contacts/' + response.photo);
-	  	$('.overlaySkype').text(response.skype);
-	  	$('.overlayCompanyPosition').text(response.position);
-	  	$('.overlayContactType').text(response.typeName);
-	  	$('.overlaySource').text(response.sourceName);
-	  	$('.overlayResponsible').text(response.responsibleName);
 	  	//EditLayer
 	  	$('.overlayInputFirstName').val(response.firstName);
 	  	$('.overlayInputMiddleNames').val(response.middleName);
@@ -445,11 +387,6 @@ $('.openContactLayer').click(function() {
 	  	}
 	  	$('.overlayInputPhoto').attr('src', '/uploads/contacts/' + response.photo);
 	  	$('.overlayComunicationProjects').text(response.projectsWorked != null ? response.projectsWorked : " -");
-	  	$('.overlayInputSkype').val(response.skype);
-	  	$('.overlayInputCompanyPosition').val(response.position);
-	  	$('.overlayInputContactType option[value="'+ response.type_id +'"]').prop('selected', true);
-	  	$('.overlayInputSource option[value="'+ response.source_id +'"]').prop('selected', true);
-	  	$('.overlayInputResponsible option[value="'+ response.responsible_id +'"]').prop('selected', true);
 	  }
 	 });
 });

@@ -2,12 +2,12 @@
 
 <?php $__env->startSection('content'); ?>
 
-<div class="col-md-11">
+<div class="col-xs-12" style="max-width: 100%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.user_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<table class="table borderless">
+	<div class="panel panel-default borderless">
+		<div class="panel-body" style="padding: 0;">
+			<table class="table smallFontTable">
 				<thead>
 					<th> Perfis </th>
 				</thead>

@@ -107,15 +107,15 @@
 
 </div>
 
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 98%">
 	<?php echo $__env->make('layouts.project_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.project_management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
-			<div>
-				<button class="btn btn-primary addType pull-right" type="button" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;"><i class="glyphicon glyphicon-plus"></i></button>
-				<button type="button" class="btn btn-primary pull-right hidden insertForm" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;">Inserir</button>
-				<button type="button" class="btn btn-danger pull-right cancelForm hidden" style="padding-top: 2; padding-bottom: 2; margin-top: -30px; margin-right: 80px;">Cancelar</button>
+		<div class="panel-body" style="padding-left: 0;">
+			<div style="margin-bottom: 4%;">
+				<button class="btn btn-primary addType pull-right" type="button"><i class="glyphicon glyphicon-plus"></i></button>
+				<button type="button" class="btn btn-primary pull-right hidden insertForm">Inserir</button>
+				<button type="button" class="btn btn-danger pull-right cancelForm hidden">Cancelar</button>
 			</div>
 			<table class="table smallFontTable" id='test-table'>
 				<thead>

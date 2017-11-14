@@ -1,11 +1,11 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 98%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.project_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
-			<table class="table typesTable smallFontTable">
+		<div class="panel-body" style="padding: 0;">
+			<table class="table typesTable">
 				<thead>
 					<th class="text-center">Código</th>
 					<th class="text-center">Tipo de Construção</th>
@@ -35,7 +35,7 @@
 				</tbody>
 			</table>
 			<div class="editableTypes hidden">
-				<table class="table editableTableTypes smallFontTable">
+				<table class="table editableTableTypes">
 					<thead>
 						<th class="text-center">Código</th>
 						<th class="text-center">Tipo de Construção</th>

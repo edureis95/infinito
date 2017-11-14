@@ -478,7 +478,7 @@
                             <a href="/contacts">Contactos</a>
                         </li>
                         <li>
-                            <a href="/mail">E-mail</a>
+                            <a href="/mail">Email</a>
                         </li>
                         <li>
                             <a href="#"></i> Área Pessoal <span class="fa arrow"></span></a>
@@ -548,12 +548,6 @@
                                 <li>
                                     <a href="/settings/company/absence">Empresa</a>
                                 </li>
-                                <li>
-                                    <a href="/settings/contacts/types">Contactos</a>
-                                </li>
-                                <li>
-                                    <a href="/settings/commercial/iva">Comercial</a>
-                                </li>
                             </ul>
                         </li>
                         <li>
@@ -585,11 +579,6 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        <?php if(Request::path() != 'mail'): ?>
-                        <li style="display: none;">
-                            <iframe src="https://infinito.elementofinito.com/roundcube/" frameBorder="0" style="height: calc(100% - 70px); width: 100%"></iframe>   
-                        </li>
-                        <?php endif; ?>
                         <?php endif; ?>
                         <hr style="border-color: white;">
                         <li style="font-size: 12px; padding-left: 8px;">Projetos Recentes</li>

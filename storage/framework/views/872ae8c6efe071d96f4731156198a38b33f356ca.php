@@ -390,6 +390,7 @@
 			}
 
 			var task_id = null;
+			var task_name = null;
 			$(document).ready(function() {
 				$(document).on('click', '.gantt_tree_content', function() {
 					task_id = $(this).parent().parent().attr('task_id');
@@ -413,6 +414,7 @@
 					      success: function(response) {
 					      		$('#myNav').css('width', 'calc(96% - 170px)');
 					      		$('.overlayTaskName').text(response.name);
+					      		task_name = response.name;
 								$('.overlayStartDate').text(response.start_date);
 								$('.overlayEndDate').text(response.end_date);
 								$('.overlayUser').text(response.userName);
@@ -447,6 +449,7 @@
 				var start_date = $('.editTable .overlayStartDatePicker').val();
 				var end_date = $('.editTable .overlayEndDatePicker').val();
 				var notes = $('.summernoteOverlay').summernote('code');
+				var taskNameEdit = $('.overlayTaskName input').val();
 				$.ajax({
 			      type: "POST",
 			      url: '/project/gantt/editPlannedTaskFromGeneralGantt',
@@ -456,7 +459,8 @@
 			        'taskType': taskType,
 			        'start_date': start_date,
 			        'end_date': end_date,
-			        'notes': notes
+			        'notes': notes,
+			        'task_name': taskNameEdit
 			      },
 			      success: function() {
 			        location.reload();
@@ -479,6 +483,8 @@
 					$('.descriptionTable').addClass('hidden');
 					$('.summernoteOverlay').summernote('enable');
 					$('.note-toolbar').removeClass('hidden');
+					$('.overlayTaskName').text('');
+					$('.overlayTaskName').append('<input class="input-sm form-control" style="width: 80%;" type="text" value="'+ task_name +'">');
 				});
 
 				$('.cancelEditDescription').click(function() {
@@ -488,6 +494,7 @@
 					$('.descriptionTable').removeClass('hidden');
 					$('.summernoteOverlay').summernote('disable');
 					$('.note-toolbar').addClass('hidden');
+					$('.overlayTaskName').text(task_name);
 				});
 
 				$('.ganttCheckbox').change(function() {

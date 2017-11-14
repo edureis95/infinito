@@ -1,38 +1,5 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="col-xs-12 insideContainer">
-	<?php echo $__env->make('layouts.management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<?php echo $__env->make('layouts.commercial_management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default borderless">
-		<div class="panel-body">
-			<table class="table typesTable smallFontTable">
-				<thead>
-					<th class="text-center">Código</th>
-					<th class="text-center">Descrição</th>
-					<th class="text-center">Especialidade</th>
-					<th class="text-center">Localidade</th>
-					<th class="text-center">Valor de Obra</th>
-					<th class="text-center">Valor de Projeto</th>
-					<th class="text-center">Estado Comercial</th>
-					<th class="text-center">
-						<button style="padding: 3px 5px;" data-toggle="modal" data-target="#myModal" class="btn btn-primary addType" type="button"><i class="glyphicon glyphicon-plus"></i> Nova proposta</button>
-					</th>
-				</thead>
-				<tbody class="text-center">
-				<?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				<tr>
-					<td><a href="/commercialProject/showProject/<?php echo e($project->id); ?>"><?php echo e($project->number); ?></a></td>
-					<td><a href="/commercialProject/showProject/<?php echo e($project->id); ?>"><?php echo e($project->name); ?></a></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
-
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
 <div class="modal-dialog">
@@ -147,6 +114,39 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="col-xs-12" style="max-width: 98%;">
+	<?php echo $__env->make('layouts.management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('layouts.commercial_management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<div class="panel panel-default borderless">
+		<div class="panel-body" style="padding: 0;">
+			<table class="table typesTable">
+				<thead>
+					<th class="text-center">Código</th>
+					<th class="text-center">Descrição</th>
+					<th class="text-center">Especialidade</th>
+					<th class="text-center">Localidade</th>
+					<th class="text-center">Valor de Obra</th>
+					<th class="text-center">Valor de Projeto</th>
+					<th class="text-center">Estado Comercial</th>
+					<th class="text-center">
+						<button style="padding: 3px 5px;" data-toggle="modal" data-target="#myModal" class="btn btn-primary addType" type="button"><i class="glyphicon glyphicon-plus"></i> Nova proposta</button>
+					</th>
+				</thead>
+				<tbody class="text-center">
+				<?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+				<tr>
+					<td><a href="/commercialProject/showProject/<?php echo e($project->id); ?>"><?php echo e($project->number); ?></a></td>
+					<td><a href="/commercialProject/showProject/<?php echo e($project->id); ?>"><?php echo e($project->name); ?></a></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 
 <script>

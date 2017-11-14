@@ -69,14 +69,18 @@
 				<thead>
 					<th class="text-center">Código</th>
 					<th class="text-center">Nome</th>
-					<th class="text-center">Estado</th>
+					<th class="text-center">Horas</th>
 				</thead>
 				<tbody class="text-center">
 				@foreach($projects as $project)
 					<tr>
-						<td><a href="/management/project/{{$project->id}}">{{str_pad($project->number, 5, '0', STR_PAD_LEFT)}}</a></td>
-					<td><a href="/management/project/{{$project->id}}">{{$project->name}}</a></td>
-					<td>{{$project->state}}</td>
+						<td><a href="/project/gantt/{{$project->id}}">{{str_pad($project->number, 5, '0', STR_PAD_LEFT)}}</a></td>
+					<td><a href="/project/gantt/{{$project->id}}">{{$project->name}}</a></td>
+					@if(!empty($project->taskTimer))
+					<td>{{$project->taskTimer->hours + ceil($project->taskTimer->minutes/60)}}</td>
+					@else
+					<td>0</td>
+					@endif
 					<td>
 					</tr>
 				@endforeach
@@ -238,10 +242,13 @@ $('.refreshFilter').click(function() {
 		success: function(response) {
 			$('.projectsTable tbody').empty();
 			for(var i = 0; i < response.length; i++) {
+				var hours = 0;
+				if(response[i].taskTimer != null)
+					hours = parseInt(response[i].taskTimer.hours) + Math.ceil(response[i].taskTimer.minutes / 60);
 				var toAppend = '<tr>'+
-						'<td><a href="/management/project/' + response[i].id + '">'+("0" + response[i].number).slice(-5)+'</a></td>'+
-					'<td><a href="/management/project/'+response[i].id+'">'+response[i].name+'</a></td>'+
-					'<td>'+ response[i].state + '</td>'+
+						'<td><a href="/project/gantt/' + response[i].id + '">'+("0" + response[i].number).slice(-5)+'</a></td>'+
+					'<td><a href="/project/gantt/'+response[i].id+'">'+response[i].name+'</a></td>'+
+					'<td>'+ hours + '</td>'+
 					'</tr>';
 				$('.projectsTable tbody').append(toAppend);
 			}

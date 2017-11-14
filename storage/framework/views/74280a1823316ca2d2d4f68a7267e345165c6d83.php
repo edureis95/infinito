@@ -5,7 +5,7 @@
 	<?php echo $__env->make('layouts.user_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
 		<div class="panel-body" style="padding: 0;">
-			<table class="table smallFontTable">
+			<table class="table borderless">
 				<thead>
 					<th> Perfis </th>
 				</thead>

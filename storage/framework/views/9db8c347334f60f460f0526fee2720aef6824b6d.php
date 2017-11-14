@@ -26,6 +26,8 @@
     <link href="/css/metisMenu.min.css" rel="stylesheet">
     <link href="/css/summernote.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <!-- Custom CSS -->
     <link href="/css/sb-admin-2.css" rel="stylesheet">
 
@@ -35,6 +37,7 @@
     <link href="/css/bootstrap-formhelpers.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.css"/>
     <link href="/css/css.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/overlayLayer.css">
     <link rel="stylesheet" href="/css/print.css" media="print">
     <link rel="stylesheet" href="/css/nonResponsive.css">
 
@@ -70,6 +73,8 @@
 
     <!-- include summernote css/js-->
     <script src="/js/summernote.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="/js/datepicker-pt.js"></script>
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js"></script>
 
@@ -86,7 +91,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default main-navbar navbar-static-top" id="main-nav" role="navigation" style="margin-bottom: 0; border: none;">
+        <nav class="navbar navbar-default main-navbar navbar-fixed-top" id="main-nav" role="navigation" style="margin-bottom: 0; border: none;">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -118,7 +123,7 @@
                               <div class="form-group">
                                 <label for="input1" class="col-xs-3 control-label">Colaborador</label>
                                 <div class="col-xs-9">
-                                  <select class="form-control assignedToSelect" name="assignedTo">
+                                  <select class="form-control" name="assignedTo">
                                         <?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php if(Auth::user()->id == $user->id): ?>
                                             <option selected value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
@@ -199,7 +204,7 @@
                             <div class="form-group">
                                 <label for="input1" class="col-xs-3 control-label">Colaborador</label>
                                 <div class="col-xs-9">
-                                  <select class="form-control" name="assignedTo">
+                                  <select class="form-control assignedToSelect" name="assignedTo">
                                         <?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <?php if(Auth::user()->id == $user->id): ?>
                                             <option selected value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
@@ -269,7 +274,7 @@
                 <?php endif; ?>
                 
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle"  href="#">
                         <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-messages">
@@ -327,7 +332,11 @@
 
                         <?php $__currentLoopData = $tasksPercentage; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
+                            <?php if($task->taskType == 'commercial'): ?>
+                            <a href="/commercialProject/planningTasks/<?php echo e($task->p_id); ?>">
+                            <?php else: ?>
                             <a href="/project/gantt/<?php echo e($task->p_id); ?>">
+                            <?php endif; ?>
                                 <div>
                                     <span style="line-height: 20px; font-size: 12px;">
                                         <strong>
@@ -377,31 +386,35 @@
                         <i class="fa fa-bell fa-fw"></i><span> <?php echo e($notificationNumber); ?> </span> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
-                    <?php $__currentLoopData = $hoursApprovalList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notApproved): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
-                            <a href="#">
-                                <div style="font-size: 12px;">
-                                    Tarefa - <?php echo e($notApproved->task_name); ?>
-
-                                    <span class="pull-right text-muted small"><?php echo e($notApproved->user_name); ?></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php $__currentLoopData = $absenceApprovalList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notApproved): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li>
-                            <a href="#">
-                                <div style="font-size: 12px;">
-                                    Ausência - <?php echo e($notApproved->text); ?>
+                            <a href="/management/hoursApproval" style="margin-top: -4px; height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Tarefas - <?php echo e($hoursApprovalList); ?>
 
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <li class="divider" style="margin: 1;"></li>
                         <li>
-                            <a class="text-center" href="#">
+                            <a href="/management/absence" style="height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Ausências - <?php echo e($absenceApprovalList); ?>
+
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" style="margin: 1;"></li>
+                        <li>
+                            <a href="/personal/hoursApproval" style="height: 30px;">
+                                <div style="font-size: 12px; margin-top: 2px;">
+                                    Horas Não Aprovadas - <?php echo e($hoursNotApproved); ?>
+
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider" style="margin: 1;"></li>
+                        <li>
+                            <a class="text-center" href="/management/hoursApproval">
                                 <strong>Ver Aprovações</strong>
                                 <i class="fa fa-angle-right"></i>
                             </a>
@@ -414,12 +427,15 @@
                 <?php if(!Auth::guest()): ?>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" style="max-height:40px;display:inline;overflow: visible;" href="#">
-                        <img src="/uploads/avatars/<?php echo e(Auth::user()->avatar); ?>" style="max-width: 30px; border-radius: 40%;">
+                        <img src="/uploads/avatars/<?php echo e(Auth::user()->avatar); ?>" style="max-width: 30px; border-radius: 40%; margin-right: 8px;">
                         <span><?php echo e(Auth::user()->name); ?> </span><i class="fa fa-caret-down"></i>
                     </a>
 
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<?php echo e(url('/profile/'. Auth::user()->id)); ?>"><i class="fa fa-btn fa-user"></i>  Profile</a></li>
+                        <li><a href="<?php echo e(url('/profile/'. Auth::user()->id)); ?>"><i class="fa fa-btn fa-user"></i>  Perfil</a></li>
+                        <li><a href="/personal/absence">Ausências</a></li>
+                        <li><a href="/personal/hoursApproval">Registo de Horas</a></li>
+                        <li><a href="/management/hoursApproval">Aprovações</a></li>
                         <li>
                             <a href="<?php echo e(url('/logout')); ?>"
                                 onclick="event.preventDefault();
@@ -458,20 +474,20 @@
             <!-- /.navbar-top-links -->
             <?php if(!Auth::guest()): ?>
             <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
+                <div class="sidebar-nav ">
                     <ul class="nav" id="side-menu">
-                        <li>
+                        <li class="dashboard">
                             <a href="#">DASHBOARD</a>
                         </li>
-                                <li>
-                                    <a href="/scheduler">Calendário</a>
-                                </li>
-                                <li>
-                                    <a href="/contacts">Contactos</a>
-                                </li>
-                                <li>
-                                    <a href="/mail">Email</a>
-                                </li>
+                        <li>
+                            <a href="/calendar">Calendário</a>
+                        </li>
+                        <li>
+                            <a href="/contacts">Contactos</a>
+                        </li>
+                        <li>
+                            <a href="/mail">E-mail</a>
+                        </li>
                         <li>
                             <a href="#"></i> Área Pessoal <span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -487,6 +503,9 @@
                                 <li>
                                     <a href="/management/hoursApproval">Aprovações</a>
                                 </li>
+                                <li>
+                                    <a href="/personal/report">Relatório</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -499,7 +518,7 @@
                                     <a href="/company/showCompanyMembers/2">Colaboradores</a>
                                 </li>
                                 <li>
-                                    <a href="#">Requisições</a>
+                                    <a href="/company/absence">Mapa de Férias</a>
                                 </li>
                             </ul>
                         </li>
@@ -537,6 +556,12 @@
                                 <li>
                                     <a href="/settings/company/absence">Empresa</a>
                                 </li>
+                                <li>
+                                    <a href="/settings/contacts/types">Contactos</a>
+                                </li>
+                                <li>
+                                    <a href="/settings/commercial/iva">Comercial</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -568,12 +593,18 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        <?php if(Request::path() != 'mail'): ?>
+                        <li style="display: none;">
+                            <iframe src="https://infinito.elementofinito.com/roundcube/" frameBorder="0" style="height: calc(100% - 70px); width: 100%"></iframe>   
+                        </li>
+                        <?php endif; ?>
                         <?php endif; ?>
                         <hr style="border-color: white;">
+                        <li style="font-size: 12px; padding-left: 8px;">Projetos Recentes</li>
                         <?php if(isset($memoryProject)): ?>
                         <?php $__currentLoopData = $memoryProject; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li>
-                            <a href="/project/gantt/<?php echo e($project->id); ?>"><?php echo e(str_pad($project->number, 5, '0', STR_PAD_LEFT)); ?> - <?php echo e($project->name); ?></a>
+                            <a class="projects" href="/project/gantt/<?php echo e($project->id); ?>"><?php echo e(str_pad($project->number, 5, '0', STR_PAD_LEFT)); ?> - <?php echo e($project->name); ?></a>
                         </li>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
@@ -614,13 +645,6 @@
 </body>
 
 <script>
-
-    $(window).scroll(function(){
-       if($(window).scrollTop() < $("#main-nav").height())
-           $("#myNav").css({"margin-top": - ($(window).scrollTop()) + "px"});
-       else
-           $("#myNav").css({"margin-top": - $("#main-nav").height() + "px"});
-    });
 
     $(document).ready(function() {
         $(".select2").select2({ containerCssClass: "smallFontContainer", dropdownCssClass: "smallFont" });
@@ -801,6 +825,13 @@
 $('.clickableLabel').click(function(e) {
     e.stopPropagation();
 });
+
+$( function() {
+    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker("option", "dateFormat",'yy-mm-dd');
+});
+
+
 
 </script>
 

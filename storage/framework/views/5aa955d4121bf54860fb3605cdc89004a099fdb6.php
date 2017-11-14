@@ -3,6 +3,13 @@
 <link href='//fonts.googleapis.com/css?family=Nunito:400,300,700' rel='stylesheet' type='text/css'>
 
 <style>
+.sidebar {
+	width: 10px;
+}
+
+#page-wrapper {
+	margin-left: 10px;
+}
 
 </style>
 
@@ -17,7 +24,7 @@
 </div>
 
 <script>
-/*var locked = 0;
+var locked = 0;
 $('.lockSidebar').click(function() {
     locked = 1;
     $(this).addClass('hidden');
@@ -42,9 +49,9 @@ $('.sidebar').mouseenter(function(e) {
       }, 150, function() {
         // Animation complete.
     });
-})*/
+})
 
-/*$('.sidebar').mouseleave(function(e) {
+$('.sidebar').mouseleave(function(e) {
     if(locked == 0) {
         $('.sidebar .pinSidebar').css('display', 'none');
         $( ".sidebar" ).animate({
@@ -58,7 +65,7 @@ $('.sidebar').mouseenter(function(e) {
             // Animation complete.
         });
     }
-})  */
+})  
 
 </script>
 

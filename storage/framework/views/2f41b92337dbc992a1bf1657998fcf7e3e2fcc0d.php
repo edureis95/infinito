@@ -17,16 +17,16 @@
     </div>
 </div>
 
-<div class="col-md-11">
+<div class="col-xs-12" style="max-width: 100%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.user_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
-		<table class="table">
+	<div class="panel panel-default borderless">
+		<div class="panel-body" style="padding:0;">
+		<table class="table smallFontTable">
+		<tbody>
 		<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 		<tr>
-		<div>
-			<td><?php echo e($user->name); ?></td>
+			<td><a href="/profile/<?php echo e($user->id); ?>"><?php echo e($user->name); ?></a></td>
 			<td><?php echo e($user->email); ?></td>
 			<td> <button type="button" style="padding: 0; padding-right: 2%; padding-left: 2%;" class="btn btn-sm btn-primary resetPassword"> Reset Password </button></td>
 			<td class="hidden changePasswordForm">
@@ -56,7 +56,7 @@
 				</form>
 			</td>
 			<td> 
-				<select class="selectType form-control" id="<?php echo e($user->id); ?>" type="text" name="typeUser">
+				<select class="selectType form-control input-sm" id="<?php echo e($user->id); ?>" type="text" name="typeUser">
 					<option value="0">Sem perfil</option>
 					<?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<?php if($permission->id == $user->profile): ?>
@@ -70,12 +70,12 @@
 			<td>
 			<a href="/deleteUser/<?php echo e($user->id); ?>"><i class="fa fa-trash fa-lg" aria-hidden="true"></i></a>
 			</td>
-		</div>
 		</tr>
 		<tr>
 
 		</tr>
 		<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+		</tbody>
 		</table>
 
 		<form action="/addCollaborator" method="POST">

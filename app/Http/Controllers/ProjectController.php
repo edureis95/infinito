@@ -2302,6 +2302,7 @@ class ProjectController extends Controller
         DB::transaction(function () use($r) {
             $project = \App\Project::find($r['project_id']);
             $task = \App\Task::where('ganttTask_id', $r['id'])->first();
+            $task->name = $r['task_name'];
             $task->user_id = $r['user'];
             $task->start_date = $r['start_date'];
             $task->end_date = $r['end_date'];
@@ -2388,6 +2389,7 @@ class ProjectController extends Controller
     public function editPlannedTaskFromGeneralGantt(Request $r) {
         DB::transaction(function () use($r) {
             $task = \App\Task::where('ganttTask_id', $r['id'])->first();
+            $task->name = $r['task_name'];
             $task->user_id = $r['user'];
             $task->start_date = $r['start_date'];
             $task->end_date = $r['end_date'];

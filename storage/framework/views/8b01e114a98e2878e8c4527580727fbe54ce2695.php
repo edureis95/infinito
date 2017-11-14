@@ -1,5 +1,5 @@
 <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-<script src="https://swc.cdn.skype.com/sdk/v1/sdk.min.js"></script>
+
 <style>
 </style>
 

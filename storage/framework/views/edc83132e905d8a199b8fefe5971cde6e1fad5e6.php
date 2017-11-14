@@ -1,4 +1,4 @@
-<div class="panel panel-default secondPanelMenu borderless">
+<div class="panel panel-default panelMenu borderless">
 	<div class="panel-body link-nav">
 		<a href="/settings/company/absence" class="ausencias"> <span>Ausências</span> </a>
 		<a href="#" class="férias secondNavMargin"> <span>Motivo do Calendário</span> </a>

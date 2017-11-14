@@ -68,7 +68,7 @@
 
             body {
                 background-image: url('/images/elemento-finito-background.png');
-                background-size: 80% auto;
+                background-size: 100% auto;
                 background-position: center, center;
                 background-repeat: no-repeat;
                 background-color: #001F3A;

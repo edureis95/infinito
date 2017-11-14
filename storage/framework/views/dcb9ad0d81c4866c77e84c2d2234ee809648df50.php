@@ -2,43 +2,84 @@
 
 <?php $__env->startSection('content'); ?>
 
-<div class="col-md-11">
+<div class="col-xs-12 insideContainer">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.project_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
+	<div class="panel panel-default borderless">
 		<div class="panel-body">
-			<table class="table borderless phasesTable" style="width:auto;">
-			<th>Cód.</th>
-			<th>Sigla</th>
-			<th>Nome Fase</th>
-			<th>Ações</th>
-			<th>
-				<button style="padding: 3px 5px;" class="btn btn-primary hiddenFormButton" type="button"><i class="glyphicon glyphicon-plus"></i></button>
-			</th>
-			<th style="padding: 0;" class="hidden hiddenForm">
+			<button class="dropdown-toggle editButton btn btn-primary pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px; margin-right: 90px">
+					<span style="font-size: 12px;">Editar</span>
+			</button>
+			<button class="dropdown-toggle hiddenFormButton btn btn-primary pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;">
+					<span style="font-size: 12px;">Adicionar</span>
+			</button>
+			<div class="editButtons hidden">
+				<button class="dropdown-toggle cancelEdit btn btn-danger pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px; margin-right: 80px;">
+					<span style="font-size: 12px;">Cancelar</span>
+				</button>
+				<button class="dropdown-toggle saveEdit btn btn-primary pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;">
+						<span style="font-size: 12px;">Guardar</span>
+				</button>
+			</div>
+			<div class="formButtons hidden">
+				<button class="dropdown-toggle cancelFunction btn btn-danger pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px; margin-right: 80px;">
+					<span style="font-size: 12px;">Cancelar</span>
+				</button>
+				<button class="dropdown-toggle saveFunction btn btn-primary pull-right" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;">
+						<span style="font-size: 12px;">Guardar</span>
+				</button>
+			</div>
+			<table class="table phasesTable smallFontTable">
+			<thead>
+				<th>Cód.</th>
+				<th>Sigla</th>
+				<th>Nome Fase</th>
+			</thead>
+			<tbody>
+			<tr class="hiddenForm hidden">
 				<form action="/settings/addPhase" method="POST">
-					<div class="col-md-3">
+					<td>
 						<input type="text" required  class="form-control" name="code" placeholder="Cód.">
-					</div>
-					<div class="col-md-3">
+					</td>
+					<td>
 						<input type="text" required  class="form-control" name="sigla" placeholder="Sigla">
-					</div>
-					<div class="col-md-4">
+					</td>
+					<td>
 						<input type="text" required  class="form-control" name="phase" placeholder="Fase">
-					</div>
+					</td>
+					<td class="hidden"><button type="submit" class="submitButton">Guardar</button></td>
 					<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-					<button type="submit" class="btn btn-primary">Inserir</button>
 				</form>
-			</th>
+			</tr>
 			<?php $__currentLoopData = $phases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $phase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
 				<tr>
 					<td content='<?php echo e($phase->id); ?>' class="code"><?php echo e($phase->code); ?></td>
 					<td content='<?php echo e($phase->id); ?>' class="sigla"><?php echo e($phase->sigla); ?></td>
 					<td content='<?php echo e($phase->id); ?>' class="phase name"><?php echo e($phase->name); ?></td>
-					<td data-editable='false'><button content='<?php echo e($phase->id); ?>' style="padding: 3px 5px;" class="btn btn-danger removePhase" type="button"><i class="glyphicon glyphicon-minus"></i></button></td>
 				</tr>
 			<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+			</tbody>
 			</table>
+			<div class="phasesEditable hidden">
+				<table class="table phasesTableEditable smallFontTable">
+				<thead>
+					<th>Cód.</th>
+					<th>Sigla</th>
+					<th>Nome Fase</th>
+					<th>Ações</th>
+				</thead>
+				<tbody>
+				<?php $__currentLoopData = $phases; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $phase): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> 
+					<tr class="editablePhase" content="<?php echo e($phase->id); ?>">
+						<td content='<?php echo e($phase->id); ?>' class="code"><?php echo e($phase->code); ?></td>
+						<td content='<?php echo e($phase->id); ?>' class="sigla"><?php echo e($phase->sigla); ?></td>
+						<td content='<?php echo e($phase->id); ?>' class="phase name"><?php echo e($phase->name); ?></td>
+						<td data-editable='false'><button content='<?php echo e($phase->id); ?>' style="padding: 3px 5px;" class="btn btn-danger removePhase" type="button"><i class="glyphicon glyphicon-minus"></i></button></td>
+					</tr>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
@@ -46,56 +87,79 @@
 <script>
 
 $('.hiddenFormButton').click(function() {
-	$(this).parent().parent().find('.hiddenForm').removeClass('hidden');
+	$('.hiddenForm').removeClass('hidden');
+	$('.hiddenFormButton').addClass('hidden');
+	$('.formButtons').removeClass('hidden');
+	$('.editButton').addClass('hidden');
 });
+
+$('.cancelFunction').click(function() {
+	$('.formButtons').addClass('hidden');
+	$('.hiddenForm').addClass('hidden');
+	$('.hiddenFormButton').removeClass('hidden');
+	$('.editButton').removeClass('hidden');
+})
+
+$('.saveFunction').click(function() {
+	$('.submitButton').click();
+})
+
 
 $('.removePhase').click(function() {
-	var id = $(this).attr('content');
+	//var id = $(this).attr('content');
 	$(this).parent().parent().find('.phase').parent().remove();
-	$.get('/settings/projects/phases/deletePhase/' + id, function() {
-	});
+	/*$.get('/settings/projects/phases/deletePhase/' + id, function() {
+	});*/
 
 });
 
-$('.phasesTable').editableTableWidget();
+$('.phasesTableEditable').editableTableWidget();
 
-$('.phasesTable td').on('change', function(evt, newValue) {
-	var id = $(this).attr('content');
-	if($(this).hasClass('code')) {
-		$.ajax({
-	      type: "POST",
-	      url: '/settings/projects/phases/changePhaseCode',
-	      data: {
-	      	'code': newValue,
-	      	'id': id
-	      },
-	      success: function(response) {
-	      }
-	    });
-	} else if($(this).hasClass('sigla')) {
-		$.ajax({
-	      type: "POST",
-	      url: '/settings/projects/phases/changePhaseSigla',
-	      data: {
-	      	'sigla': newValue,
-	      	'id': id
-	      },
-	      success: function(response) {
-	      }
-	    });
-	} else if($(this).hasClass('name')) {
-		$.ajax({
-	      type: "POST",
-	      url: '/settings/projects/phases/changePhaseName',
-	      data: {
-	      	'name': newValue,
-	      	'id': id
-	      },
-	      success: function(response) {
-	      }
-	    });
-	}
-});	
+$('.editButton').click(function() {
+	$('.phasesEditable').removeClass('hidden');
+	$('.phasesTable').addClass('hidden');
+	$('.editButtons').removeClass('hidden');
+	$('.hiddenFormButton').addClass('hidden');
+	$(this).addClass('hidden');
+});
+
+$('.cancelEdit').click(function() {
+	$('.phasesEditable').addClass('hidden');
+	$('.phasesTable').removeClass('hidden');
+	$('.editButtons').addClass('hidden');
+	$('.hiddenFormButton').removeClass('hidden');
+	$('.editButton').removeClass('hidden');
+});
+
+$('.saveEdit').click(function() {
+	var obj = {};
+	var ids = [];
+	$('.editablePhase').each(function() {
+		var id = $(this).attr('content');
+		var expertise = [];
+		$(this).find('td').each(function(index) {
+			if(index < 3)
+				expertise.push($(this).text());
+		})
+		if(expertise.length > 0) {
+			ids.push(id);
+			obj[id] = expertise;
+		}
+	});
+
+	$.ajax({
+	  type: "POST",
+	  url: '/settings/projects/phases/edit',
+	  data: {
+	  	'obj': obj,
+	  	'ids': ids
+	  },
+	  success: function() {
+	  	location.reload();
+	  }
+	});
+});
+
 </script>
 
 

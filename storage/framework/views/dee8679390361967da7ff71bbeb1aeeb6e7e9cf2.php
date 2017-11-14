@@ -123,11 +123,11 @@
 			}
 
 			.companyDay {
-				background: #e4e4e4;
+				background: lightgreen;
 			}
 
 			.today {
-				background: #FF5050;
+				background: lightblue;
 			}
 
 			.number-teste{
@@ -723,7 +723,7 @@
 					return ""; 
 				else if(task.type == 2)
 					return "";
-				else if(task.type == 4 || task.type == 5 || task.type == 6)
+				else if(task.type == 4 || task.type == 5)
 					return "";
 				else {
 					return task.text;
@@ -735,8 +735,8 @@
 				gantt.config.font_width_ratio = 9;
 				gantt.templates.leftside_text = function leftSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "left" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -744,8 +744,8 @@
 				};
 				gantt.templates.rightside_text = function rightSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "right" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -753,8 +753,8 @@
 				};
 				gantt.templates.task_text = function taskTextTemplate(start, end, task){
 					if (getTaskFitValue(task) === "center" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -766,7 +766,7 @@
 						taskEndPos = gantt.posFromDate(task.end_date);
 
 					var width = taskEndPos - taskStartPos;
-					var textWidth = (task.text + task.u_sigla || "").length * gantt.config.font_width_ratio;
+					var textWidth = (task.text + task.responsible || "").length * gantt.config.font_width_ratio;
 
 					if(width < textWidth){
 						var ganttLastDate = gantt.getState().max_date;
@@ -809,6 +809,7 @@
 			gantt.showDate(new Date());
 
 			gantt.attachEvent("onBeforeTaskDisplay", function(id, task){
+
 				//Filters
 				if(task.type == 0 && task.milestone == 0 && !$('.plannedTasksCheckbox').is(':checked'))
 					return false;
@@ -819,12 +820,14 @@
 					return true;
 				} else if(task.type == 5) {
 					return true;
-				} else if(task.type == 6) {
-					return true;
-				} 
+				} else if(task.type == 1) {
+					if(gantt.hasChild(id) && (task.id == <?php echo e($project->commercial_project_Task_ID); ?> || task.id == <?php echo e($project->operational_project_Task_ID); ?>)) {
+							return true
+						} else return false;
+				}
 				else if(task.type == 2){
 
-					if((task.parent == <?php echo e($project->commercial_project_Task_ID); ?> || task.parent == <?php echo e($project->operational_project_Task_ID); ?> || task.parent == <?php echo e($project->plannedTask_id); ?>) && gantt.hasChild(id)) {
+					if((task.parent == <?php echo e($project->commercial_project_Task_ID); ?> || task.parent == <?php echo e($project->operational_project_Task_ID); ?>) && gantt.hasChild(id)) {
 						if(gantt.getTask(gantt.getChildren(id)[0]).type == 2) {
 							if(gantt.hasChild(gantt.getChildren(id)[0]))
 								return true;
@@ -834,27 +837,28 @@
 						else if(gantt.getTask(gantt.getChildren(id)[0]).type == 1)
 							return true;
 					}
-					else if((gantt.getParent(task.parent) == <?php echo e($project->commercial_project_Task_ID); ?> || gantt.getParent(task.parent) == <?php echo e($project->operational_project_Task_ID); ?> || gantt.getParent(task.parent) == <?php echo e($project->plannedTask_id); ?>) && gantt.hasChild(id))
+					else if((gantt.getParent(task.parent) == <?php echo e($project->commercial_project_Task_ID); ?> || gantt.getParent(task.parent) == <?php echo e($project->operational_project_Task_ID); ?>) && gantt.hasChild(id))
 						return true;
 					else
 						return false;
 
 					return true;
-				} else if(task.type == 0  || task.type == 3 || task.type == 7) {
-					if((task.parent == <?php echo e($project->commercial_project_Task_ID); ?> || task.parent == <?php echo e($project->operational_project_Task_ID); ?> || task.parent == <?php echo e($project->plannedTask_id); ?>)) {
+				}
+				else if(task.type == 0  || task.type == 3) {
+					if((task.parent == <?php echo e($project->commercial_project_Task_ID); ?> || task.parent == <?php echo e($project->operational_project_Task_ID); ?>)) {
 							return true;
 					} else {
 						var parent1 = gantt.getParent(task.parent);
-						if(parent1.type == 0 || parent1.type == 3 || parent1.type == 7)
+						if(parent1.type == 0 || parent1.type == 3)
 							return false;
-						if((parent1 == <?php echo e($project->commercial_project_Task_ID); ?> || parent1 == <?php echo e($project->operational_project_Task_ID); ?> || parent1 == <?php echo e($project->plannedTask_id); ?>)) {
+						if((parent1 == <?php echo e($project->commercial_project_Task_ID); ?> || parent1 == <?php echo e($project->operational_project_Task_ID); ?>)) {
 								return true;
 						}
 						else {
 							var parent2 = gantt.getParent(parent1);
-							if(parent2.type == 0 || parent2.type == 3 || parent2.type == 7)
+							if(parent2.type == 0 || parent2.type == 3)
 								return false;
-							if((parent2 == <?php echo e($project->commercial_project_Task_ID); ?> || parent2 == <?php echo e($project->operational_project_Task_ID); ?> || parent2 == <?php echo e($project->plannedTask_id); ?>)) {
+							if((parent2 == <?php echo e($project->commercial_project_Task_ID); ?> || parent2 == <?php echo e($project->operational_project_Task_ID); ?>)) {
 									return true;
 							}
 						}
@@ -924,7 +928,7 @@
 
 			gantt.templates.task_class  = function(start, end, task){
 				var currentDate = new Date();
-				if(task.type == 4 || task.type == 5 || task.type == 6)
+				if(task.type == 4 || task.type == 5)
 					return 'commercial';
 				else if(task.type == 1) {
 					return 'project';
@@ -968,15 +972,15 @@
 			};
 
 			gantt.templates.grid_file = function(task) {
-				if(task.u_sigla != "")
-			    	return "<div class='gantt_tree_icon number-teste'>" + task.u_sigla + ' - ' + "</div>";
+				if(task.responsible != "")
+			    	return "<div class='gantt_tree_icon number-teste'>" + task.responsible + ' - ' + "</div>";
 			    else
 			    	return "<div class='gantt_tree_icon number-teste'>" + "</div>";
 			};
 
 			gantt.templates.grid_folder = function(task) {
 				var pad = "00000";
-				if(task.type == 4 || task.type == 5 || task.type == 6)
+				if(task.type == 4 || task.type == 5)
 					return "<div class='gantt_tree_icon number-teste'>" + "</div>";
 				else if(task.type == 1)
 					return "<div class='gantt_tree_icon number-teste projectGantt'>" + pad.substring(0, pad.length - task.number.length) + task.number + " | " + "</div>";
@@ -987,7 +991,7 @@
 			};
 
 			gantt.templates.grid_row_class = function(start, end, task){
-				if(task.type == 4 || task.type == 5 || task.type == 6)
+				if(task.type == 4 || task.type == 5)
 			    	return "boldLetters";
 			    if(task.type == 0)
 			    	return 'openTaskLayer';

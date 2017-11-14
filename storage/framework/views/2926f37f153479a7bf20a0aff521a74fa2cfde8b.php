@@ -1,19 +1,19 @@
 <?php $__env->startSection('content'); ?>
 
 <script type="text/javascript" src="/js/canvasjs.min.js"></script>
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 98%;">
 	<?php echo $__env->make('layouts.project_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.project_management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
+		<div class="panel-body" style="padding: 0;">
 			<div>
 				<p>Tempo de Execução: <?php echo e($task_timer_hours); ?></p>
 				<p>Nº de Tarefas: <?php echo e($totalNumberTasks); ?></p>
 			</div>
 			<div id="taskByType" class="chart" style="float: left; height: 40%; width: 50%;"></div>
 			<div id="members" class="chart" style="float: left; height: 40%; width: 50%;"></div>
-			<div id="expertise" class="chart" style="float: left; height: 40%; width: 50%; margin-top: 50px;"></div>
-			<div id="phases" class="chart" style="float: left; height: 40%; width: 50%; margin-top: 50px;"></div>
+			<div id="expertise" class="chart" style="float: left; height: 40%; width: 50%;"></div>
+			<div id="phases" class="chart" style="float: left; height: 40%; width: 50%;"></div>
 		</div>
 	</div>
 </div>

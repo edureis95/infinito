@@ -20,7 +20,7 @@
 	<?php echo $__env->make('layouts.user_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
 		<div class="panel-body" style="padding:0;">
-		<table class="table smallFontTable">
+		<table class="table">
 		<tbody>
 		<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 		<tr>
@@ -54,7 +54,7 @@
 				</form>
 			</td>
 			<td> 
-				<select class="selectType form-control input-sm" id="<?php echo e($user->id); ?>" type="text" name="typeUser">
+				<select class="selectType form-control" id="<?php echo e($user->id); ?>" type="text" name="typeUser">
 					<option value="0">Sem perfil</option>
 					<?php $__currentLoopData = $permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 					<?php if($permission->id == $user->profile): ?>

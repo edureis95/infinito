@@ -2,15 +2,90 @@
 
 <?php $__env->startSection('content'); ?>
 
-<div class="col-md-11">
+<div class="col-xs-12" style="max-width: 98%;">
 	<?php echo $__env->make('layouts.management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<button class="btn btn-info newProject" style="width: 100%;" role="button" data-toggle="modal" data-target="#myModal">Criar Projeto</button>
+	<div class="panel panel-default borderless">
+		<div class="panel-body members" style="padding-left: 0;">
+			<div class="col-xs-6">
+			<table class="table borderless" style="width: 75%;">
+					<tr>
+						<td><button class="btn btn-info newProject" role="button" data-toggle="modal" data-target="#myModal">Criar Projeto</button></td>
+					</tr>
+					<tr></tr>
+					<tr>
+						<td> Ano </td>
+						<td>
+							<select class="form-control yearFilter">
+								<option value="0">Sem Filtro</option>
+							</select>
+						</td>
+					</tr>
+
+					<tr>
+						<td>Especialidade</td>
+						<td>
+							<select class="form-control expertiseFilter">
+								<option value="0">Sem filtro</option>
+								<?php $__currentLoopData = $expertise; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expert): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+								<?php if($expert->parent == 0): ?>
+								<?php if(isset($filter) and $filter->expertise == $expert->id): ?>
+								<option selected value="<?php echo e($expert->id); ?>"><?php echo e($expert->name); ?></option>
+								<?php else: ?>
+								<option value="<?php echo e($expert->id); ?>"><?php echo e($expert->name); ?></option>
+								<?php endif; ?>
+								<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Estado</td>
+						<td>
+							<select class="form-control stateFilter">
+								<option value="0">Sem filtro</option>
+								<?php $__currentLoopData = $states; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $state): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<?php if(isset($filter) and $filter->state == $state->id): ?>
+									<option selected value="<?php echo e($state->id); ?>"><?php echo e($state->name); ?></option>
+									<?php else: ?>
+									<option value="<?php echo e($state->id); ?>"><?php echo e($state->name); ?></option>
+									<?php endif; ?>
+								<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</select>
+						</td>
+					</tr>
+					</tr>
+					<td></td>
+					</tr>
+					<tr>
+					<td></td>
+					</tr>
+					<tr>
+						<td><button type="button" class="btn refreshFilter">Atualizar</button></td>
+					</tr>
+				</table>
+			</div>
+			<div class="col-xs-6">
+				<table class="table projectsTable">
+				<thead>
+					<th class="text-center">Código</th>
+					<th class="text-center">Nome</th>
+					<th class="text-center">Estado</th>
+				</thead>
+				<tbody class="text-center">
+				<?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					<tr>
+						<td><a href="/management/project/<?php echo e($project->id); ?>"><?php echo e(str_pad($project->number, 5, '0', STR_PAD_LEFT)); ?></a></td>
+					<td><a href="/management/project/<?php echo e($project->id); ?>"><?php echo e($project->name); ?></a></td>
+					<td><?php echo e($project->state); ?></td>
+					<td>
+					</tr>
+				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
-
 
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
@@ -130,6 +205,50 @@
 </div>
 
 <script>
+
+function appendYears() {
+	var i,yr,now = new Date();
+	for (i=0; i<13; i++) {
+	    yr = now.getFullYear()-11+i; // or whatever
+	    <?php if(isset($filter)): ?>
+	    	if(yr == <?php echo e($filter->year); ?>)
+	    		$('.yearFilter').append($('<option/>').val(yr).text(yr).prop('selected', true));
+	    	else
+	    		$('.yearFilter').append($('<option/>').val(yr).text(yr));
+	    <?php else: ?>
+	    $('.yearFilter').append($('<option/>').val(yr).text(yr));
+	    <?php endif; ?>
+	}
+}
+
+appendYears();
+
+$('.refreshFilter').click(function() {
+	var year = $('.yearFilter').val();
+	var expertise = $('.expertiseFilter').val();
+	var state = $('.stateFilter').val();
+	$.ajax({
+		type: "POST",
+		url: '/management/operations/filterProjects',
+		data: {
+			'year': year,
+			'expertise': expertise,
+			'state': state
+		},
+		success: function(response) {
+			$('.projectsTable tbody').empty();
+			for(var i = 0; i < response.length; i++) {
+				var toAppend = '<tr>'+
+						'<td><a href="/management/project/' + response[i].id + '">'+("0" + response[i].number).slice(-5)+'</a></td>'+
+					'<td><a href="/management/project/'+response[i].id+'">'+response[i].name+'</a></td>'+
+					'<td>'+ response[i].state + '</td>'+
+					'</tr>';
+				$('.projectsTable tbody').append(toAppend);
+			}
+		}
+	});
+})
+
 $(function () {
 	$(document).on('click', '.btn-add-phase', function(e) {
 	    e.preventDefault();
@@ -164,7 +283,9 @@ $(function () {
 						'<select class="form-control expertiseSelect" type="text" name="expertise[]">'+
 							'<option value="0"> Sem especialidades </option>'+
 							'<?php $__currentLoopData = $expertise; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $expert): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>'+
+							'<?php if($expert->parent == 0): ?>' +
 							'<option value="<?php echo e($expert->id); ?>"> <?php echo e($expert->name); ?> </option>'+
+							'<?php endif; ?>' +
 							'<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>'+
 						'</select>'+
 						'</div>'+

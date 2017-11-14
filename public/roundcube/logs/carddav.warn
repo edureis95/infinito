@@ -1,2 +1,18 @@
 [05-Sep-2017 14:39:06 +0000]: <ftb3rbea> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
 [05-Sep-2017 14:39:06 +0000]: <ftb3rbea> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 18
+[11-Oct-2017 11:58:05 +0000]: <1fdk8cr2> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~0a7ceb0d-bd6a-' for key 'uri'
+[11-Oct-2017 11:58:05 +0000]: <1fdk8cr2> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 33
+[11-Oct-2017 11:58:05 +0000]: <1fdk8cr2> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 11:58:05 +0000]: <1fdk8cr2> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 34
+[11-Oct-2017 11:58:06 +0000]: <1fdk8cr2> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 11:58:06 +0000]: <1fdk8cr2> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 34
+[11-Oct-2017 13:54:14 +0000]: <dkb5gq1t> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 13:54:14 +0000]: <dkb5gq1t> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 24
+[11-Oct-2017 13:54:14 +0000]: <dkb5gq1t> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 13:54:14 +0000]: <dkb5gq1t> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 24
+[11-Oct-2017 13:54:16 +0000]: <dkb5gq1t> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 13:54:16 +0000]: <dkb5gq1t> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 24
+[11-Oct-2017 13:54:16 +0000]: <dkb5gq1t> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 13:54:16 +0000]: <dkb5gq1t> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 24
+[11-Oct-2017 13:54:19 +0000]: <dkb5gq1t> BACKEND: (dbstore_base) [1062] Duplicate entry '/rpc/addressbooks/adm@elementofinito.com/contacts~8e47fd43-abb7-' for key 'uri'
+[11-Oct-2017 13:54:19 +0000]: <dkb5gq1t> BACKEND: (refreshdb_from_server) Errors occurred during the refresh of addressbook 24

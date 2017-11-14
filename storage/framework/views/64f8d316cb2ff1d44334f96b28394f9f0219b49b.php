@@ -1,14 +1,11 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 100%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.project_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
-			<button class="pull-right hidden saveButton btn btn-success" data-toggle="dropdown" style="padding-top: 2; padding-bottom: 2; margin-top: -30px;">
-					<span style="font-size: 12px;">Guardar</span>
-			</button>
-			<table class="table expertiseTable smallFontTable">
+		<div class="panel-body" style="padding-left:0;">
+			<table class="table expertiseTable">
 			<thead>
 				<th>Cód.</th>
 				<th>Sigla</th>
@@ -66,7 +63,7 @@
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 			</tbody>
 			</table>
-			<table class="table expertiseTableEditable hidden smallFontTable">
+			<table class="table expertiseTableEditable hidden">
 				<thead>
 				<th>Cód.</th>
 				<th>Sigla</th>
@@ -90,6 +87,7 @@
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 				</tbody>
 			</table>
+			<button type="button" class="btn btn-success pull-right hidden saveButton" style="margin-right: 10px;">Guardar</button>
 		</div>
 	</div>
 </div>
@@ -102,9 +100,9 @@ function appendSubExpertise() {
       url: '/expertiseWithParent',
       success: function(response) {
         for(var i = 0; i < response.length; i++) {
-        	$('#expert' + response[i].parent).after('<tr class="subexpert' + response[i].parent + '"><td content="' + response[i].id + '" class="code">' + response[i].code + '</td><td content="' + response[i].id + '" class="sigla">' + response[i].sigla + '</td><td content="' + response[i].id + '" class="subexpert name" style="padding-left: 40px !important;">' + response[i].name + ' </td><td></td><td></td><td></td></tr>');
+        	$('#expert' + response[i].parent).after('<tr class="subexpert' + response[i].parent + '"><td content="' + response[i].id + '" class="code">' + response[i].code + '</td><td content="' + response[i].id + '" class="sigla">' + response[i].sigla + '</td><td content="' + response[i].id + '" class="subexpert name" style="padding-left: 40px;">' + response[i].name + ' </td><td></td><td></td><td></td></tr>');
 
-        	$('#expertEditable' + response[i].parent).after('<tr class="editableSubExpert subexpert' + response[i].parent + '" id="editableSubExpert' + response[i].id + '"><td content="' + response[i].id + '" class="code">' + response[i].code + '</td><td content="' + response[i].id + '" class="sigla">' + response[i].sigla + '</td><td content="' + response[i].id + '" class="subexpert name" style="padding-left: 40px !important;">' + response[i].name + ' </td><td data-editable="false"><button style="padding: 3px 5px;" class="btn btn-danger removeSubExpertise" content="'+ response[i].id +'" type="button"><i class="glyphicon glyphicon-minus"></i></button></td><td></td></tr>');
+        	$('#expertEditable' + response[i].parent).after('<tr class="editableSubExpert subexpert' + response[i].parent + '" id="editableSubExpert' + response[i].id + '"><td content="' + response[i].id + '" class="code">' + response[i].code + '</td><td content="' + response[i].id + '" class="sigla">' + response[i].sigla + '</td><td content="' + response[i].id + '" class="subexpert name" style="padding-left: 40px;">' + response[i].name + ' </td><td data-editable="false"><button style="padding: 3px 5px;" class="btn btn-danger removeSubExpertise" content="'+ response[i].id +'" type="button"><i class="glyphicon glyphicon-minus"></i></button></td><td></td></tr>');
         }
       }
     });

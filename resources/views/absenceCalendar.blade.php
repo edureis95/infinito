@@ -18,20 +18,7 @@
             <script src="../dhtmlxScheduler/codebase/sources/locale/recurring/locale_recurring_pt.js" ></script>
             <link rel="stylesheet" href="../dhtmlxScheduler/codebase/sources/skins/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
-            @if(Auth::user()->email_password == null)
-            <form action="/setMailPassword" method="POST" style="margin-bottom: 5%;">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <div class="form-group">
-                    <label>Introduz a password do webmail da elementofinito para sincronizares calendários</label>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="password" required  class="form-control" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sincronizar</button>
-                    </div>
-                </div>
-            </form>
-            @endif
+            
             <div class="row">
                 <div class="col-md-9">
                     <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%; min-width: 300px;'>

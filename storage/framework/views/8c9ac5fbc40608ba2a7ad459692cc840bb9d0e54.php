@@ -1,10 +1,10 @@
-
-
-
 <?php $__env->startSection('content'); ?>
 
-<div class="col-lg-11" style=" height:100%;">
+<div class="col-xs-12 insideContainer">
     <?php echo $__env->make('layouts.company_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="row">
+        <hr style="margin-top: 0; margin-left: 0; width: 100%; border-color: #DCDCDC;">
+    </div>
     <div id="userID" class="hidden"><?php echo e(Auth::user()->id); ?></div>
     <div class="panel panel-default">
         <div class="panel-body scheduler-container">
@@ -15,20 +15,7 @@
             <script src="../dhtmlxScheduler/codebase/sources/locale/recurring/locale_recurring_pt.js" ></script>
             <link rel="stylesheet" href="../dhtmlxScheduler/codebase/sources/skins/dhtmlxscheduler.css" type="text/css" media="screen" title="no title" charset="utf-8">
 
-            <?php if(Auth::user()->email_password == null): ?>
-            <form action="/setMailPassword" method="POST" style="margin-bottom: 5%;">
-                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-                <div class="form-group">
-                    <label>Introduz a password do webmail da elementofinito para sincronizares calendários</label>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="password" required  class="form-control" name="password">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sincronizar</button>
-                    </div>
-                </div>
-            </form>
-            <?php endif; ?>
+            
             <div class="row">
                 <div class="col-md-9">
                     <div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%; min-width: 300px;'>
@@ -103,7 +90,7 @@
                                 }
                                 scheduler.config.lightbox.sections=[
                                     {name:"description", height:70  , map_to:"text", type:"textarea" , focus:true},
-                                    {name:"Motivo da ausência", height:40, type:"select", options: reasons, map_to:'type'},
+                                    {name:"Motivo da ausência", height:40, type:"select", options: reasons, map_to:'absence_type'},
                                     {name:"time", height:72, type:"time", map_to:"auto"}
                                 ];
                             })

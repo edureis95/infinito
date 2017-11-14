@@ -118,31 +118,33 @@
 			  			<div class="col-xs-9">
 				  			<table class="table borderless" style="">
 				  				<tr>
-				  					<td><span class="inputLabel">Tipo de Empresa:</span></td>
+				  					<td><b>Nome da Empresa: </b><input class="overlayInputName form-control" type="text" name="name"></td>
+				  				</tr>
+				  				<tr>
+				  					<td><b>URL: </b><input class="overlayInputURL form-control" type="text" name="url"></td>
+				  				</tr>
+				  				<tr>
 				  					<td>
-				  						<select class="form-control">
-				  						<?php $__currentLoopData = $contactTypes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				  						<option value="<?php echo e($type->id); ?>"><?php echo e($type->name); ?></option>
-				  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-				  						</select>	
-				  					</td>
-				  					<td><b>Área: </b><span class="overlaCompanyArea">Eduardo</span></td><!--dropdown-->
-				  					<td><b>Dimensão: </b><span class="overlayCompanySize">Eduardo</span></td><!--dropdown-->
-				  				</tr>
-				  				<tr>
-				  					<td><b>NIF: </b><span class="overlayNIF">Eduardo</span></td>
-				  				</tr>
-				  				<tr>
-				  					<td> <b>Morada: </b><span class="overlayAddress">Urb. Cidade do Sol Nº 22</span></td>
-				  					<td> <b>Nº de Porta: </b><span class="overlayDoorNumber">22</span></td>
-				  					<td> <b>Cidade: </b><span class="overlayCity">Lamego</span></td>
-				  				</tr>
-				  				<tr>
-				  					<td> <b>Distrito: </b><span class="overlayRegion">Viseu</span></td>
-				  					<td> <b>Cód. Postal: </b><span class="overlayZipCode">5100-215</span></td>
-				  					<td> <b>País: </b><span class="overlayCountry">Portugal</span></td>
+					  					<b>Pessoa Responsável: </b>
+					  					<select class="overlayInputResponsible form-control" name="responsiblePerson">
+					  						<option value="0">Sem Responsável</option>
+					  						<?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+					  						<option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
+					  						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+					  					</select>
+					  				</td>
 				  				</tr>
 				  			</table>
+			  			</div>
+			  			<div class="col-xs-3">
+			  				<img class="img img-thumbnail overlayInputPhoto" src="/uploads/avatars/default.jpg">
+			  				<input id="input" style="width: 100% !important;" name="photo" type="file" class="file" data-show-upload="false" data-show-caption="true">
+								<script>
+									$("#input").fileinput({
+										language: "pt",
+										allowedFileExtensions: ["jpg", "png", "gif"]
+									});
+								</script>
 			  			</div>
 		  			</form>
 	  			</div>
@@ -241,7 +243,7 @@
 <div class="col-xs-12 insideContainer">
 	<?php echo $__env->make('layouts.contacts_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
+		<div class="panel-body" style="padding-left: 0;">
 			<table class="table smallFontTable">
 				<thead>
 					<th class="text-center">Logo</th>
@@ -264,16 +266,14 @@
 						</td>
 						<td class="openContactLayer buttonCursor" content="<?php echo e($contact->id); ?>"><?php echo e($contact->name); ?></td>
 						<td>
-						<?php if(count($contact->phones)): ?>
-							<?php echo e($contact->phones->first()->phone); ?>
-
-						<?php endif; ?>
+						<?php $__currentLoopData = $contact->phones; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $phone): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<p><?php echo e($phone->phone); ?></p>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</td>
 						<td>
-						<?php if(count($contact->emails)): ?>
-							<?php echo e($contact->emails->first()->email); ?>
-
-						<?php endif; ?>
+						<?php $__currentLoopData = $contact->emails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $email): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<p><?php echo e($email->email); ?></p>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 						</td>
 						<td><?php echo e($contact->url); ?></td>
 						<td><?php echo e($contact->responsible_name); ?></td>

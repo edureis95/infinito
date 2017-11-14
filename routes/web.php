@@ -268,6 +268,7 @@ Route::middleware('auth')->group(function () {
 
 		Route::middleware('management')->group(function () {
 			Route::get('management', 'ManagementController@showManagement');
+			Route::get('management/rh', 'ManagementController@showRH');
 			Route::get('management/operations', 'ManagementController@showOperations');
 			Route::get('management/absence', 'ManagementController@getAbsenceApproval');
 			Route::post('management/absenceApproval/saveApproval', 'ManagementController@saveAbsenceApproval');

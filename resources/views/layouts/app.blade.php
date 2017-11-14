@@ -571,6 +571,9 @@
                                 <li>
                                     <a href="/settings/company/holidays">Empresa</a>
                                 </li>
+                                <li>
+                                    <a href="/management/rh">RH</a>
+                                </li>
                             </ul>
                         </li>
                         <li>

@@ -1,4 +1,4 @@
-<div class="panel panel-default secondPanelMenu borderless">
+<div class="panel panel-default panelMenu borderless">
 	<div class="panel-body link-nav">
 		<a href="/management/commercial" class="propostas"> <span>Propostas</span> </a>
 		<a href="#" class="secondNavMargin relatório"> <span>Relatório</span> </a>

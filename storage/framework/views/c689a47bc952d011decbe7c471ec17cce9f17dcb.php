@@ -3,7 +3,7 @@
 		<a href="/project/<?php echo e($project->id); ?>" class="informações secondNavMargin"> <span>Informações</span> </a>
 		<a href="/project/team/<?php echo e($project->id); ?>" class="secondNavMargin equipa"> <span>Equipa</span> </a>
 		<a href="/project/outsideTeam/<?php echo e($project->id); ?>" class="secondNavMargin equipaFora"> <span>Equipa de Projeto</span> </a>
-		<a href="/project/expertise/<?php echo e($project->id); ?>" class="secondNavMargin especialidades"> <span>Especialidades e Fases</span> </a>
+		<a href="/project/expertise/<?php echo e($project->id); ?>" class="secondNavMargin especialidades"> <span>Especialidades</span> </a>
 		<a href="/project/<?php echo e($project->id); ?>/planning" class="secondNavMargin planeamento"> <span>Planeado</span> </a>
 	</div>
 </div>

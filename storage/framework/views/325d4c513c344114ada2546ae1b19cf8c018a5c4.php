@@ -2,7 +2,7 @@
 
 <?php $__env->startSection('content'); ?>
 
-<div class="col-md-11">
+<div class="col-xs-12" style="max-width: 98%;">
 
 	<!-- Modal -->
 	<div id="myModal" class="modal fade" role="dialog">
@@ -26,7 +26,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Departamento Pai</label>
 							<div class="col-md-6">
-								<select class="add_department_select" name="parent" style="width: 100%">
+								<select class="add_department_select form-control" name="parent" style="width: 100%">
 									
 								</select>
 							</div>
@@ -35,11 +35,9 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Supervisor</label>
 							<div class="col-md-6">
-								<select class="form-control js-example-basic-single" type="text" name="supervisor" style="width:100%;">
-									<?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<optgroup label="<?php echo e($company->name); ?>" class="s<?php echo e($company->id); ?>">
-
-									</optgroup>
+								<select class="form-control select2" type="text" name="supervisor" style="width:100%;">
+									<?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</select>
 							</div>
@@ -79,7 +77,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Departamento a eliminar</label>
 							<div class="col-md-6">
-								<select class="add_department_select" name="department" style="width: 100%">
+								<select class="add_department_select form-control" name="department" style="width: 100%">
 									
 								</select>
 							</div>
@@ -119,7 +117,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Departamento a editar</label>
 							<div class="col-md-6">
-								<select class="add_department_select" name="department" style="width: 100%">
+								<select class="add_department_select form-control" name="department" style="width: 100%">
 									
 								</select>
 							</div>
@@ -135,7 +133,7 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Departamento Pai</label>
 							<div class="col-md-6">
-								<select class="edit_department_select_parent" name="parent" style="width: 100%">
+								<select class="edit_department_select_parent form-control" name="parent" style="width: 100%">
 									
 								</select>
 							</div>
@@ -144,11 +142,9 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Supervisor</label>
 							<div class="col-md-6">
-								<select class="form-control js-example-basic-single edit_department_select_supervisor" type="text" name="supervisor" style="width:100%;">
-									<?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<optgroup label="<?php echo e($company->name); ?>" class="s<?php echo e($company->id); ?>">
-
-									</optgroup>
+								<select class="form-control select2 edit_department_select_supervisor" type="text" name="supervisor" style="width:100%;">
+									<?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</select>
 							</div>
@@ -188,19 +184,16 @@
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Departamento</label>
 							<div class="col-md-6">
-								<select class="add_department_select" name="department" style="width: 100%">
-									
+								<select class="add_department_select form-control" name="department" style="width: 100%">
 								</select>
 							</div>
 						</div>
 						<div class="form-group row">
 							<label class="col-md-4 col-form-label" style="text-align: right;">Utilizador</label>
 							<div class="col-md-6">
-							<select class="form-control js-example-basic-single" type="text" name="user" style="width:100%;">
-									<?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-									<optgroup label="<?php echo e($company->name); ?>" class="s<?php echo e($company->id); ?>">
-
-									</optgroup>
+							<select class="form-control select2" type="text" name="user" style="width:100%;">
+									<?php $__currentLoopData = $usersList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+									<option value="<?php echo e($user->id); ?>"><?php echo e($user->name); ?></option>
 									<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 								</select>
 							</div>
@@ -225,7 +218,10 @@
 	</div>
 
 	<?php echo $__env->make('layouts.company_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default structure-panel">
+	<div class="row">
+    	<hr style="margin-top: 0; margin-left: 0; width: 100%; border-color: #DCDCDC;">
+	</div>
+	<div class="panel panel-default structure-panel borderless" style="margin-right: 15px;">
 		<div class="panel-body">
 			<div id="chart" style=" min-width: 90%; width: 100%; margin: 0%;">
 				<ul id="basic-chart-source" class="hide">
@@ -242,41 +238,39 @@
 	div.orgchart {
 		background-color: white;
 		border: none;
-		overflow-x: scroll;
+		overflow-x: scroll;;
 	}
 
 	div.orgChart div.node {
 		width: 200px;
-		min-height: 100px;
 		height: auto;
-		overflow: hidden;
 	}
 
 	div.orgChart div.node.level0 {
-		background-color: #F4F8FC;
-		border-color: #8BBDD3;
+		background-color: #0088cd;
+		border-color: #0088cd;
 	}
 
 	div.orgChart div.node.level0 hr{
-		border-color: #8BBDD3;
+		border-color: white;
 	}
 
 	div.orgChart div.node.level1 hr{
-		border-color: #E49C65;
+		border-color: white;
 	}
 
 	div.orgChart div.node.level1 {
-		background-color: #F8EEE6;
-		border-color: #E49C65;
+		background-color: #39b1f0;
+		border-color: #39b1f0;
 	}
 
 	div.orgChart div.node.level2 hr{
-		border-color: #9AC228;
+		border-color: white;
 	}
 
 	div.orgChart div.node.level2 {
-		background-color: #F2F6DD;
-		border-color: #9AC228;
+		background-color: #b0b0b0;
+		border-color: #b0b0b0;
 	}
 
 	div.orgChart div.node p{
@@ -299,13 +293,13 @@
 
 	div.orgChart div.node .supervisor {
 		text-align: left;
-		font-size: 12px;
+		font-size: 11px;
 	}
 
 	div.orgChart div.node .employees {
 		margin-top: 20px;
 		margin-bottom: 10px;
-		color: #E69863;
+		color: white;
 		font-size: 10px;
 		clear: left;
 		text-align: left;
@@ -319,7 +313,7 @@
 	div.orgChart div.node .top_department {
 		margin-top: 8px;
 		text-align: left;
-		font-size: 15px;
+		font-size: 11px;
 	}
 
 	div.orgChart div.node .top_department img{
@@ -348,13 +342,13 @@
 	});
 
 
-	
+	$(".add_department_select, .edit_department_select_parent").append('<option value="0">Sem pai</option>')
 
 	<?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 	if(<?php echo e($department->parent); ?> == 0)
-		$('#basic-chart-source').append('<li> <div class="department" id="department<?php echo e($department->id); ?>"> <div class="top_department"> <p class="title"><?php echo e($department->department_name); ?> <img title="Adiciona utilizador" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#add_user" src=/images/add_user.png> <img title="Adiciona departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#myModal" src=/images/add.png>  <img class="edit_department" title="Edita departamento" src=/images/pencil.ico></p></div> <hr> <div class="supervisor"><img title="<?php echo e($department->user_name); ?>" src="/uploads/avatars/<?php echo e($department->user_avatar); ?>"> <p><b><?php echo e($department->user_name); ?></b></p> </div> <div class="employees"> <p> Employees </p> <?php $__currentLoopData = $department->employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <img title="<?php echo e($employee->name); ?>" src="/uploads/avatars/<?php echo e($employee->avatar); ?>">  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> </div></div> <ul id="<?php echo e($department->id); ?>"> </ul> </li>');
+		$('#basic-chart-source').append('<li class="adjunct<?php echo e($department->id); ?>"> <div class="department" id="department<?php echo e($department->id); ?>"> <div class="top_department"> <p class="title"><b><?php echo e($department->department_name); ?></b> <img title="Adiciona utilizador" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#add_user" src=/images/add_user.png> <img title="Adiciona departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#myModal" src=/images/add.png>  <img class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#edit_department"  title="Edita departamento" src=/images/pencil.ico></p></div> <hr> <div class="supervisor"><img title="<?php echo e($department->user_name); ?>" src="/uploads/avatars/<?php echo e($department->user_avatar); ?>"> <p><b><?php echo e($department->user_name); ?></b></p> </div> <div class="employees"> <p> Employees </p> <?php $__currentLoopData = $department->employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <img title="<?php echo e($employee->name); ?>" src="/uploads/avatars/<?php echo e($employee->avatar); ?>">  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> </div></div> <ul id="<?php echo e($department->id); ?>"> </ul> </li>');
 	else 
-		$('#<?php echo e($department->parent); ?>').append('<li> <div class="department" id="department<?php echo e($department->id); ?>"> <div class="top_department"> <p class="title"><?php echo e($department->department_name); ?> <img title="Elimina departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#delete_department" src=/images/delete.ico> <img title="Adiciona utilizador" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#add_user" src=/images/add_user.png> <img title="Adiciona departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#myModal" src=/images/add.png>  <img class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#edit_department" title="Edita departamento" src=/images/pencil.ico></p></div> <hr> <div class="supervisor"><img title="<?php echo e($employee->name); ?>" src="/uploads/avatars/<?php echo e($department->user_avatar); ?>"> <p><b><?php echo e($department->user_name); ?></b></p> </div> <div class="employees"> <?php if(count($department->employees) > 0): ?><p> Employees </p> <?php endif; ?> <?php $__currentLoopData = $department->employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <img title="<?php echo e($employee->name); ?>" src="/uploads/avatars/<?php echo e($employee->avatar); ?>">  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> </div></div> <ul id="<?php echo e($department->id); ?>"> </ul> </li>');
+		$('#<?php echo e($department->parent); ?>').append('<li> <div class="department" id="department<?php echo e($department->id); ?>"> <div class="top_department"> <p class="title"><b><?php echo e($department->department_name); ?></b> <img title="Elimina departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#delete_department" src=/images/delete.ico> <img title="Adiciona utilizador" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#add_user" src=/images/add_user.png> <img title="Adiciona departamento" class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#myModal" src=/images/add.png>  <img class="add_department" id="add_department<?php echo e($department->id); ?>" data-toggle="modal" data-target="#edit_department" title="Edita departamento" src=/images/pencil.ico></p></div> <hr> <div class="supervisor"><img title="<?php echo e($department->user_name); ?>" src="/uploads/avatars/<?php echo e($department->user_avatar); ?>"> <p><b><?php echo e($department->user_name); ?></b></p> </div> <div class="employees"> <?php if(count($department->employees) > 0): ?><p> Employees </p> <?php endif; ?> <?php $__currentLoopData = $department->employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <img title="<?php echo e($employee->name); ?>" src="/uploads/avatars/<?php echo e($employee->avatar); ?>">  <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> </div></div> <ul id="<?php echo e($department->id); ?>"> </ul> </li>');
 
 	$("#chart").on("mouseenter", "#department<?php echo e($department->id); ?>", function() {
 		$("#department<?php echo e($department->id); ?> .title img").show();
@@ -372,17 +366,6 @@
 	});
 
 	$(".add_department_select, .edit_department_select_parent").append('<option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?> </option>');
-	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-	<?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-	$('.s<?php echo e($user->company); ?>').append("<option value = '<?php echo e($user->id); ?>''> <?php echo e($user->name); ?> </option>");
-	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-	<?php $__currentLoopData = $companies; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $company): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-	var count = $('.s<?php echo e($company->id); ?>').children().length;
-	if(count == 0) {
-		$('.s<?php echo e($company->id); ?>').remove();
-	}
 	<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 });

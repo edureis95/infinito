@@ -1,9 +1,9 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 98%;">
 	<?php echo $__env->make('layouts.personal_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
+		<div class="panel-body" style="padding-left: 0;">
 			<table class="table approvalTable smallFontTable">
 				<thead>
 					<th class="text-center">Início</th>

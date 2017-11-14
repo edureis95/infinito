@@ -3,6 +3,7 @@
 		<a href="/management/commercial" class="comercial"> <span>Comercial</span> </a>
 		<a href="/management/operations" class="secondNavMargin operações"> <span>Operações</span> </a>
 		<a href="/management/absence" class="secondNavMargin empresa"><span>Empresa</span></a>
+		<a href="/management/rh" class="secondNavMargin rh"><span>RH</span></a>
 	</div>
 </div>
 <div class="row">

@@ -1,11 +1,11 @@
 
 
 <?php $__env->startSection('content'); ?>
-<div class="col-md-11">
-	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<?php echo $__env->make('layouts.company_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-	<div class="panel panel-default">
-		<div class="panel-body">
+<div class="col-xs-12" style="max-width: 100%;">
+	<?php echo $__env->make('layouts.management_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<?php echo $__env->make('layouts.management_company_second_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	<div class="panel panel-default borderless">
+		<div class="panel-body" style="padding-left: 0;">
 			<table class="table borderless" style="width: 200px;">
 				<th class="text-center">Ano</th>
 				<tr>
@@ -22,7 +22,7 @@
 				</tr>
 			</table>
 
-			<table class="table borderless" style="width: auto;">
+			<table class="table companyDaysTable">
 				<thead>
 					<th class="text-center">Data/Data-Início</th>
 					<th class="text-center">Data-Fim</th>
@@ -32,6 +32,7 @@
 					<th class="text-center">Ação</th>
 					<th class="text-center"><button style="padding: 3px 5px;" class="btn btn-primary addDay" type="button"><i class="glyphicon glyphicon-plus"></i></button></th>
 				</thead>
+				<tbody>
 				<tr class="hiddenForm hidden text-center">
 					<form action="/settings/company/calendar/addDay" method="POST">
 						<td><input type="date" class="form-control" name="startDate"></td>
@@ -44,7 +45,7 @@
 					</form>
 				</tr>
 				<?php $__currentLoopData = $companyDays; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $day): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-				<tr class="text-center">
+				<tr class="text-center companyDay">
 					<?php if($day->end_date != null): ?>
 						<td><?php echo e($day->start_date); ?></td>
 						<td><?php echo e($day->end_date); ?></td>
@@ -62,6 +63,7 @@
 					<td><button content='<?php echo e($day->id); ?>' style="padding: 3px 5px; margin-bottom: 5px;" class="btn btn-danger removeDay" type="button"><i class="glyphicon glyphicon-minus"></i></button></td>
 				</tr>
 				<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+				</tbody>
 			</table>
 		</div>
 	</div>
@@ -71,8 +73,8 @@
 
 function appendYears() {
 	var i,yr,now = new Date();
-	for (i=0; i<20; i++) {
-	    yr = now.getFullYear()-10+i; // or whatever
+	for (i=0; i<10; i++) {
+	    yr = now.getFullYear()-5+i; // or whatever
 	    $('.yearFilter').append($('<option/>').val(yr).text(yr));
 	}
 }
@@ -90,7 +92,42 @@ $('.addDay').click(function() {
 	$('.hiddenForm').removeClass('hidden');
 });
 
-$('.removeDay').click(function() {
+var companyDays = '';
+$('.companyDay').each(function() {
+	companyDays += $(this).parent().html();
+});
+
+$('.refreshFilter').click(function() {
+	var year = $('.yearFilter').val();
+	$.ajax({
+	  type: "POST",
+	  url: '/settings/company/calendar/getByYear',
+	  data: {
+	  	'year' : year
+	  },
+	  success: function(response) {
+	  	$('.companyDay').remove();
+	  	for(var i = 0; i < response.length; i++) {
+	  		var toAppend = '<tr class="text-center companyDay"><td>' + response[i].start_date + '</td>';
+	  		if(response[i].end_date != null)
+	  			toAppend += '<td>' + response[i].end_date + '</td>';
+	  		else
+	  			toAppend += '<td> - </td>';
+	  		toAppend += '<td>' + response[i].reason + '</td><td>' + response[i].description + '</td>';
+	  		if(response[i].end_date != null) 
+	  			toAppend += '<td> Não </td>';
+	  		else 
+	  			toAppend += '<td> Sim </td>';
+
+	  		toAppend += '<td><button content="' + response[i].id + '" style="padding: 3px 5px; margin-bottom: 5px;" class="btn btn-danger removeDay" type="button"><i class="glyphicon glyphicon-minus"></i></button></td></tr>';
+
+	  		$('.companyDaysTable tbody').append(toAppend);
+	  	}
+	  }
+	});
+})
+
+$('.companyDaysTable').on('click', '.removeDay', function() {
 	var id = $(this).attr('content');
 	$(this).parent().parent().find('td').remove();
 	$.get('/settings/company/calendar/removeDay/' + id, function() {

@@ -1,12 +1,12 @@
 <?php $__env->startSection('content'); ?>
 
-<div class="col-xs-12 insideContainer">
+<div class="col-xs-12" style="max-width: 100%;">
 	<?php echo $__env->make('layouts.settings_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo $__env->make('layouts.company_settings_2nd_nav', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<div class="panel panel-default borderless">
-		<div class="panel-body">
+		<div class="panel-body" style="padding: 0;">
 			<?php if(count($absenceReasons)): ?>
-			<table class="table smallFontTable">
+			<table class="table borderless" style="width: auto;">
 				<thead>
 					<th>Código</th>
 					<th>Motivo de ausência </th>

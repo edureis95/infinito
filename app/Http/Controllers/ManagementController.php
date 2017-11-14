@@ -41,19 +41,11 @@ class ManagementController extends Controller
         if(!isset($projects)) {
             $projects = \App\Project::orderBy('number', 'desc')->get();
             foreach($projects as $project) {
-                $event = \App\Executed_Task::where('project_id', $project->id)
-                                           ->join('state_types', 'state_types.id', '=', 'executed_tasks.subType')
-                                           ->orderBy('start_date', 'desc')
-                                           ->first();
-
-                if($event != null) {
-                    $project->state_id = $event->id;
-                    $project->state = $event->name;
-                }
-                else {
-                   $project->state_id = 0;
-                   $project->state = "Sem Estado";
-               }
+                $taskTimer = \App\TaskTimer::where('project_id', $project->id)
+                                            ->groupBy('project_id')
+                                            ->select(DB::raw('sum(hours) as hours'), DB::raw('sum(minutes) as minutes'))
+                                            ->first();
+                $project->taskTimer = $taskTimer;
             }  
         }
 
@@ -703,19 +695,11 @@ class ManagementController extends Controller
 
 
         foreach($projects as $project) {
-            $event = \App\Executed_Task::where('project_id', $project->id)
-                                       ->join('state_types', 'state_types.id', '=', 'executed_tasks.subType')
-                                       ->orderBy('start_date', 'desc')
-                                       ->first();
-
-            if($event != null) {
-                $project->state_id = $event->id;
-                $project->state = $event->name;
-            }
-            else {
-               $project->state_id = 0;
-               $project->state = "Sem Estado";
-           }
+            $taskTimer = \App\TaskTimer::where('project_id', $project->id)
+                                            ->groupBy('project_id')
+                                            ->select(DB::raw('sum(hours) as hours'), DB::raw('sum(minutes) as minutes'))
+                                            ->first();
+            $project->taskTimer = $taskTimer;
         }
 
         if($state != 0) {
@@ -765,19 +749,11 @@ class ManagementController extends Controller
 
 
         foreach($projects as $project) {
-            $event = \App\Executed_Task::where('project_id', $project->id)
-                                       ->join('state_types', 'state_types.id', '=', 'executed_tasks.subType')
-                                       ->orderBy('start_date', 'desc')
-                                       ->first();
-
-            if($event != null) {
-                $project->state_id = $event->id;
-                $project->state = $event->name;
-            }
-            else {
-               $project->state_id = 0;
-               $project->state = "Sem Estado";
-           }
+            $taskTimer = \App\TaskTimer::where('project_id', $project->id)
+                                            ->groupBy('project_id')
+                                            ->select(DB::raw('sum(hours) as hours'), DB::raw('sum(minutes) as minutes'))
+                                            ->first();
+            $project->taskTimer = $taskTimer;
         }
 
         if($state != 0) {
@@ -1167,6 +1143,27 @@ class ManagementController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function showRH() {
+        $users = \App\User::leftJoin('task_timer', 'task_timer.user_id', '=', 'users.id')
+                          ->leftJoin('scheduler_events', function($q) {
+                                $q->on('scheduler_events.user_id', '=', 'users.id')
+                                  ->where('scheduler_events.absence_type', 3);
+                          })
+                          ->groupBy('users.id', 'users.name')
+                          ->select(DB::raw('sum(hours) as operationHours'), DB::raw('sum(minutes) as operationMinutes'), 'name', 'users.id as id')
+                          ->get();
+
+        $usersAbsence = \App\User::leftJoin('scheduler_events', function($q) {
+                                $q->on('scheduler_events.user_id', '=', 'users.id')
+                                  ->where('scheduler_events.absence_type', 3);
+                          })
+                          ->groupBy('users.id', 'users.name')
+                          ->select(DB::raw('SUM(IF(TIMESTAMPDIFF(HOUR, start_date, end_date) < 9, TIMESTAMPDIFF(HOUR, start_date, end_date), TIMESTAMPDIFF(DAY, start_date, end_date) * 8)) as absenceHours'), 'users.id as id')
+                          ->get();
+
+        return view('managementRH', array('activeL' => 'rh', 'users' => $users, 'usersAbsence' => $usersAbsence));
     }
 
 }

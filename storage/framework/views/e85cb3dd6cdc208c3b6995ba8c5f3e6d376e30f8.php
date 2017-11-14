@@ -27,11 +27,11 @@
 			}
 
 			.companyDay {
-				background: #e4e4e4;
+				background: lightgreen;
 			}
 
 			.today {
-				background: #FF5050;
+				background: lightblue;
 			}
 
 			.number-teste{
@@ -432,8 +432,8 @@
 				gantt.config.font_width_ratio = 9;
 				gantt.templates.leftside_text = function leftSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "left" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -441,8 +441,8 @@
 				};
 				gantt.templates.rightside_text = function rightSideTextTemplate(start, end, task) {
 					if (getTaskFitValue(task) === "right" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -450,8 +450,8 @@
 				};
 				gantt.templates.task_text = function taskTextTemplate(start, end, task){
 					if (getTaskFitValue(task) === "center" && (task.type == 0 || task.type == 3)) {
-						if(task.u_sigla != "")
-							return task.u_sigla + ' - ' + task.text;
+						if(task.responsible != "")
+							return task.responsible + ' - ' + task.text;
 						else 
 							return task.text;
 					}
@@ -463,7 +463,7 @@
 						taskEndPos = gantt.posFromDate(task.end_date);
 
 					var width = taskEndPos - taskStartPos;
-					var textWidth = (task.text + task.u_sigla || "").length * gantt.config.font_width_ratio;
+					var textWidth = (task.text + task.responsible || "").length * gantt.config.font_width_ratio;
 
 					if(width < textWidth){
 						var ganttLastDate = gantt.getState().max_date;
@@ -656,10 +656,10 @@
 			});
 
 			gantt.templates.grid_file = function(task) {
-				if(task.u_sigla != "")
-			    	return "<div class='gantt_tree_icon number-teste'>" + task.u_sigla + ' - ' + "</div>";
+				if(task.responsible != "")
+			    	return "<div class='gantt_tree_icon number-teste'>" + task.responsible + ' - ' + "</div>";
 			    else
-			    	return "<div class='gantt_tree_icon number-teste'>" + "</div>";
+			    	return "<div class='gantt_tree_icon number-teste'>" + task.id + "</div>";
 			};
 
 

@@ -1,4 +1,4 @@
-<div class="panel panel-default secondPanelMenu borderless">
+<div class="panel panel-default panelMenu borderless">
 	<div class="panel-body link-nav">
 		<a href="/settings" class="registo"> <span>Registo</span> </a>
 		<a href="/settings/users/profiles" class="secondNavMargin perfis"><span>Perfis</span> </a>
